@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { DataService } from './services/data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Course, StudentInfo } from './models/models';
+import {CourseRegComponent } from './course-reg/course-reg.component';
 
 @Component({
   selector: 'app-root',
