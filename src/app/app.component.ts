@@ -12,6 +12,7 @@ import { Course, StudentInfo } from './models/models';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
+  title="COURSE REGISTRATION"
   courses:Course[] = []
   student: StudentInfo | undefined
   constructor(private dataService: DataService){}

@@ -7,29 +7,7 @@ export interface PrerequisiteClause {
   export interface Prerequisite {
     orClause: PrerequisiteClause[];
     notClause: string[];
-  }
-  
-  // Interface representing a student profile
-  export interface StudentProfile {
-    rollNo: string;
-    name: string;
-    program: string;
-    branch: string;
-    semester?: number;
-    cgpa?: number;
-  }
-  
-  // Interface for the range of credits
-  export interface CreditRange {
-    max: number;
-    min: number;
-  }
-  
-  // Enum representing the type of the course
-  export enum CourseType {
-    ELECTIVE,
-    CORE
-  }
+  }  
   
   // Interface representing the course details
   export interface Course {
@@ -37,26 +15,34 @@ export interface PrerequisiteClause {
     name: string;
     credits: string; // Format: "L-T-P-C"
     instructor: string[];
-    prerequisites: Prerequisite[];
+    preRequisites: Prerequisite[];
+    coRequisites: Prerequisite[];
     slot: string;
     textBooks: string[];
     referenceBooks: string[];
-    type: CourseType;
-    syllabusLink?: string;
+    syllabusLink: string;
+    programCode:string 
+    isCore: boolean
+    isElective: boolean
+    electiveCategory:string //PME, HSE, 
+    quota:number
+    courseLevel: number;
   }
-  
-  // Interface representing a student's course information
-  export interface StudentCourse {
-    semesters: number[];
-    isCompleted: boolean;
-    course: Course; // Details of the course
-    isWaiverApplied: boolean; // Indicates if a prerequisite waiver is granted
+  export interface Range {
+    max: number;
+    min: number;
   }
+
+  export interface ElectiveRange extends Range {
+    code: string
+}
   
   // Interface extending StudentProfile with additional course-related information
-  export interface StudentInfo extends StudentProfile {
-    creditRange: CreditRange;
-    pastCourses: StudentCourse[]; // List of past courses (including electives)
-    waivedCourses: string[];
+  export interface StudentInfo{
+    rollNo: string;
+    isEligible: boolean;
+    electiveRange: ElectiveRange[]
+    creditRange: Range;
+    completedCourses: string[]; // List of past courses (including electives)
+    preRequisiteWaivers: string[];
   }
-  
