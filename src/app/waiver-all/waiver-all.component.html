@@ -1,0 +1,52 @@
+<div class="row g-3 justify-content-center mt-1">
+
+    <!-- Search By Department -->
+    <div class="card col-1 me-2">
+        <h4>Search by Program</h4>
+        @for (item of programs; track $index) {
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                  {{item}}
+                </label>
+            </div>
+        }
+
+    </div>
+
+    <!-- Table  -->
+    <div class="col-10 ms-2">
+        <table class="table table-striped table-bordered">
+            <thead class="bg-primary text-light">
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Credits</th>
+                <th>Instructor</th>
+                <th>Slot</th>
+                <th>Prerequisite Met?</th>
+                <th>Prerequisite Waiver</th>
+            </thead>
+
+            <tbody>
+                @for (item of selectedCourses; track $index) {
+                    <tr scope="col">
+                        <td> {{item.code}} </td>
+                        <td> {{item.name}} </td>
+                        <td> {{item.credits}} </td>
+                        <td> {{item.instructor}} </td>
+                        <td> {{item.slot}} </td>
+                        <td>  
+                            <!-- {{item.preRequisiteMet?}} -->
+                        </td>
+                        <td>  
+                            <!-- {{item.applyForWaiver}} -->
+                        </td>
+                    </tr>
+                }
+                
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
