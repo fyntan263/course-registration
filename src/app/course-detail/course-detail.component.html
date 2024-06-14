@@ -1,0 +1,38 @@
+<div class="table-responsive">
+    <table class="table table-sm  table-hover table-striped">
+        <tbody>
+            <tr>
+                <th scope="row">Course Code</th>
+                <td>{{ courseDetail.code }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Course Name</th>
+                <td>{{ courseDetail.name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Credits</th>
+                <td>{{ courseDetail.credits }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Instructors</th>
+                <td>{{ courseDetail.instructor.join(', ') }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Time Slot</th>
+                <td>{{ courseDetail.slot }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Prerequisites</th>
+                <td>{{ courseDetail.preRequisites }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Textbooks</th>
+                <td>{{ courseDetail.textBooks.join(', ') }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Reference Books</th>
+                <td>{{ courseDetail.referenceBooks.join(', ') }}</td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
