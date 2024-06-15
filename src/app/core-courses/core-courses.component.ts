@@ -1,18 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgbAccordionModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { Course } from '../models/models';
+import { Course, StudentInfo } from '../models/models';
 import { DataService } from '../services/data.service';
+import { FilterPipe } from '../pipes/filter.pipe';
+import { FormsModule } from '@angular/forms';
+import { CourseRegistrationUtils } from '../utils/course-registration-utils';
 
 @Component({
   selector: 'app-core-courses',
   standalone: true,
-  imports: [NgbAccordionModule, CommonModule, NgbTooltipModule],
+  imports: [NgbAccordionModule, CommonModule, NgbTooltipModule, FilterPipe, FormsModule],
   templateUrl: './core-courses.component.html',
   styleUrl: './core-courses.component.css'
 })
 export class CoreCoursesComponent {
+  searchQuery: string = '';
+  currentStudent:StudentInfo = {} as StudentInfo
   coreCourses:Course[] = []
+  active!:NgbAccordionModule
   constructor(private dataService: DataService){}
 
   ngOnInit(): void {
@@ -26,5 +32,7 @@ export class CoreCoursesComponent {
     complete:() => {console.log("DONE")}
     })
   }
+ 
+  
 
 }

@@ -1,4 +1,9 @@
 <div class="table-responsive">
+   <div class="d-flex justify-content-end pt-3 border border-light">
+    <div><input type="text" class="form-control mb-3 rounded-0" placeholder="Search courses..." [(ngModel)]="searchQuery"></div>
+    | filter: searchQuery;
+    
+   </div>
     <table class="table">
       <thead class="">
         <tr class="">
@@ -12,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (course of coreCourses; track course.code) {
+        @for (course of coreCourses | filter: searchQuery; track course.code) {
         <tr>
           <td>
             @if(true){
