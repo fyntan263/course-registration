@@ -452,7 +452,7 @@
       "max": 24,
       "min": 18
     },
-    "completedCourses": ["CSE101", "CSE102", "CSE201"],
+    "completedCourses": ["CS2030", "CSE102", "CSE201"],
     "preRequisiteWaivers": ["CSE202"]
   }
 }
