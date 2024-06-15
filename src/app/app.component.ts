@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
 
 //Is complete Just do this in your component
   isComplete(courseCode:string):boolean{
-    return CourseRegistrationUtils.isComplete(this.currentStudent, courseCode)
+    return CourseRegistrationUtils.isComplete(this.currentStudent.completedCourses, courseCode)
   }
 
 }

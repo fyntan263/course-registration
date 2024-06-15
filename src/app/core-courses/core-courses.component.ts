@@ -23,15 +23,28 @@ export class CoreCoursesComponent {
 
   ngOnInit(): void {
         this.getCourses()
+        this.getStudent()
   }
 
   getCourses(){  // subscribe for data from the service
     this.dataService.getCourses().subscribe({
     next: data => {this.coreCourses = data.filter(course => course.isCore);},
-    error: err => console.log("ERROR: ", err),
-    complete:() => {console.log("DONE")}
     })
   }
+
+  getStudent(){ // subscribe for data from the service
+    this.dataService.getStudent().subscribe({
+      next:data =>{this.currentStudent = data as StudentInfo; console.log("STUDENTS INFO: ", data)},
+      error: err => console.log("ERROR: ", err),
+      complete:() => {console.log("DONE")}
+    }
+    )
+  }
+
+  isComplete(courseCode:string):boolean{    
+    return  CourseRegistrationUtils.isComplete(this.currentStudent.completedCourses, courseCode)
+  }
+
  
   
 

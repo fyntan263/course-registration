@@ -20,7 +20,7 @@
         @for (course of coreCourses | filter: searchQuery; track course.code) {
         <tr>
           <td>
-            @if(true){
+            @if(isComplete(course.code)){
             <button
               type="button"
               class="btn btn-outline-dark me-2"
