@@ -22,6 +22,7 @@ export interface PrerequisiteClause {
     referenceBooks: string[];
     syllabusLink: string;
     programCode:string 
+    targetedBranch:string;
     isCore: boolean
     isElective: boolean
     electiveCategory:string //PME, HSE, 

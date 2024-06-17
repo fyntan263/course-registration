@@ -1,36 +1,52 @@
 <div>
-  <div
-    class="m-2 d-flex justify-content-around fs-5 border border-dark flex-fill text-dark"
-  >
-    <div><b> Program: </b> BTECH</div>
-    <div><b> Branch: </b> CS</div>
-    <div class="text-dark">
-      <div><b>Semester </b> &nbsp; 1</div>
+  
+
+ <div class="container-fluid border border-light">
+  <div class="row">
+    <div class="col-md-9">
+      <div class="container-fluid">        
+      <div class="m-2 d-flex justify-content-around  bg-primary flex-fill text-white">
+        <div><b> Program: </b> BTECH</div>
+        <div><b> Branch: </b> CS</div>
+        <div >
+          <div><b>Semester </b> &nbsp; 1</div>
+        </div>
+    </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+          <div class="p-1 d-flex flex-row">
+            <div class="input-group border border-light">
+              <div class="input-group-prepend border-0 bg-white">
+                <label for="search-filter-input" class="input-group-text  rounded-0 border-0 bg-white" id="basic-addon1"> 
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </label>
+              </div>
+              <input  
+              id = "search-filter-input"
+              type="text"
+              class="form-control border-0 form-control-sm flex-fill" 
+              placeholder="Search courses..."
+              (input)="onSearch($event)" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+          </div>
     </div>
   </div>
 
+ </div>
   <div>
     <div class="table-responsive">
-      <div class="d-flex justify-content-end pt-1 bg-light border border-light">
-        <div>
-          <input
-            type="text"
-            class="form-control mb-1 rounded-0"
-            placeholder="Search courses..."
-            (input)="onSearch($event)"
-          />
-        </div>
-      </div>
+     
       <table class="table table-hover">
-        <thead class="">
-          <tr class="text-center">
-            <th>Course<div>Code</div></th>
-            <th> Course<div>Name</div></th>
-            <th>Credits<div>(L-T-P-C)</div></th>
-            <th>Intructor</th>
-            <th>Slot</th>
-            <th>Prerequisite<div>met?</div></th>
-            <th>Prerequisite<div>Waiver</div></th>
+        <thead >
+          <tr class="text-center ">
+            <th class="text-uppercase">Course<div>Code</div></th>
+            <th class="text-uppercase"> Course<div>Name</div></th>
+            <th class="text-uppercase">Credits<div>(L-T-P-C)</div></th>
+            <th class="text-uppercase">Intructor</th>
+            <th class="text-uppercase">Slot</th>
+            <th class="text-uppercase">Prerequisite<div>met?</div></th>
+            <th class="text-uppercase">Prerequisite<div>Waiver</div></th>
           </tr>
         </thead>
         <tbody>
@@ -41,7 +57,7 @@
 
               <button
                 type="button"
-                class="btn btn-outline-dark border-0 me-2 py-1"
+                class="btn btn-outline-dark border-0 py-1 rounded-5 shadow-sm" style="width: 10vw;"
                 ngbTooltip="Course already completed"
                 tooltipClass="tooltip-styles"
                 [openDelay]="300"
@@ -52,7 +68,7 @@
               >
                 {{ course.code }}
                 <i
-                  class="fas fa-circle-check text-success"
+                  class="fas fa-circle-check text-success mx-2"
                   style="font-size: 12px"
                 ></i>
               </button>
@@ -73,8 +89,8 @@
 
               }@else {
               <button
-                type="button"
-                class="btn btn-outline-primary me-2 border-0 py-1"
+                type="button " style="width: 10vw;"
+                class="btn shadow-sm me-2  btn-outline-primary border-0   rounded-5   py-1"
                 (click)="toggleCollapse(course.code)"
                 [attr.aria-expanded]="!collapsedStates[course.code]"
                 aria-controls="collapseExample"
@@ -142,31 +158,29 @@
                 (click)="toggleCollapseApply(course.code)"
                 [attr.aria-expanded]="!collapsedStatesApply[course.code]"
                 aria-controls="collapseExample"
-                ><i class="fa-solid fa-circle-minus"></i> </span
+                ><i class="fa-regular fa-pen-to-square"></i> </span
               >}
               @else {
                 <span class="badge bg-light text-success text-uppercase"> applied</span>
               }
               <div
-                class="m-2 shadow-sm"
+                class="m-2 "
                 #collapse="ngbCollapse"
                 [ngbCollapse]="!collapsedStatesApply[course.code]"
               >
-                <div class="d-flex flex-row position-relative">
+                <div class="">
                   <textarea
                     rows="1"
                     [(ngModel)]="reasonInput"
                     name="reason-{{ course.code }}"
                     type="text"
-                    class="form-control mt-1 border-0 rounded-0"
+                    class="form-control mt-1"
                     placeholder="Reason for waiver"
                   ></textarea>
                   <button
-                    class="btn bg-white end-0 p-0 m-0"
-                    style="right: -3px"
-                    (click)="closeInput(course.code)"
-                  >
-                    <i class="fas fa-times text-danger position-absolute"></i>
+                    class="btn btn-sm mt-1 py-1 px-3 btn-outline-primary "
+                    (click)="closeInput(course.code)">
+                    Submit
                   </button>
                 </div>
               </div>

@@ -1,18 +1,18 @@
 
      
-<div class="container-fluid p-2 rounded-0 border-light text-dark border border-dark">
+<div class="container-fluid p-2 rounded-0 border border-light text-white">
     <div class="d-flex justify-content-around">
-      <div class="m-2 d-flex justify-content-around  fs-5 border border-dark flex-fill">
+      <div class="m-2 d-flex justify-content-around border bg-primary flex-fill">
         <div ><b> Program: </b> BTECH</div>
         <div ><b> Branch: </b> CS</div>
-        <div class="text-dark">
+        <div>
           <div><b>Total Credits</b> &nbsp; {{ totalCredits }}</div>
         </div>
       </div>
       <div >
         @if (isSelectingCourses) {   
         <button
-        class="fs-5 btn btn-outline-primary"
+        class=" btn btn-outline-primary"
         (click)="toggleView()"
       >
         Review your courses &nbsp; <i class="fa-solid fa-arrow-right"></i>
@@ -20,7 +20,7 @@
         }
         @if ( isReviewingCourses) {
             <button
-            class="fs-5 btn btn-outline-primary"
+            class="btn btn-outline-primary"
             (click)="toggleView()"
           >
             <i class="fa-solid fa-arrow-left"></i>
@@ -37,15 +37,15 @@
     <div class="table-responsive">
         <table class="table table-hover">
           <thead>
-            <tr class="text-center">
-                <th scope="col">Course <div>Code</div></th>
-                <th class="text-wrap" scope="col">Course <div>Name</div></th>
-                <th scope="col">Credits<div>(L-T-P-C)</div></th>
-                <th scope="col">Instructor</th>
-                <th scope="col">Slot</th>
-                <th scope="col">Prerequisite <div>Met/Waived?</div></th>
-                <th scope="col">Add/Drop <div>Courses</div></th>
-                <th scope="col">More <div>Info</div></th>
+            <tr class="text-center ">
+                <th class="text-uppercase">Course <div>Code</div></th>
+                <th class="text-uppercase" scope="col">Course <div>Name</div></th>
+                <th class="text-uppercase"scope="col">Credits<div>(L-T-P-C)</div></th>
+                <th class="text-uppercase" scope="col">Instructor</th>
+                <th class="text-uppercase" scope="col">Slot</th>
+                <th class="text-uppercase" scope="col">Prerequisite <div>Met/Waived?</div></th>
+                <th class="text-uppercase" scope="col">Add/Drop <div>Courses</div></th>
+                <th  class="text-uppercase" scope="col">More <div>Info</div></th>
               </tr>
           </thead>
           <tbody>
@@ -114,14 +114,14 @@
         <table class="table table-hover">
           <thead>
             <tr class="text-center">
-              <th scope="col">Course <div>Code</div></th>
-              <th  scope="col">Course<div>Name</div></th>
-              <th  scope="col">Credits<div>(L-T-P-C)</div></th>
-              <th scope="col">Instructor</th>
-              <th scope="col">Slot</th>
-              <th  scope="col">Prerequisite<div>Met/Waived?</div></th>
-              <th  scope="col">Add/Drop <div>Courses</div></th>
-              <th  scope="col">More <div>Info</div></th>
+              <th class="text-uppercase" scope="col">Course <div>Code</div></th>
+              <th class="text-uppercase"  scope="col">Course<div>Name</div></th>
+              <th class="text-uppercase" scope="col">Credits<div>(L-T-P-C)</div></th>
+              <th class="text-uppercase" scope="col">Instructor</th>
+              <th class="text-uppercase" scope="col">Slot</th>
+              <th  class="text-uppercase" scope="col">Prerequisite<div>Met/Waived?</div></th>
+              <th class="text-uppercase" scope="col">Add/Drop <div>Courses</div></th>
+              <th class="text-uppercase" scope="col">More <div>Info</div></th>
             </tr>
           </thead>
           <tbody>
@@ -161,9 +161,9 @@
         Submit for FA Approval
       </button>
     }@else {
-        <div  class="text-center fs-4">
-            <b>You don't have enough credits</b>
-        </div>
+      <ngb-alert [dismissible]="false" class="d-block mt-3" type="warning">
+        You don't have enough credits!
+    </ngb-alert> 
     }
   
   </div>

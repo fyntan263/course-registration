@@ -11,6 +11,7 @@ import { JsonUtils } from '../../utils/json-utils';
   selector: 'app-review-courses',
   standalone: true,
   imports: [NgbModule, CommonModule, PrerequisiteTooltipPipe],
+  providers: [CourseEligibilityService],
   templateUrl: './review-courses.component.html'
 })
 export class ReviewCoursesComponent implements OnInit {
@@ -99,8 +100,7 @@ export class ReviewCoursesComponent implements OnInit {
         coreCoursePlan: this.selectedCourses
       };
       JsonUtils.downloadJson(coreCoursePlanSubmission)
-    }
-    
+    }    
 
   }
 

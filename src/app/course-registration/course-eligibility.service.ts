@@ -42,7 +42,6 @@ isPrerequisiteMet(input: string[], clause: Prerequisite): boolean {
   return orClause;
 }
 
-
   // Check if corequisites are met
   isCorequisiteMet(isPrerequisiteMet: boolean, input: string[], clause: Prerequisite): boolean {
     return isPrerequisiteMet || this.isPrerequisiteMet(input, clause);
