@@ -15,8 +15,8 @@ export interface Course {
   name: string;
   credits: string; // Format: "L-T-P-C"
   instructor: string[];
-  preRequisites: Prerequisite[];
-  coRequisites: Prerequisite[];
+  preRequisites: Prerequisite;
+  coRequisites: Prerequisite;
   slot: string;
   textBooks: string[];
   referenceBooks: string[];

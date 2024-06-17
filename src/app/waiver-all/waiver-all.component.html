@@ -14,7 +14,13 @@
 
     </div> -->
 
-    
+    <button class="input-group-text btn btn-secondary" id="basic-addon1">Search
+        Student</button>
+      <input type="text" class="form-control"
+        placeholder="Enter a student name or Roll No and click Search Student to the Left" aria-label="Username"
+        aria-describedby="basic-addon1" [(ngModel)]="searchCourse" [ngbTypeahead]="search"
+        (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
+        #instance="ngbTypeahead">
 
 
     <!-- Table  -->
@@ -33,7 +39,7 @@
             <tbody>
                 @for (item of selectedCourses; track $index) {
                     <tr scope="col">
-                        @if(isCompleted(item)){
+                        @if(isCourseAlreadyCompleted(item)){
                             <!-- <td title="Course already completed"> {{item.code}} </td> -->
                             <div class="text-wrap">
                             <td class="text-light bg-secondary" placement="top" ngbTooltip="Course already completed">
@@ -51,9 +57,18 @@
                         <td> {{item.slot}} </td>
                         <td>  
                             <!-- {{item.preRequisiteMet?}} -->
+                             @if(checkPrerequisiteMet(item)){
+                                Yes
+                             }
+                             @else {
+                                No
+                             }
                         </td>
                         <td>  
                             <!-- {{item.applyForWaiver}} -->
+                             @if(!checkPrerequisiteMet(item)){
+                                <button class="btn btn-secondary"> Apply </button>
+                             }
                         </td>
                     </tr>
                 }
