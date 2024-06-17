@@ -35,7 +35,7 @@
         </thead>
         <tbody>
           @for (course of filteredCourses$ | async; track course.code) {
-          <tr class="text-center">
+          <tr class="text-center" [ngClass]="{ 'table-light': isCourseAlreadyCompleted(course) }">
             <td>
               @if(isCourseAlreadyCompleted(course)){
 
@@ -144,6 +144,9 @@
                 aria-controls="collapseExample"
                 ><i class="fa-solid fa-circle-minus"></i> </span
               >}
+              @else {
+                <span class="badge bg-light text-success text-uppercase"> applied</span>
+              }
               <div
                 class="m-2 shadow-sm"
                 #collapse="ngbCollapse"
