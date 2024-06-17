@@ -1,0 +1,178 @@
+<div>
+  <div
+    class="m-2 d-flex justify-content-around fs-5 border border-dark flex-fill text-dark"
+  >
+    <div><b> Program: </b> BTECH</div>
+    <div><b> Branch: </b> CS</div>
+    <div class="text-dark">
+      <div><b>Semester </b> &nbsp; 1</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="table-responsive">
+      <div class="d-flex justify-content-end pt-1 bg-light border border-light">
+        <div>
+          <input
+            type="text"
+            class="form-control mb-1 rounded-0"
+            placeholder="Search courses..."
+            (input)="onSearch($event)"
+          />
+        </div>
+      </div>
+      <table class="table table-hover">
+        <thead class="">
+          <tr class="text-center">
+            <th>Course<div>Code</div></th>
+            <th> Course<div>Name</div></th>
+            <th>Credits<div>(L-T-P-C)</div></th>
+            <th>Intructor</th>
+            <th>Slot</th>
+            <th>Prerequisite<div>met?</div></th>
+            <th>Prerequisite<div>Waiver</div></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (course of filteredCourses$ | async; track course.code) {
+          <tr class="text-center">
+            <td>
+              @if(isCourseAlreadyCompleted(course)){
+
+              <button
+                type="button"
+                class="btn btn-outline-dark border-0 me-2 py-1"
+                ngbTooltip="Course already completed"
+                tooltipClass="tooltip-styles"
+                [openDelay]="300"
+                [closeDelay]="400"
+                (click)="toggleCollapse(course.code)"
+                [attr.aria-expanded]="!collapsedStates[course.code]"
+                aria-controls="collapseExample"
+              >
+                {{ course.code }}
+                <i
+                  class="fas fa-circle-check text-success"
+                  style="font-size: 12px"
+                ></i>
+              </button>
+
+              <div
+                #collapse="ngbCollapse"
+                [ngbCollapse]="!collapsedStates[course.code]"
+                class="position position-absolute"
+              >
+                <div class="card">
+                  <div class="card-body">
+                    <app-course-detail
+                      [courseDetail]="course"
+                    ></app-course-detail>
+                  </div>
+                </div>
+              </div>
+
+              }@else {
+              <button
+                type="button"
+                class="btn btn-outline-primary me-2 border-0 py-1"
+                (click)="toggleCollapse(course.code)"
+                [attr.aria-expanded]="!collapsedStates[course.code]"
+                aria-controls="collapseExample"
+              >
+                {{ course.code }}
+              </button>
+              <div
+                #collapse="ngbCollapse"
+                [ngbCollapse]="!collapsedStates[course.code]"
+                class="position position-absolute"
+              >
+                <div class="card">
+                  <div class="card">
+                    <div class="card-body">
+                      <app-course-detail
+                        [courseDetail]="course"
+                      ></app-course-detail>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              }
+            </td>
+            <td>
+              <span
+                class="d-inline-block text-truncate"
+                style="max-width: 150px"
+                [ngbTooltip]="course.name"
+                >{{ course.name }}</span
+              >
+            </td>
+            <td>
+              <span>{{ course.credits }}</span>
+            </td>
+            <td>
+              <span
+                class="d-inline-block text-truncate"
+                style="max-width: 150px"
+                [ngbTooltip]="course.instructor.join(',')"
+                >{{ course.instructor }}</span
+              >
+            </td>
+            <td>{{ course.slot }}</td>
+            <td>
+              @if(isPrerequisiteMet(course)){
+              <i class="fs-5 fa-solid fa-check text-success"></i>
+              }@else {
+              <div
+                class="text-nowrap text-danger"
+                placement="top"
+                [ngbTooltip]="course.preRequisites | prerequisiteTooltip"
+              >
+                <i class="fs-5 fa-solid fa-xmark"></i>
+              </div>
+              }
+            </td>
+            <td style="width: 17vw">
+              @if( !isCourseAlreadyCompleted(course) &&
+              !isPrerequisiteMet(course) && !isPrerequisiteWaiverApplied(course)
+              ){
+              <span
+                type="button"
+                class="badge bg-primary p1-2 text-white px-4"
+                (click)="toggleCollapseApply(course.code)"
+                [attr.aria-expanded]="!collapsedStatesApply[course.code]"
+                aria-controls="collapseExample"
+                ><i class="fa-solid fa-circle-minus"></i> </span
+              >}
+              <div
+                class="m-2 shadow-sm"
+                #collapse="ngbCollapse"
+                [ngbCollapse]="!collapsedStatesApply[course.code]"
+              >
+                <div class="d-flex flex-row position-relative">
+                  <textarea
+                    rows="1"
+                    [(ngModel)]="reasonInput"
+                    name="reason-{{ course.code }}"
+                    type="text"
+                    class="form-control mt-1 border-0 rounded-0"
+                    placeholder="Reason for waiver"
+                  ></textarea>
+                  <button
+                    class="btn bg-white end-0 p-0 m-0"
+                    style="right: -3px"
+                    (click)="closeInput(course.code)"
+                  >
+                    <i class="fas fa-times text-danger position-absolute"></i>
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

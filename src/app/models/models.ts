@@ -15,8 +15,8 @@ export interface PrerequisiteClause {
     name: string;
     credits: string; // Format: "L-T-P-C"
     instructor: string[];
-    preRequisites: Prerequisite[];
-    coRequisites: Prerequisite[];
+    preRequisites: Prerequisite;
+    coRequisites: Prerequisite;
     slot: string;
     textBooks: string[];
     referenceBooks: string[];
@@ -46,3 +46,10 @@ export interface PrerequisiteClause {
     completedCourses: string[]; // List of past courses (including electives)
     preRequisiteWaivers: string[];
   }
+
+  export interface CoreCoursePlanSubmission {
+    rollNo: string;
+    riskStatus: boolean;  // Changed to more descriptive naming for properties
+    totalCredits: number;
+    coreCoursePlan: Course[];
+}

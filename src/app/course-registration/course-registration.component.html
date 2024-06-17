@@ -5,14 +5,18 @@
         <ng-template ngbNavContent> </ng-template>
       </li>
       <li [ngbNavItem]="2"  class="px-4">
-        <button ngbNavLink>Your Core Courses</button>
+        <button ngbNavLink class="text-dark"  [ngClass]="{'active-tab': active === 2, 'text-white': active === 2}" >Core Courses</button>
         <ng-template ngbNavContent>
-          <app-core-courses></app-core-courses>  
+          <app-prerequisite-waiver></app-prerequisite-waiver> 
         </ng-template>
       </li>
       <li [ngbNavItem]="3"  class="px-4">
-        <button ngbNavLink>Your Elective Courses</button>
+        <button ngbNavLink class="text-dark" [ngClass]="{'active-tab': active === 3, 'text-white': active === 3}" >Elective Courses</button>
         <ng-template ngbNavContent> </ng-template>
+      </li>
+      <li [ngbNavItem]="4"  class="px-4">
+        <button ngbNavLink class="text-dark"  [ngClass]="{'active-tab': active === 4, 'text-white': active === 4}" >Review Courses</button>
+        <ng-template ngbNavContent> <app-review-courses></app-review-courses></ng-template>
       </li>
     </ul>
     <div [ngbNavOutlet]="nav" class="mt-2"></div>

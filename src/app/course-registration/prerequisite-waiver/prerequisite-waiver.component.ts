@@ -1,41 +1,23 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { NgbAccordionModule, NgbTooltipModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Course, StudentInfo } from '../models/models';
-import { DataService } from '../services/data.service';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
-import { CourseDetailComponent } from '../course-detail/course-detail.component';
-import { HttpClientModule } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { Course, StudentInfo } from '../../models/models';
+import { Observable, OperatorFunction, Subject, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
+import { DataService } from '../../services/data.service';
+import { CourseEligibilityService } from '../course-eligibility.service';
 import { FormsModule } from '@angular/forms';
-import { FilterPipe } from '../pipes/filter.pipe';
-import { CourseRegistrationUtils } from '../utils/course-registration-utils';
-import { OperatorFunction, Observable, debounceTime, distinctUntilChanged, filter, merge, map, Subject, of, switchMap, startWith } from 'rxjs';
-import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
-@Component({
-  selector: 'app-core-courses',
-  standalone: true,
-  imports:[],
-  providers: [DataService],
-  template: `<div>
-    	<p>
-				All information associated to this user profile will be permanently deleted.
-				<span class="text-danger">This operation can not be undone.</span>
-			</p>
-  </div>`,
-})
-export class ConfirmModal{
-
-}
+import { NgbAccordionModule, NgbCollapseModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { CourseDetailComponent } from '../course-detail/course-detail.component';
+import { PrerequisiteTooltipPipe } from '../pipes/prerequisite-tooltip.pipe';
 
 @Component({
-  selector: 'app-core-courses',
+  selector: 'app-prerequisite-waiver',
   standalone: true,
-  imports: [NgbAccordionModule, FormsModule, FilterPipe, CommonModule, NgbTooltipModule, NgbCollapseModule, CourseDetailComponent, HttpClientModule],
+  imports: [CourseDetailComponent, NgbAccordionModule, FormsModule, CommonModule, NgbTooltipModule, NgbCollapseModule, HttpClientModule, PrerequisiteTooltipPipe],
   providers: [DataService],
-  templateUrl: './core-courses.component.html',
-  styleUrl: './core-courses.component.css'
+  templateUrl: './prerequisite-waiver.component.html'
 })
-export class CoreCoursesComponent {
+export class PrerequisiteWaiverComponent {
   private coreCourses:Course[] = [];
   reasonInput: string='';
   private searchQuery = new Subject<string>();
@@ -45,7 +27,7 @@ export class CoreCoursesComponent {
   collapsedStates: { [key: string]: boolean } = {};
   collapsedStatesApply: { [key: string]: boolean } = {};
   
-  constructor(private dataService: DataService){}
+  constructor(private dataService: DataService, private courseEligibilityService: CourseEligibilityService){}
 
   ngOnInit(): void {
         this.getCourses();        
@@ -89,11 +71,7 @@ export class CoreCoursesComponent {
     }
     )
   }
-
-  isComplete(courseCode:string):boolean{    
-    return  CourseRegistrationUtils.isComplete(this.currentStudent.completedCourses, courseCode)
-  }
- 
+  
   toggleCollapse(courseCode: string): void {
     this.collapsedStates[courseCode] = !this.collapsedStates[courseCode];
   }
@@ -106,4 +84,25 @@ export class CoreCoursesComponent {
     // Handle the logic to close or remove the input field
   }
 
+
+   isCourseAlreadyCompleted(course: Course): boolean {
+    if (this.currentStudent) {
+      return  this.courseEligibilityService.isComplete(this.currentStudent.completedCourses, course.code);
+    }
+    return false;
+  }
+
+  isPrerequisiteMet(course: Course): boolean {
+    if (this.currentStudent && this.currentStudent.completedCourses.length) {
+      return  this.courseEligibilityService.isPrerequisiteMet(this.currentStudent.completedCourses, course.preRequisites);
+    }
+    return false;
+  }
+
+  isPrerequisiteWaiverApplied(course:Course){
+      if (this.currentStudent ) {
+        return  this.courseEligibilityService.isWaiverApplied(this.currentStudent.preRequisiteWaivers, course.code);
+      }
+      return false;
+    }
 }

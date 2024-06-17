@@ -5,8 +5,18 @@
       "name": "Data Structures and Algorithms",
       "credits": "3-0-0-3",
       "instructor": ["Krithika Ramaswamy"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "B",
       "textBooks": [],
       "referenceBooks": [],
@@ -23,8 +33,20 @@
       "name": "Computer Organisation",
       "credits": "3-0-0-3",
       "instructor": ["Sandeep Chandran"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":["CS3020"]
+        },{
+          "code":["CS2130","CS2030"]
+        }],
+        "notClause" : ["CS2030"]
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "G",
       "textBooks": [],
       "referenceBooks": [],
@@ -41,8 +63,18 @@
       "name": "Data Structures and Algorithms Lab",
       "credits": "0-0-3-3",
       "instructor": ["Deepak Rajendraprasad", "Srimanta Bhattacharya"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":["CS2030"]
+        }],
+        "notClause" : []
+      },
       "slot": "PA4",
       "textBooks": [],
       "referenceBooks": [],
@@ -59,8 +91,18 @@
       "name": "Computer Organization Lab",
       "credits": "0-0-3-3",
       "instructor": ["Sandeep Chandran"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "PA2",
       "textBooks": [],
       "referenceBooks": [],
@@ -77,8 +119,18 @@
       "name": "Artificial Intelligence Lab",
       "credits": "1-0-2-3",
       "instructor": ["C K Narayanan"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "C+PA3",
       "textBooks": [],
       "referenceBooks": [],
@@ -95,8 +147,18 @@
       "name": "Database Management Systems",
       "credits": "3-0-0-3",
       "instructor": ["Koninika Pal"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "A",
       "textBooks": [],
       "referenceBooks": [],
@@ -113,8 +175,18 @@
       "name": "Compiler Design",
       "credits": "2-0-1-3",
       "instructor": ["Unnikrishnan Cheramangalath"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "D+E5",
       "textBooks": [],
       "referenceBooks": [],
@@ -131,8 +203,18 @@
       "name": "Computer Architecture",
       "credits": "3-0-0-3",
       "instructor": ["Sandeep Chandran"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "G",
       "textBooks": [],
       "referenceBooks": [],
@@ -149,8 +231,18 @@
       "name": "Internship",
       "credits": "0-0-0-0",
       "instructor": ["Vivek Chaturvedi"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "",
       "textBooks": [],
       "referenceBooks": [],
@@ -167,8 +259,18 @@
       "name": "Database Management Systems Lab",
       "credits": "0-0-3-3",
       "instructor": ["Sahely Bhadra", "Koninika Pal"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "PA1",
       "textBooks": [],
       "referenceBooks": [],
@@ -185,8 +287,18 @@
       "name": "Compiler Design Laboratory",
       "credits": "0-0-3-3",
       "instructor": ["Unnikrishnan Cheramangalath"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "PA5",
       "textBooks": [],
       "referenceBooks": [],
@@ -203,8 +315,18 @@
       "name": "Computer Architecture Lab",
       "credits": "0-0-3-3",
       "instructor": ["Sandeep Chandran"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "PA2",
       "textBooks": [],
       "referenceBooks": [],
@@ -221,8 +343,18 @@
       "name": "Project II",
       "credits": "0-0-0-0",
       "instructor": ["Deepak Rajendraprasad", "Srimanta Bhattacharya"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "",
       "textBooks": [],
       "referenceBooks": [],
@@ -239,8 +371,18 @@
       "name": "Functional Programming",
       "credits": "3-0-0-3",
       "instructor": ["Piyush Kurur"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "B",
       "textBooks": [],
       "referenceBooks": [],
@@ -257,8 +399,18 @@
       "name": "Parameterized Algorithms",
       "credits": "3-0-0-3",
       "instructor": ["Krithika Ramaswamy"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "H",
       "textBooks": [],
       "referenceBooks": [],
@@ -275,8 +427,18 @@
       "name": "Graph Theory and Combinatorics",
       "credits": "3-0-0-3",
       "instructor": ["Srimanta Bhattacharya"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "I",
       "textBooks": [],
       "referenceBooks": [],
@@ -293,8 +455,18 @@
       "name": "Foundations of Data Science and Machine Learning",
       "credits": "2-1-0-3",
       "instructor": ["Deepak Rajendraprasad"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "F",
       "textBooks": [],
       "referenceBooks": [],
@@ -311,8 +483,18 @@
       "name": "Computational Methods and Applications",
       "credits": "1-1-0-2",
       "instructor": ["Albert Sunny"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "PA4+E4",
       "textBooks": [],
       "referenceBooks": [],
@@ -329,8 +511,18 @@
       "name": "Compiler Optimizations and Program Analysis",
       "credits": "3-0-0-3",
       "instructor": ["Unnikrishnan Cheramangalath"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "L",
       "textBooks": [],
       "referenceBooks": [],
@@ -347,8 +539,18 @@
       "name": "Computational Complexity",
       "credits": "3-0-0-3",
       "instructor": ["Dinesh Krishnamoorthy"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "B",
       "textBooks": [],
       "referenceBooks": [],
@@ -365,8 +567,18 @@
       "name": "Model Checking",
       "credits": "1-2-0-3",
       "instructor": ["Jasine Babu"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "C+E2",
       "textBooks": [],
       "referenceBooks": [],
@@ -383,8 +595,18 @@
       "name": "Quantum Computing",
       "credits": "2-1-0-3",
       "instructor": ["Dinesh Krishnamoorthy", "Srimanta Bhattacharya"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "E",
       "textBooks": [],
       "referenceBooks": [],
@@ -401,8 +623,18 @@
       "name": "Topics in Networks",
       "credits": "1-2-0-3",
       "instructor": ["Anish Hirwe"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "PA2+E2",
       "textBooks": [],
       "referenceBooks": [],
@@ -419,8 +651,18 @@
       "name": "Introduction to Programming",
       "credits": "2-1-0-3",
       "instructor": ["Anish Hirwe", "Vivek Chaturvedi", "Sovan Lal Das"],
-      "preRequisites": [],
-      "coRequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "F",
       "textBooks": [],
       "referenceBooks": [],
@@ -452,7 +694,7 @@
       "max": 24,
       "min": 18
     },
-    "completedCourses": ["CS2030", "CSE102", "CSE201"],
+    "completedCourses": ["CS2030","ID1110"],
     "preRequisiteWaivers": ["CSE202"]
   }
 }

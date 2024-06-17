@@ -1,0 +1,171 @@
+
+     
+<div class="container-fluid p-2 rounded-0 border-light text-dark border border-dark">
+    <div class="d-flex justify-content-around">
+      <div class="m-2 d-flex justify-content-around  fs-5 border border-dark flex-fill">
+        <div ><b> Program: </b> BTECH</div>
+        <div ><b> Branch: </b> CS</div>
+        <div class="text-dark">
+          <div><b>Total Credits</b> &nbsp; {{ totalCredits }}</div>
+        </div>
+      </div>
+      <div >
+        @if (isSelectingCourses) {   
+        <button
+        class="fs-5 btn btn-outline-primary"
+        (click)="toggleView()"
+      >
+        Review your courses &nbsp; <i class="fa-solid fa-arrow-right"></i>
+      </button>
+        }
+        @if ( isReviewingCourses) {
+            <button
+            class="fs-5 btn btn-outline-primary"
+            (click)="toggleView()"
+          >
+            <i class="fa-solid fa-arrow-left"></i>
+            Select your courses
+          </button>
+        }      
+      </div>
+    </div>
+  </div>
+
+
+
+  @if (isSelectingCourses) {
+    <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr class="text-center">
+                <th scope="col">Course <div>Code</div></th>
+                <th class="text-wrap" scope="col">Course <div>Name</div></th>
+                <th scope="col">Credits<div>(L-T-P-C)</div></th>
+                <th scope="col">Instructor</th>
+                <th scope="col">Slot</th>
+                <th scope="col">Prerequisite <div>Met/Waived?</div></th>
+                <th scope="col">Add/Drop <div>Courses</div></th>
+                <th scope="col">More <div>Info</div></th>
+              </tr>
+          </thead>
+          <tbody>
+            @for (course of availableCourses; track course.code) {
+                
+            <tr class="text-center" [ngClass]="{ 'table-light': isCourseAlreadyCompleted(course) }">
+                <td>
+                  @if (isCourseCompleted) {
+                      <div class="text-wrap" placement="right" ngbTooltip="Course Already Completed">
+                    {{ course.code }}
+                    <i class="fa-solid fa-circle-check text-success"></i>
+                  </div>
+                  }@else {
+                      <div>{{ course.code }}</div>
+                  }                
+                </td>
+                <td>{{ course.name }}</td>
+                <td>{{ course.credits }}</td>
+                <td>{{ course.instructor }}</td>
+                <td>{{ course.slot }}</td>
+                @if(checkPrerequisiteMet(course)){
+                    <td  class="text-center text-success">
+                        <i class="fs-5 fa-solid fa-check"></i>
+                      </td>
+                }
+                @else{ 
+                    
+                <td  class="text-danger">
+                    <div class="text-nowrap" placement="top" [ngbTooltip]="course.preRequisites | prerequisiteTooltip">
+                      <i class="fs-5 fa-solid fa-xmark"></i>
+                    </div>
+                  </td>
+                }
+                <td>
+                    @if (!isCourseSelected(course) && !isCourseCompleted && (totalCredits + parseCredits(course.credits) <= creditRange.max) && checkPrerequisiteMet(course)) {
+                        <button
+                        class="btn py-0 px-2 bg-primary text-white"
+                        (click)="addCourse(course) "
+                      >
+                        <i class=" fas fa-plus text-white" ></i>
+                    </button>
+                    }
+                 @if (isCourseSelected(course)) {
+                    <button
+                    class="btn py-0 px-2 bg-danger text-white"
+                    (click)="dropCourse(course) "
+                  >
+                        <i class=" fa-solid fa-circle-minus"></i>
+                      </button>
+                 }                  
+                </td>
+                <td>
+                  <a [href]="course.syllabusLink">
+                    <i class="fa-solid fa-circle-info text-primary" ngbTooltip="For Syllabus" placement="top"></i>
+                  </a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+  }
+
+  @if (isReviewingCourses) {
+    <div  class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr class="text-center">
+              <th scope="col">Course <div>Code</div></th>
+              <th  scope="col">Course<div>Name</div></th>
+              <th  scope="col">Credits<div>(L-T-P-C)</div></th>
+              <th scope="col">Instructor</th>
+              <th scope="col">Slot</th>
+              <th  scope="col">Prerequisite<div>Met/Waived?</div></th>
+              <th  scope="col">Add/Drop <div>Courses</div></th>
+              <th  scope="col">More <div>Info</div></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (course  of selectedCourses; track course.code) {                
+            <tr class="text-center">
+                <td >{{ course.code }}</td>
+                <td >{{ course.name }}</td>
+                <td >{{ course.credits }}</td>
+                <td>{{ course.instructor }}</td>
+                <td >{{ course.slot }}</td>
+                <td class="text-success">
+                  <i class="fs-5 fa-solid fa-check"></i>
+                </td>
+                <td class="text-center">
+                  <button class="btn text-white bg-danger py-0 px-2" (click)="dropCourse(course)">
+                    <i class="fas  fa-circle-minus"></i>
+                  </button>
+                </td>
+                <td>
+                  <a [href]="course.syllabusLink">
+                    <i class="fas fa-circle-info text-primary" ngbTooltip="For Syllabus" placement="top"></i>
+                  </a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+  }
+  
+  @if (isReviewingCourses) {
+    
+  <div class="text-center m-2">
+    @if (totalCredits >= creditRange.min) {
+        
+    <button class="btn btn-primary" (click)="sendDataToServer()">
+        Submit for FA Approval
+      </button>
+    }@else {
+        <div  class="text-center fs-4">
+            <b>You don't have enough credits</b>
+        </div>
+    }
+  
+  </div>
+  }
+  

@@ -3,13 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { DataService } from './services/data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Course, StudentInfo } from './models/models';
-import { CoreCoursesComponent } from './core-courses/core-courses.component';
-import { CourseRegistrationUtils } from './utils/course-registration-utils';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HttpClientModule, CoreCoursesComponent],// import HttpClientModule
+  imports: [RouterOutlet, HttpClientModule],// import HttpClientModule
   providers: [DataService],   //Add service in your component providers list
   templateUrl: './app.component.html',
 })
@@ -39,12 +37,6 @@ export class AppComponent implements OnInit {
       complete:() => {console.log("DONE")}
     }
     )
-  }
-
-
-//Is complete Just do this in your component
-  isComplete(courseCode:string):boolean{
-    return CourseRegistrationUtils.isComplete(this.currentStudent.completedCourses, courseCode)
   }
 
 }
