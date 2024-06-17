@@ -49,6 +49,7 @@
             <th class="text-uppercase">Prerequisite<div>Waiver</div></th>
           </tr>
         </thead>
+        
         <tbody>
           @for (course of filteredCourses$ | async; track course.code) {
           <tr class="text-center" [ngClass]="{ 'table-light': isCourseAlreadyCompleted(course) }">

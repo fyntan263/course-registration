@@ -15,97 +15,106 @@ import { JsonUtils } from '../../utils/json-utils';
   templateUrl: './review-courses.component.html'
 })
 export class ReviewCoursesComponent implements OnInit {
-  currentStudent: StudentInfo = {} as StudentInfo;
-  availableCourses: Course[] = [];
-  selectedCourses: Course[] = [];
-  isSelectingCourses: boolean = true;
-  isReviewingCourses: boolean = false;
-  totalCredits: number = 0;
-  creditRange: Range = {
-    max: 24,
-    min: 9
+  student : StudentInfo | undefined;
+  courses : Course[] = []; 
+  yourcourses : Course[] = [];
+  yourcoursescode : string[] = [];
+  isselyourcourses : boolean = true
+  isselreviewcourses : boolean = false
+  totalcredits = 0;
+  creditRange : Range = {
+    "max" : 24,
+    "min" : 9
   };
-  isCourseCompleted: boolean = false;
-  isPrerequisiteMet: boolean = false;
+  iscompl : boolean = false
+  ispremet : boolean = false;
+  iscomet : boolean = false;
+  datatoserver !: CoreCoursePlanSubmission ;
 
-  constructor(
-    private courseEligibilityService: CourseEligibilityService,
-    private dataService: DataService
-  ) {}
+  constructor(private prereqService:CourseEligibilityService,
+              private dataService: DataService,
+             ){
+    // console.log(this.student)
+  }
 
   ngOnInit(): void {
-    this.loadCourses();
-    this.loadStudentInfo();
+    this.getCourses();
+    this.getStudent();
+    if(this.student)
+    this.yourcoursescode = this.student.completedCourses;
   }
 
-  loadCourses(): void {
+  getCourses(){  // subscribe for data from the service
     this.dataService.getCourses().subscribe({
-      next: data => {
-        this.availableCourses = data;
-        console.log('COURSES: ', data);
-      },
-      error: err => console.log('ERROR: ', err),
-      complete: () => console.log('DONE')
-    });
+    next: data => {this.courses = data; console.log("COURSES: ",data)},
+    error: err => console.log("ERROR: ", err),
+    complete:() => {console.log("DONE")}
+    })
   }
 
-  loadStudentInfo(): void {
+  getStudent(){ // subscribe for data from the service
     this.dataService.getStudent().subscribe({
-      next:data =>{this.currentStudent = data as StudentInfo; console.log("STUDENTS INFO: ", data)},
+      next:data =>{this.student = data? data as StudentInfo: undefined; console.log("STUDENTS INFO: ", data)},
       error: err => console.log("ERROR: ", err),
       complete:() => {console.log("DONE")}
     }
     )
   }
 
-  parseCredits(credits: string): number {
-    return Number(credits.split('-')[3]);
+  credit(credit:string):number{
+    return Number(credit.split('-')[3])
   }
-
-  isCourseSelected(course: Course): boolean {
-    return this.selectedCourses.some(selectedCourse => selectedCourse === course);
-  }
-
-  isCourseAlreadyCompleted(course: Course): boolean {
-    if (this.currentStudent) {
-      return  this.courseEligibilityService.isComplete(this.currentStudent.completedCourses, course.code);
-    }
-    return false;
-  }
-
-  checkPrerequisiteMet(course: Course): boolean {
-    if (this.currentStudent && this.currentStudent.completedCourses.length) {
-      return  this.courseEligibilityService.isPrerequisiteMet(this.currentStudent.completedCourses, course.preRequisites);
-    }
-    return false;
-  }
-
   
-  dropCourse(course: Course): void {
-    this.selectedCourses = this.selectedCourses.filter(selectedCourse => selectedCourse !== course);
-    this.totalCredits -= this.parseCredits(course.credits);
+  isyourcoursesel(s:Course):boolean{
+    return this.yourcourses.some((term)=>term==s)
   }
 
-  addCourse(course: Course): void {
-    this.selectedCourses.push(course);
-    this.totalCredits += this.parseCredits(course.credits);
+  ispastcoursesel(s:Course):boolean{
+    this.iscompl = false
+    if(this.student){
+      this.iscompl = this.student.completedCourses.some((term)=>term==s.code)
+    }
+    return this.iscompl
   }
 
-  sendDataToServer(): void {
-    if (this.currentStudent) {
-      const coreCoursePlanSubmission = {
-        rollNo: this.currentStudent.rollNo,
-        riskStatus: false,
-        totalCredits: this.totalCredits,
-        coreCoursePlan: this.selectedCourses
-      };
-      JsonUtils.downloadJson(coreCoursePlanSubmission)
-    }    
-
+  dropcourse(c:Course):void{
+    this.yourcourses = this.yourcourses.filter(item => item!=c);
+    this.yourcoursescode = this.yourcoursescode.filter(item => item!=c.code);
+    this.totalcredits -= Number(c.credits.split('-')[3]);
+    if(this.student){
+      this.student.completedCourses = this.student?.completedCourses.filter(term => term!=c.code);
+    }
+    for( let cour of this.yourcourses){
+      if(this.iscoreqmet(cour)) return;
+      this.dropcourse(cour);
+    }
   }
 
-  toggleView(): void {
-    this.isSelectingCourses = !this.isSelectingCourses;
-    this.isReviewingCourses = !this.isReviewingCourses;
+  isprereqmet(c:Course):boolean{
+    if(this.student?.preRequisiteWaivers.includes(c.code)) return true;
+    if(this.student){
+      this.ispremet = this.prereqService.isPrerequisiteMet(this.student.completedCourses,c.preRequisites);
+      return this.ispremet;
+    }
+    return false;
+  }
+
+  iscoreqmet(c:Course):boolean{
+    this.iscomet = this.prereqService.isPrerequisiteMet(this.yourcoursescode,c.coRequisites);
+    return this.iscomet;
+  }
+
+  senddatatoserver(){
+    if(this.student){
+      this.datatoserver  = 
+      {
+        "rollNo" : this.student.rollNo,
+        "riskStatus" : false,
+        "totalCredits" : this.totalcredits,
+        "coreCoursePlan" : this.yourcourses
+      }
+      
+    JsonUtils.downloadJson(this.datatoserver)
+    } 
   }
 }

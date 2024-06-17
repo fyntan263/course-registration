@@ -14,3 +14,4 @@ export class CourseRegistrationComponent {
   active =1
 
 }
+

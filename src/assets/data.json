@@ -71,7 +71,7 @@
       },
       "coRequisites": {
         "orClause" : [{
-          "code":["CS2030"]
+          "code":[]
         }],
         "notClause" : []
       },
@@ -323,7 +323,7 @@
       },
       "coRequisites": {
         "orClause" : [{
-          "code":[]
+          "code":["CS3060"]
         }],
         "notClause" : []
       },
@@ -457,7 +457,7 @@
       "instructor": ["Deepak Rajendraprasad"],
       "preRequisites": {
         "orClause" : [{
-          "code":[]
+          "code":["CS5010"]
         }],
         "notClause" : []
       },
@@ -695,6 +695,6 @@
       "min": 18
     },
     "completedCourses": ["CS2030","ID1110"],
-    "preRequisiteWaivers": ["CSE202"]
+    "preRequisiteWaivers": []
   }
 }
