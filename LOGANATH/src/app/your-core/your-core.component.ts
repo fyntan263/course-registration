@@ -17,6 +17,7 @@ export class YourCoreComponent implements OnInit {
   student : StudentInfo | undefined;
   courses : Course[] = []; 
   yourcourses : Course[] = [];
+  yourcoursescode : string[] = [];
   isselyourcourses : boolean = true
   isselreviewcourses : boolean = false
   totalcredits = 0;
@@ -26,6 +27,7 @@ export class YourCoreComponent implements OnInit {
   };
   iscompl : boolean = false
   ispremet : boolean = false;
+  iscomet : boolean = false;
   datatoserver !: senddata ;
 
   constructor(private prereqService:PrerequisiteService,
@@ -37,6 +39,8 @@ export class YourCoreComponent implements OnInit {
   ngOnInit(): void {
     this.getCourses();
     this.getStudent();
+    if(this.student)
+    this.yourcoursescode = this.student.completedCourses;
   }
 
   getCourses(){  // subscribe for data from the service
@@ -74,15 +78,29 @@ export class YourCoreComponent implements OnInit {
 
   dropcourse(c:Course):void{
     this.yourcourses = this.yourcourses.filter(item => item!=c);
+    this.yourcoursescode = this.yourcoursescode.filter(item => item!=c.code);
     this.totalcredits -= Number(c.credits.split('-')[3]);
+    if(this.student){
+      this.student.completedCourses = this.student?.completedCourses.filter(term => term!=c.code);
+    }
+    for( let cour of this.yourcourses){
+      if(this.iscoreqmet(cour)) return;
+      this.dropcourse(cour);
+    }
   }
 
   isprereqmet(c:Course):boolean{
+    if(this.student?.preRequisiteWaivers.includes(c.code)) return true;
     if(this.student){
       this.ispremet = this.prereqService.isprereqmet(this.student.completedCourses,c.preRequisites);
       return this.ispremet;
     }
     return false;
+  }
+
+  iscoreqmet(c:Course):boolean{
+    this.iscomet = this.prereqService.isprereqmet(this.yourcoursescode,c.coRequisites);
+    return this.iscomet;
   }
 
   senddatatoserver(){
