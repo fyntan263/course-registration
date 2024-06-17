@@ -9,7 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { CourseRegistrationUtils } from '../utils/course-registration-utils';
-
+import { OperatorFunction, Observable, debounceTime, distinctUntilChanged, filter, merge, map, Subject, of, switchMap, startWith } from 'rxjs';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-core-courses',
   standalone: true,
@@ -35,30 +36,45 @@ export class ConfirmModal{
   styleUrl: './core-courses.component.css'
 })
 export class CoreCoursesComponent {
-  private modalService = inject(NgbModal);
- searchQuery: string = '';
-currentStudent:StudentInfo = {} as StudentInfo
+  private coreCourses:Course[] = [];
+  reasonInput: string='';
+  private searchQuery = new Subject<string>();
+  filteredCourses$!: Observable<Course[]>;
+  currentStudent:StudentInfo = {} as StudentInfo
+
   collapsedStates: { [key: string]: boolean } = {};
   collapsedStatesApply: { [key: string]: boolean } = {};
-  active!:NgbAccordionModule
- 
-  coreCourses:Course[] = []
-  reasonInput: string = '';
-
-	open(name: string) {
-		this.modalService.open(ConfirmModal);
-	}
-
-  isCnfModalVisible: boolean = false; // Controls the visibility of the modal
-  
-  confirmationCallback: (() => void) | undefined;
   
   constructor(private dataService: DataService){}
 
   ngOnInit(): void {
-        this.getCourses(); 
-    this.getStudent()
+        this.getCourses();        
+        this.getStudent()
+        this.filteredCourses$ = this.searchQuery.pipe(
+          startWith(''),
+          debounceTime(200),
+          distinctUntilChanged(),
+          this.search
+    );
   }
+
+  onSearch(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    this.searchQuery.next(inputElement.value);
+  }
+
+  search: OperatorFunction<string, Course[]> = (text$: Observable<string>) =>
+    text$.pipe(
+      map(term =>
+        term.trim() === ''
+          ? this.coreCourses
+          : this.coreCourses.filter(course =>
+              course.code.toLowerCase().includes(term.toLowerCase()) ||
+              course.name.toLowerCase().includes(term.toLowerCase())
+            )
+      )
+    );
+
  getCourses(){  // subscribe for data from the service
     this.dataService.getCourses().subscribe({
     next: data => {this.coreCourses = data.filter(course => course.isCore);},
@@ -77,42 +93,17 @@ currentStudent:StudentInfo = {} as StudentInfo
   isComplete(courseCode:string):boolean{    
     return  CourseRegistrationUtils.isComplete(this.currentStudent.completedCourses, courseCode)
   }
-
  
   toggleCollapse(courseCode: string): void {
     this.collapsedStates[courseCode] = !this.collapsedStates[courseCode];
   }
 
-  // Method to handle the Apply button click
-toggleOrConfirmApply(courseCode: string) {
 
-  console.log('reasonInput:', this.reasonInput);
-  if (!(this.reasonInput.trim().length===0)) {
-    console.log('reason field is not empty');
-    this.isCnfModalVisible = true;
-    this.open('confirmModal');
-
-  } else {
-    this.toggleCollapseApply(courseCode);
+  public toggleCollapseApply(courseCode: string) {
+    this.collapsedStatesApply[courseCode] = !this.collapsedStatesApply[courseCode];
   }
-}
-
-// Method to apply for the course after confirmation
-applyCourse(courseCode: string, reason: string) {
-  console.log(`Applying for ${courseCode} with reason: ${reason}`);
-  // Change the button text to "Applied"
-  // This might involve setting a property and binding it in the template
-}
-
-confirmApplication() {
-  if (this.confirmationCallback) {
-    this.confirmationCallback();
+  closeInput(courseCode: string) {
+    // Handle the logic to close or remove the input field
   }
-  this.isCnfModalVisible = false; // Hide the modal
-}
 
-// Method to toggle the collapse state
-toggleCollapseApply(courseCode: string) {
-  this.collapsedStatesApply[courseCode] = !this.collapsedStatesApply[courseCode];
-}
 }

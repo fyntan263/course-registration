@@ -14,9 +14,11 @@ export class FilterPipe implements PipeTransform {
       return items;
     }
     searchText = searchText.toLowerCase();
-    return items.filter(it => {
-      return Object.values(it).toString().toLowerCase().includes(searchText);
-    });
+    const lowerTerm = searchText.toLowerCase().trim()
+    return items.filter(course => {
+      return course.code.toLowerCase().includes(lowerTerm) ||
+      course.name.toLowerCase().includes(lowerTerm)
+    })
   }
   }
   
