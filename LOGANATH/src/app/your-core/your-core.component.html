@@ -32,25 +32,13 @@
   <table class="table table-hover">
     <thead class="table-primary">
       <tr>
-        <th class="text-center" scope="col">
-          Course Code
-        </th>
-        <th class="text-center text-wrap" scope="col">
-          Course Name
-        </th>
-        <th class="text-center text-wrap" scope="col">
-          Credits(L-T-P-C)
-        </th>
-        <th class="text-center text-wrap" scope="col">
-          Instructor
-        </th>
+        <th class="text-center" scope="col">Course Code</th>
+        <th class="text-center text-wrap" scope="col">Course Name</th>
+        <th class="text-center text-wrap" scope="col">Credits(L-T-P-C)</th>
+        <th class="text-center text-wrap" scope="col">Instructor</th>
         <th class="text-center" scope="col">Slot</th>
-        <th class="text-center" scope="col">
-          Prerequisite met/Waived
-        </th>
-        <th class="text-center" scope="col">
-          Add/Drop Courses
-        </th>
+        <th class="text-center" scope="col">Prerequisite met/Waived</th>
+        <th class="text-center" scope="col">Add/Drop Courses</th>
         <th class="text-center" scope="col">More Info</th>
       </tr>
     </thead>
@@ -76,7 +64,7 @@
         </td>
         <td class="text-center">{{ item.instructor }}</td>
         <td class="text-center">{{ item.slot }}</td>
-        @if(isprereqmet(item)){
+        @if(isprereqmet(item) && iscoreqmet(item) ){
         <td class="text-center text-success">
           <i class="fs-3 fa-solid fa-check"></i>
         </td>
@@ -93,17 +81,19 @@
         }
         <td class="text-center">
           @if(!isyourcoursesel(item) && !iscompl &&
-          (totalcredits+credit(item.credits)<=creditRange.max) && ispremet){
+          (totalcredits+credit(item.credits)<=creditRange.max) && ispremet && iscomet){
           <button
             class="btn text-white bg-success"
             (click)="
               this.yourcourses.push(item);
+              this.yourcoursescode.push(item.code);
+              iscoreqmet(item);
               totalcredits = totalcredits + credit(item.credits)
             "
           >
             <i class="fs-3 fa-solid fa-circle-plus"></i>
           </button>
-          } @else if (isyourcoursesel(item)) {
+          } @else if (isyourcoursesel(item) && iscomet) {
           <button class="btn text-white bg-danger" (click)="dropcourse(item)">
             <i class="fs-3 fa-solid fa-circle-minus"></i>
           </button>
