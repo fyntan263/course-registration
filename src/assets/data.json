@@ -5,372 +5,696 @@
       "name": "Data Structures and Algorithms",
       "credits": "3-0-0-3",
       "instructor": ["Krithika Ramaswamy"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "B",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs2030/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 60,
+      "courseLevel": 2
     },
     {
       "code": "CS2060",
       "name": "Computer Organisation",
       "credits": "3-0-0-3",
       "instructor": ["Sandeep Chandran"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":["CS3020"]
+        },{
+          "code":["CS2130","CS2030"]
+        }],
+        "notClause" : ["CS2030"]
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "G",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs2060/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 60,
+      "courseLevel": 2
     },
     {
       "code": "CS2130",
       "name": "Data Structures and Algorithms Lab",
       "credits": "0-0-3-3",
       "instructor": ["Deepak Rajendraprasad", "Srimanta Bhattacharya"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":["CS2030"]
+        }],
+        "notClause" : []
+      },
       "slot": "PA4",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs2130/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 30,
+      "courseLevel": 2
     },
     {
       "code": "CS2160",
       "name": "Computer Organization Lab",
       "credits": "0-0-3-3",
       "instructor": ["Sandeep Chandran"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "PA2",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs2160/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 30,
+      "courseLevel": 2
     },
     {
       "code": "CS2180",
       "name": "Artificial Intelligence Lab",
       "credits": "1-0-2-3",
       "instructor": ["C K Narayanan"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "C+PA3",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs2180/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 30,
+      "courseLevel": 3
     },
     {
       "code": "CS3020",
       "name": "Database Management Systems",
       "credits": "3-0-0-3",
       "instructor": ["Koninika Pal"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "A",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs3020/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 60,
+      "courseLevel": 3
     },
     {
       "code": "CS3040",
       "name": "Compiler Design",
       "credits": "2-0-1-3",
       "instructor": ["Unnikrishnan Cheramangalath"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "D+E5",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs3040/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 60,
+      "courseLevel": 3
     },
     {
       "code": "CS3060",
       "name": "Computer Architecture",
       "credits": "3-0-0-3",
       "instructor": ["Sandeep Chandran"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "G",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs3060/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 60,
+      "courseLevel": 3
     },
     {
       "code": "CS3100",
       "name": "Internship",
       "credits": "0-0-0-0",
       "instructor": ["Vivek Chaturvedi"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs3100/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 60,
+      "courseLevel": 3
     },
     {
       "code": "CS3120",
       "name": "Database Management Systems Lab",
       "credits": "0-0-3-3",
       "instructor": ["Sahely Bhadra", "Koninika Pal"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "PA1",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs3120/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 30,
+      "courseLevel": 3
     },
     {
       "code": "CS3140",
       "name": "Compiler Design Laboratory",
       "credits": "0-0-3-3",
       "instructor": ["Unnikrishnan Cheramangalath"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "PA5",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs3140/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 30,
+      "courseLevel": 3
     },
     {
       "code": "CS3160",
       "name": "Computer Architecture Lab",
       "credits": "0-0-3-3",
       "instructor": ["Sandeep Chandran"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "PA2",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs3160/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 30,
+      "courseLevel": 3
     },
     {
       "code": "CS4120",
       "name": "Project II",
       "credits": "0-0-0-0",
       "instructor": ["Deepak Rajendraprasad", "Srimanta Bhattacharya"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs4120/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 60,
+      "courseLevel": 4
     },
     {
       "code": "CS5002",
       "name": "Functional Programming",
       "credits": "3-0-0-3",
       "instructor": ["Piyush Kurur"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "B",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "ELECTIVE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs5002/syllabus",
+      "programCode": "MTECH-CS",
+      "isCore": false,
+      "isElective": true,
+      "electiveCategory": "PME",
+      "quota": 60,
+      "courseLevel": 5
     },
     {
       "code": "CS5003",
       "name": "Parameterized Algorithms",
       "credits": "3-0-0-3",
       "instructor": ["Krithika Ramaswamy"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "H",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "ELECTIVE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs5003/syllabus",
+      "programCode": "MTECH-CS",
+      "isCore": false,
+      "isElective": true,
+      "electiveCategory": "PME",
+      "quota": 60,
+      "courseLevel": 5
     },
     {
       "code": "CS5010",
       "name": "Graph Theory and Combinatorics",
       "credits": "3-0-0-3",
       "instructor": ["Srimanta Bhattacharya"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "I",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "ELECTIVE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs5010/syllabus",
+      "programCode": "MTECH-CS",
+      "isCore": false,
+      "isElective": true,
+      "electiveCategory": "PME",
+      "quota": 60,
+      "courseLevel": 5
     },
     {
       "code": "CS5014",
       "name": "Foundations of Data Science and Machine Learning",
       "credits": "2-1-0-3",
       "instructor": ["Deepak Rajendraprasad"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "F",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "ELECTIVE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs5014/syllabus",
+      "programCode": "MTECH-CS",
+      "isCore": false,
+      "isElective": true,
+      "electiveCategory": "PME",
+      "quota": 60,
+      "courseLevel": 5
     },
     {
       "code": "CS5016",
       "name": "Computational Methods and Applications",
       "credits": "1-1-0-2",
       "instructor": ["Albert Sunny"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "PA4+E4",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "ELECTIVE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs5016/syllabus",
+      "programCode": "MTECH-CS",
+      "isCore": false,
+      "isElective": true,
+      "electiveCategory": "PME",
+      "quota": 60,
+      "courseLevel": 5
     },
     {
       "code": "CS5510",
       "name": "Compiler Optimizations and Program Analysis",
       "credits": "3-0-0-3",
       "instructor": ["Unnikrishnan Cheramangalath"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "L",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "ELECTIVE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs5510/syllabus",
+      "programCode": "MTECH-CS",
+      "isCore": false,
+      "isElective": true,
+      "electiveCategory": "PME",
+      "quota": 60,
+      "courseLevel": 5
     },
     {
       "code": "CS5616",
       "name": "Computational Complexity",
       "credits": "3-0-0-3",
       "instructor": ["Dinesh Krishnamoorthy"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "B",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "ELECTIVE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs5616/syllabus",
+      "programCode": "MTECH-CS",
+      "isCore": false,
+      "isElective": true,
+      "electiveCategory": "PME",
+      "quota": 60,
+      "courseLevel": 5
     },
     {
       "code": "CS5633",
       "name": "Model Checking",
       "credits": "1-2-0-3",
       "instructor": ["Jasine Babu"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "C+E2",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "ELECTIVE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs5633/syllabus",
+      "programCode": "MTECH-CS",
+      "isCore": false,
+      "isElective": true,
+      "electiveCategory": "PME",
+      "quota": 60,
+      "courseLevel": 5
     },
     {
       "code": "CS5638",
       "name": "Quantum Computing",
       "credits": "2-1-0-3",
       "instructor": ["Dinesh Krishnamoorthy", "Srimanta Bhattacharya"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "E",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "ELECTIVE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs5638/syllabus",
+      "programCode": "MTECH-CS",
+      "isCore": false,
+      "isElective": true,
+      "electiveCategory": "PME",
+      "quota": 60,
+      "courseLevel": 5
     },
     {
       "code": "CS5639",
       "name": "Topics in Networks",
       "credits": "1-2-0-3",
       "instructor": ["Anish Hirwe"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "PA2+E2",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "ELECTIVE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/cs5639/syllabus",
+      "programCode": "MTECH-CS",
+      "isCore": false,
+      "isElective": true,
+      "electiveCategory": "PME",
+      "quota": 60,
+      "courseLevel": 5
     },
     {
       "code": "ID1110",
       "name": "Introduction to Programming",
       "credits": "2-1-0-3",
       "instructor": ["Anish Hirwe", "Vivek Chaturvedi", "Sovan Lal Das"],
-      "prerequisites": [],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "F",
       "textBooks": [],
       "referenceBooks": [],
-      "type": "CORE",
-      "syllabusLink": ""
+      "syllabusLink": "http://example.com/id1110/syllabus",
+      "programCode": "BTECH-CS",
+      "isCore": true,
+      "isElective": false,
+      "electiveCategory": "",
+      "quota": 100,
+      "courseLevel": 1
     }
   ],
   "studentInfo": {
     "rollNo": "2021001",
-    "name": "John Doe",
-    "program": "B.Tech",
-    "branch": "Computer Science",
-    "semester": 6,
-    "cgpa": 8.5,
+    "isEligible": true,
+    "electiveRange": [
+      {
+        "max": 4,
+        "min": 2,
+        "code": "PME"
+      },
+      {
+        "max": 2,
+        "min": 1,
+        "code": "HSE"
+      }
+    ],
     "creditRange": {
       "max": 24,
       "min": 18
     },
-    "pastCourses": [
-      {
-        "semesters": [1, 2],
-        "isCompleted": true,
-        "course": {
-          "code": "CSE101",
-          "name": "Introduction to Computer Science",
-          "credits": "3-1-0-4",
-          "instructor": ["Dr. A. Kumar"],
-          "prerequisites": [],
-          "slot": "A1",
-          "textBooks": ["Computer Science: An Overview by J. Glenn Brookshear"],
-          "referenceBooks": ["Introduction to Algorithms by Cormen, Leiserson, Rivest, and Stein"],
-          "type": "CORE",
-          "syllabusLink": "http://example.com/cse101/syllabus"
-        },
-        "isWaiverApplied": false
-      },
-      {
-        "semesters": [3, 4],
-        "isCompleted": true,
-        "course": {
-          "code": "CSE102",
-          "name": "Data Structures",
-          "credits": "3-1-0-4",
-          "instructor": ["Dr. B. Singh"],
-          "prerequisites": [
-            {
-              "orClause": [
-                {
-                  "code": ["CSE101"]
-                }
-              ],
-              "notClause": []
-            }
-          ],
-          "slot": "B1",
-          "textBooks": ["Data Structures and Algorithm Analysis by Mark Allen Weiss"],
-          "referenceBooks": ["Algorithms in C++ by Robert Sedgewick"],
-          "type": "CORE",
-          "syllabusLink": "http://example.com/cse102/syllabus"
-        },
-        "isWaiverApplied": false
-      },
-      {
-        "semesters": [5, 6],
-        "isCompleted": true,
-        "course": {
-          "code": "CSE201",
-          "name": "Database Systems",
-          "credits": "3-0-2-4",
-          "instructor": ["Dr. C. Sharma"],
-          "prerequisites": [
-            {
-              "orClause": [
-                {
-                  "code": ["CSE102"]
-                }
-              ],
-              "notClause": []
-            }
-          ],
-          "slot": "C1",
-          "textBooks": ["Database System Concepts by Abraham Silberschatz, Henry F. Korth, S. Sudarshan"],
-          "referenceBooks": ["Database Management Systems by Raghu Ramakrishnan"],
-          "type": "ELECTIVE",
-          "syllabusLink": "http://example.com/cse201/syllabus"
-        },
-        "isWaiverApplied": false
-      }
-    ],
-    "waivedCourses": ["CSE202"]
+    "completedCourses": ["CS2030","ID1110"],
+    "preRequisiteWaivers": ["CSE202"]
   }
 }
