@@ -17,6 +17,18 @@
         }],
         "notClause" : []
       },
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
       "slot": "B",
       "textBooks": [],
       "referenceBooks": [],
@@ -71,7 +83,7 @@
       },
       "coRequisites": {
         "orClause" : [{
-          "code":[]
+          "code":["CS2030"]
         }],
         "notClause" : []
       },
@@ -695,7 +707,7 @@
       "min": 18
     },
     "completedCourses": ["CS2030","ID1110"],
-    "preRequisiteWaivers": [],
+    "preRequisiteWaivers": ["CSE202"],
     "totalCredits": 18,
     "electiveCredits": [
       {

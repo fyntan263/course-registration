@@ -2,7 +2,7 @@
     <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav nav-pills m-3 shadow p-2 ">
       <li [ngbNavItem]="1"  class="px-4">
         <button ngbNavLink class="text-dark" [ngClass]="{'active-tab': active === 1, 'text-white': active === 1}" >Courses offered in the upcoming semester</button>
-        <ng-template ngbNavContent> </ng-template>
+        <ng-template ngbNavContent><app-waiver-all></app-waiver-all> </ng-template>
       </li>
       <li [ngbNavItem]="2"  class="px-4">
         <button ngbNavLink class="text-dark"  [ngClass]="{'active-tab': active === 2, 'text-white': active === 2}" >Core Courses</button>

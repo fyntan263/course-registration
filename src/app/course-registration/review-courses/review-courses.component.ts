@@ -85,7 +85,7 @@ export class ReviewCoursesComponent implements OnInit {
       this.student.completedCourses = this.student?.completedCourses.filter(term => term!=c.code);
     }
     for( let cour of this.yourcourses){
-      if(this.iscoreqmet(cour)) return;
+      if(this.iscoreqmet(cour)) continue;
       this.dropcourse(cour);
     }
   }

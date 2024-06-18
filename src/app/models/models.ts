@@ -50,6 +50,12 @@ export interface PrerequisiteClause {
     electiveCredits: ElectiveCredits[];
 
   }
+ export interface PrerequisiteWaiverRequest{
+  rollNo: string,
+  courseCode: string,
+  reason: string,
+  preReqWaiverRequest: boolean
+ }
 
   export interface CoreCoursePlanSubmission {
     rollNo: string;
