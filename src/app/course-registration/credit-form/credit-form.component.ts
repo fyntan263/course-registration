@@ -9,8 +9,6 @@ import { DataService } from '../../services/data.service';
 import { JsonUtils } from '../../utils/json-utils';
 
 
-
-
 @Component({
   selector: 'app-credit-form',
   standalone: true,
@@ -20,6 +18,8 @@ import { JsonUtils } from '../../utils/json-utils';
   styleUrls: ['./credit-form.component.css']
 })
 export class CreditFormComponent {
+  active = 1;
+
   currentStudent: StudentInfo = {} as StudentInfo;  
   basket = ['PME', 'SME', 'OE', 'HSE', 'PROJECT']
   item: any;
@@ -32,6 +32,7 @@ export class CreditFormComponent {
  valid = false;
  req = 20;
  formErrors: string[] = [];  // To store error messages
+
 
   constructor(private dataService: DataService) {
     
@@ -130,7 +131,5 @@ export class CreditFormComponent {
     }
     this.onsubmit();
   }
-  selectTab(tab: string) {
-    this.selectedTab = tab;
-  }
+ 
 }
