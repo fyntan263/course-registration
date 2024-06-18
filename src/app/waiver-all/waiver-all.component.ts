@@ -3,7 +3,7 @@ import * as types from '../models/models';
 import { NgClass } from '@angular/common';
 import { DataService } from '../services/data.service'
 import { CourseEligibilityService } from '../services/course-eligibility.service';
-import { NgbAccordionModule, NgbTooltipModule, NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule, NgbCollapseModule, NgbTooltipModule, NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
 import { ViewChild } from '@angular/core';
@@ -11,10 +11,11 @@ import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators'
 import { JsonPipe } from '@angular/common';
 
 
+
 @Component({
   selector: 'app-waiver-all',
   standalone: true,
-  imports: [NgClass, NgbTooltipModule, NgbTypeaheadModule, FormsModule, NgbAccordionModule],
+  imports: [NgClass, NgbTooltipModule, NgbTypeaheadModule, FormsModule, NgbAccordionModule, NgbCollapseModule],
   templateUrl: './waiver-all.component.html',
   styleUrl: './waiver-all.component.css',
   providers: [DataService, CourseEligibilityService],   //Add service in your component providers list
@@ -40,6 +41,8 @@ export class WaiverAllComponent {
   };
   isCourseCompleted: boolean = false;
   isPrerequisiteMet: boolean = false;
+
+  isCollapsed: boolean = true;
 
   reasonForWaiver: string = '';
   applyCourseWaiver: types.ApplyWaiverRequest = {} as types.ApplyWaiverRequest;

@@ -15,14 +15,15 @@
     </div> -->
   <div class="container-fluid row justify-content-end">
     <div class="col-3 d-flex justify-content-end">
-        <span class="input-group-text" id="basic-addon1">
-          <i class="fa fa-search" aria-hidden="true"></i>
-        </span>
-        <input type="text" class="form-control" placeholder="Search Courses" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="searchCourse" (input)="searchForCourse()">
-      
+      <span class="input-group-text" id="basic-addon1">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </span>
+      <input type="text" class="form-control" placeholder="Search Courses" aria-label="Username"
+        aria-describedby="basic-addon1" [(ngModel)]="searchCourse" (input)="searchForCourse()">
+
     </div>
 
-        
+
   </div>
 
   <!-- Table  -->
@@ -38,9 +39,9 @@
         <th>Prerequisite Waiver</th>
       </thead>
 
-     
+
       <tbody>
-        
+
         @for (item of displayedCourses; track $index) {
         <tr scope="col">
           <!-- @if(isCourseAlreadyCompleted(item)){ -->
@@ -86,34 +87,38 @@
 
 
             @if(!applyCourseWaiver.preReqWaiverRequest){
-            <span class="badge bg-primary">
-              <div ngbAccordion>
-              <div ngbAccordionItem>
-                <h2 ngbAccordionHeader>
-                  <button ngbAccordionButton>Apply</button>
-                </h2>
-                <div ngbAccordionCollapse>
-                  <div ngbAccordionBody>
-                    <ng-template>
-                      <div class="mb-3">
+            <!-- <div class="mb-3">
                         <input type="text" class="form-control" placeholder="State Reason" aria-label="Username"
                           [(ngModel)]="reasonForWaiver" aria-describedby="basic-addon1">
                       </div>
                       <button class="btn btn-primary" (click)="applyForWaiver(item)">Apply</button>
-
-                    </ng-template>
+ -->
+            
+            <button type="button" class="btn btn-outline-primary ms-2" (click)="isCollapsed = !isCollapsed"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+              Apply
+            </button>
+            <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+              <div class="card">
+                <div class="card-body">
+                  <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="State Reason" aria-label="Username"
+                      [(ngModel)]="reasonForWaiver" aria-describedby="basic-addon1">
                   </div>
+                  <button class="btn btn-primary" (click)="applyForWaiver(item)">Apply</button>
                 </div>
               </div>
             </div>
-          </span>
-
+            
 
             }
             @else {
-              <span class="badge bg-light text-success">Applied</span>
+            <span class="badge bg-light text-success">Applied</span>
             }
 
+            }
+            @else {
+              <span class="badge bg-light text-primary">Prerequisites Satisfied </span>
             }
           </td>
         </tr>
