@@ -1,7 +1,7 @@
 <div class="row g-3 justify-content-center mt-1">
 
-    <!-- Search By Department -->
-    <!-- <div class="card col-1 me-2">
+  <!-- Search By Department -->
+  <!-- <div class="card col-1 me-2">
         <h4>Search by Program</h4>
         @for (item of programs; track $index) {
             <div class="form-check">
@@ -13,69 +13,115 @@
         }
 
     </div> -->
+  <div class="container-fluid col-4 row">
+    <div class="col-3 me-2">
+      <button class="input-group-text btn btn-secondary" id="basic-addon1">Search
+        Course
+      </button>
+    </div>
 
-    <button class="input-group-text btn btn-secondary" id="basic-addon1">Search
-        Student</button>
+    <div class="col-8 ms-2">
       <input type="text" class="form-control"
         placeholder="Enter a student name or Roll No and click Search Student to the Left" aria-label="Username"
         aria-describedby="basic-addon1" [(ngModel)]="searchCourse" [ngbTypeahead]="search"
         (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
         #instance="ngbTypeahead">
-
-
-    <!-- Table  -->
-    <div class="col-11 ms-2">
-        <table class="table table-striped table-bordered">
-            <thead class="bg-primary text-light">
-                <th>Course Code</th>
-                <th>Course Name</th>
-                <th>Credits</th>
-                <th>Instructor</th>
-                <th>Slot</th>
-                <th>Prerequisite Met?</th>
-                <th>Prerequisite Waiver</th>
-            </thead>
-
-            <tbody>
-                @for (item of selectedCourses; track $index) {
-                    <tr scope="col">
-                        @if(isCourseAlreadyCompleted(item)){
-                            <!-- <td title="Course already completed"> {{item.code}} </td> -->
-                            <div class="text-wrap">
-                            <td class="text-light bg-secondary" placement="top" ngbTooltip="Course already completed">
-                                {{item.code}}
-                            </td>
-                        </div>
-                        }
-                        @else{
-
-                            <td> {{item.code}} </td>
-                        }
-                        <td> {{item.name}} </td>
-                        <td> {{item.credits}} </td>
-                        <td> {{item.instructor}} </td>
-                        <td> {{item.slot}} </td>
-                        <td>  
-                            <!-- {{item.preRequisiteMet?}} -->
-                             @if(checkPrerequisiteMet(item)){
-                                Yes
-                             }
-                             @else {
-                                No
-                             }
-                        </td>
-                        <td>  
-                            <!-- {{item.applyForWaiver}} -->
-                             @if(!checkPrerequisiteMet(item)){
-                                <button class="btn btn-secondary"> Apply </button>
-                             }
-                        </td>
-                    </tr>
-                }
-                
-            </tbody>
-        </table>
-
     </div>
+  </div>
+
+  <!-- Table  -->
+  <div class="col-11 ms-2">
+    <table class="table table-bordered table-hover">
+      <thead class="bg-primary text-light">
+        <th>Course Code</th>
+        <th>Course Name</th>
+        <th>Credits(L-T-P-C)</th>
+        <th>Instructor</th>
+        <th>Slot</th>
+        <th>Prerequisite Met?</th>
+        <th>Prerequisite Waiver</th>
+      </thead>
+
+      <tbody>
+        @for (item of selectedCourses; track $index) {
+        <tr scope="col">
+          <!-- @if(isCourseAlreadyCompleted(item)){ -->
+          <!-- <td title="Course already completed"> {{item.code}} </td> -->
+          <!-- <div class="text-wrap">
+            <td class="text-light bg-secondary" placement="top" ngbTooltip="Course already completed">
+              {{item.code}}
+            </td>
+          </div>
+          }
+          @else{
+
+          <td> {{item.code}} </td>
+          } -->
+          <div class="container-fluid">
+            <td class="text-dark" placement="top"
+              [ngbTooltip]=" isCourseAlreadyCompleted(item)? 'Course already completed':'' "> {{item.code}} </td>
+          </div>
+
+          <td> {{item.name}} </td>
+          <td> {{item.credits}} </td>
+          <td>
+            <div>
+              @for (it of item.instructor; track $index) {
+              {{it}} <br>
+              }
+            </div>
+          </td>
+          <td> {{item.slot}} </td>
+          <td>
+            <!-- {{item.preRequisiteMet?}} -->
+            @if(checkPrerequisiteMet(item)){
+            <i class="fa-solid fa-check text-success"></i>
+            }
+            @else {
+            <i class="fa-solid fa-x text-danger"></i>
+            }
+          </td>
+          <td>
+            <!-- {{item.applyForWaiver}} -->
+            @if(!checkPrerequisiteMet(item)){
+            <!-- <button class="btn btn-primary"> Apply </button> -->
+
+
+            @if(!applyCourseWaiver.preReqWaiverRequest){
+            <div ngbAccordion>
+              <div ngbAccordionItem>
+                <h2 ngbAccordionHeader>
+                  <button ngbAccordionButton>Apply</button>
+                </h2>
+                <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                    <ng-template>
+                      <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="State Reason" aria-label="Username"
+                          [(ngModel)]="reasonForWaiver" aria-describedby="basic-addon1">
+                      </div>
+                      <button class="btn btn-primary" (click)="applyForWaiver(item)">Apply</button>
+
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+            }
+            @else {
+              <div class="btn btn-success">
+                Successfully applied for Waiver
+              </div>
+            }
+
+            }
+          </td>
+        </tr>
+        }
+
+      </tbody>
+    </table>
+
+  </div>
 
 </div>

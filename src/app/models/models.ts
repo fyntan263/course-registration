@@ -37,7 +37,7 @@ export interface ElectiveRange extends Range {
   code: string
 }
 
-// Interface extending StudentProfile with additional course-related information
+// Interface StudentProfile with additional course-related information
 export interface StudentInfo{
   rollNo: string;
   isEligible: boolean;
@@ -45,4 +45,11 @@ export interface StudentInfo{
   creditRange: Range;
   completedCourses: string[]; // List of past courses (including electives)
   preRequisiteWaivers: string[];
+}
+
+export interface ApplyWaiverRequest{
+  studentDetails: string | undefined;
+  courseDetails: string;
+  preReqWaiverRequest: boolean;
+  reason: string;
 }
