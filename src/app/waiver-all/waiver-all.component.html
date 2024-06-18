@@ -43,7 +43,7 @@
       <tbody>
 
         @for (item of displayedCourses; track $index) {
-        <tr scope="col" class="text-center">
+        <tr scope="col" class="text-center text-middle">
           <!-- @if(isCourseAlreadyCompleted(item)){ -->
           <!-- <td title="Course already completed"> {{item.code}} </td> -->
           <!-- <div class="text-wrap">
@@ -56,11 +56,11 @@
 
           <td> {{item.code}} </td>
           } -->
-          <div class="container-fluid">
-            <td class="text-dark" placement="top"
-              [ngbTooltip]=" isCourseAlreadyCompleted(item)? 'Course already completed':'' "> {{item.code}} </td>
-          </div>
-
+          <!-- <div class="container-fluid">
+            
+          </div> -->
+          <td class="text-dark" placement="top"
+          [ngbTooltip]=" isCourseAlreadyCompleted(item)? 'Course already completed':'' "> {{item.code}} </td>
           <td> {{item.name}} </td>
           <td> {{item.credits}} </td>
           <td>
