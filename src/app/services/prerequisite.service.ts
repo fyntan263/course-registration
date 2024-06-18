@@ -8,5 +8,4 @@ export class PrerequisiteService {
 
   constructor() { }
   
-    
-  }
+}

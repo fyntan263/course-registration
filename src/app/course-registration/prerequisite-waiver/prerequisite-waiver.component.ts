@@ -85,7 +85,6 @@ export class PrerequisiteWaiverComponent {
 
     this.currentStudent.rollNo;
     this.currentStudent.preRequisiteWaivers.push(courseCode);
-    console.log("*** current student's prerequisite waiver ", this.currentStudent.preRequisiteWaivers);
 
     let request = {
       rollNo: this.currentStudent.rollNo,
@@ -115,7 +114,7 @@ export class PrerequisiteWaiverComponent {
   }
 
   isPrerequisiteWaiverApplied(course:Course){
-    console.log("current student's prerequisite waiver ", this.currentStudent.preRequisiteWaivers);
+    
       if (this.currentStudent ) {
         return  this.courseEligibilityService.isWaiverApplied(this.currentStudent.preRequisiteWaivers, course.code);
       }

@@ -46,6 +46,9 @@ export interface PrerequisiteClause {
     creditRange: Range;
     completedCourses: string[]; // List of past courses (including electives)
     preRequisiteWaivers: string[];
+    totalCredits: number;
+    electiveCredits: ElectiveCredits[];
+
   }
 
   export interface CoreCoursePlanSubmission {
@@ -53,4 +56,10 @@ export interface PrerequisiteClause {
     riskStatus: boolean;  // Changed to more descriptive naming for properties
     totalCredits: number;
     coreCoursePlan: Course[];
+}
+
+export interface ElectiveCredits {
+	basket: string[];
+	minCredits: number;
+  maxCredits: number;
 }

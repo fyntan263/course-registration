@@ -695,6 +695,19 @@
       "min": 18
     },
     "completedCourses": ["CS2030","ID1110"],
-    "preRequisiteWaivers": []
+    "preRequisiteWaivers": [],
+    "totalCredits": 18,
+    "electiveCredits": [
+      {
+        "basket": ["Elective 1", "Elective 2"],
+        "minCredits": 0,
+        "maxCredits": 0
+      },
+      {
+        "basket": ["Elective 3", "Elective 4"],
+        "minCredits": 0,
+        "maxCredits": 0
+      }
+    ]
   }
 }
