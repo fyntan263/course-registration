@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CourseDetailComponent } from '../course-detail/course-detail.component';
 import { PrerequisiteTooltipPipe } from '../pipes/prerequisite-tooltip.pipe';
+import { JsonUtils } from '../../utils/json-utils';
 
 @Component({
   selector: 'app-prerequisite-waiver',
@@ -24,9 +25,9 @@ export class PrerequisiteWaiverComponent {
   filteredCourses$!: Observable<Course[]>;
   currentStudent:StudentInfo = {} as StudentInfo
 
+  preReqWaiverRequest: boolean = false;
   collapsedStates: { [key: string]: boolean } = {};
   collapsedStatesApply: { [key: string]: boolean } = {};
-  
   constructor(private dataService: DataService, private courseEligibilityService: CourseEligibilityService){}
 
   ngOnInit(): void {
@@ -81,6 +82,20 @@ export class PrerequisiteWaiverComponent {
     this.collapsedStatesApply[courseCode] = !this.collapsedStatesApply[courseCode];
   }
   closeInput(courseCode: string) {
+
+    this.currentStudent.rollNo;
+    this.currentStudent.preRequisiteWaivers.push(courseCode);
+    console.log("*** current student's prerequisite waiver ", this.currentStudent.preRequisiteWaivers);
+
+    let request = {
+      rollNo: this.currentStudent.rollNo,
+      courseCode: courseCode,
+      reason: this.reasonInput,
+      preReqWaiverRequest: true
+    }
+    JsonUtils.downloadJson(request);
+
+    
     // Handle the logic to close or remove the input field
   }
 
@@ -100,6 +115,7 @@ export class PrerequisiteWaiverComponent {
   }
 
   isPrerequisiteWaiverApplied(course:Course){
+    console.log("current student's prerequisite waiver ", this.currentStudent.preRequisiteWaivers);
       if (this.currentStudent ) {
         return  this.courseEligibilityService.isWaiverApplied(this.currentStudent.preRequisiteWaivers, course.code);
       }

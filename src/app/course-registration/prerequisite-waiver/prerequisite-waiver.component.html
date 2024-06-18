@@ -161,14 +161,24 @@
                 aria-controls="collapseExample"
                 ><i class="fa-regular fa-pen-to-square"></i> </span
               >}
+              @else if(isCourseAlreadyCompleted(course)){
+              <span class="badge bg-light text-success text-uppercase">Courses Completed</span>
+              }
+              @else if (isPrerequisiteMet(course) && !isCourseAlreadyCompleted(course)) {
+                <span class="badge bg-light text-info text-uppercase">Prerequisite met</span>
+              }
               @else {
                 <span class="badge bg-light text-success text-uppercase"> applied</span>
               }
-              <div
+
+              @if( !isCourseAlreadyCompleted(course) &&
+              !isPrerequisiteMet(course) && !isPrerequisiteWaiverApplied(course)
+              ){
+                <div
                 class="m-2 "
                 #collapse="ngbCollapse"
-                [ngbCollapse]="!collapsedStatesApply[course.code]"
-              >
+                [ngbCollapse]="!collapsedStatesApply[course.code]">
+
                 <div class="">
                   <textarea
                     rows="1"
@@ -178,13 +188,15 @@
                     class="form-control mt-1"
                     placeholder="Reason for waiver"
                   ></textarea>
-                  <button
+
+                    <button
                     class="btn btn-sm mt-1 py-1 px-3 btn-outline-primary "
                     (click)="closeInput(course.code)">
-                    Submit
+                    Apply
                   </button>
                 </div>
               </div>
+              }
             </td>
           </tr>
 
