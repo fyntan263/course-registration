@@ -29,7 +29,7 @@
   <!-- Table  -->
   <div class="col-11 ms-2">
     <table class="table table-bordered table-responsible table-hover">
-      <thead class="bg-primary text-light">
+      <thead class="bg-primary text-light text-center">
         <th>Course Code</th>
         <th>Course Name</th>
         <th>Credits(L-T-P-C)</th>
@@ -43,7 +43,7 @@
       <tbody>
 
         @for (item of displayedCourses; track $index) {
-        <tr scope="col">
+        <tr scope="col" class="text-center">
           <!-- @if(isCourseAlreadyCompleted(item)){ -->
           <!-- <td title="Course already completed"> {{item.code}} </td> -->
           <!-- <div class="text-wrap">
@@ -80,7 +80,7 @@
             <i class="fa-solid fa-x text-danger"></i>
             }
           </td>
-          <td>
+          <td class="">
             <!-- {{item.applyForWaiver}} -->
             @if(!checkPrerequisiteMet(item)){
             <!-- <button class="btn btn-primary"> Apply </button> -->
@@ -94,10 +94,10 @@
                       <button class="btn btn-primary" (click)="applyForWaiver(item)">Apply</button>
  -->
             
-            <button type="button" class="btn btn-outline-primary ms-2" (click)="isCollapsed = !isCollapsed"
+            <span class="badge bg-primary" (click)="isCollapsed = !isCollapsed"
               [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
               Apply
-            </button>
+            </span>
             <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
               <div class="card">
                 <div class="card-body">
@@ -110,6 +110,29 @@
               </div>
             </div>
             
+            <!--  <div
+                class="m-2 "
+                #collapse="ngbCollapse"
+                [ngbCollapse]="!collapsedStatesApply[course.code]">
+
+                <div class="">
+                  <textarea
+                    rows="1"
+                    [(ngModel)]="reasonInput"
+                    name="reason-{{ course.code }}"
+                    type="text"
+                    class="form-control mt-1"
+                    placeholder="Reason for waiver"
+                  ></textarea>
+
+                    <button
+                    class="btn btn-sm mt-1 py-1 px-3 btn-outline-primary "
+                    (click)="closeInput(course.code)">
+                    Apply
+                  </button>
+                </div>
+              </div>
+              } -->
 
             }
             @else {
