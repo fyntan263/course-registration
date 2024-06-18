@@ -25,6 +25,7 @@ export class WaiverAllComponent {
 
   @Input() selectedCourses !: types.Course[];
   @Input() student !: types.StudentInfo | undefined;
+  @Input() displayedCourses !: types.Course[];
 
   selectedCodes: string[] = [];
   searchCourse: string = "";
@@ -59,31 +60,40 @@ export class WaiverAllComponent {
     }
   }
 
-  @ViewChild('instance', { static: true })
-  instance!: NgbTypeahead;
+  searchForCourse(): void{
+    this.displayedCourses = this.selectedCourses.filter((v) => {
+      if(v.name.toLowerCase().includes(this.searchCourse.toLowerCase()))
+          return true;
+      return false;
+    });
+  }
 
-	focus$ = new Subject<string>();
-	click$ = new Subject<string>();
 
-	search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => {
-		const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-		const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
-		const inputFocus$ = this.focus$;
+  // @ViewChild('instance', { static: true })
+  // instance!: NgbTypeahead;
+
+	// focus$ = new Subject<string>();
+	// click$ = new Subject<string>();
+
+	// search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => {
+	// 	const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+	// 	const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
+	// 	const inputFocus$ = this.focus$;
     
-    this.stringIfy();
+  //   this.stringIfy();
 
 
-		return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-			map((term) =>
-				(term === '' ? this.selectedCodes : this.selectedCodes.filter((v) => {
-          if(v.includes(this.searchCourse)){
-            return true;
-          }
-          return false;
-        })).slice(0, 10),
-			),
-		);
-	};
+	// 	return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+	// 		map((term) =>
+	// 			(term === '' ? this.selectedCodes : this.selectedCodes.filter((v) => {
+  //         if(v.includes(this.searchCourse)){
+  //           return true;
+  //         }
+  //         return false;
+  //       })).slice(0, 10),
+	// 		),
+	// 	);
+	// };
 
 
   loadCourses(): void {

@@ -13,25 +13,21 @@
         }
 
     </div> -->
-  <div class="container-fluid col-4 row">
-    <div class="col-3 me-2">
-      <button class="input-group-text btn btn-secondary" id="basic-addon1">Search
-        Course
-      </button>
+  <div class="container-fluid row justify-content-end">
+    <div class="col-3 d-flex justify-content-end">
+        <span class="input-group-text" id="basic-addon1">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </span>
+        <input type="text" class="form-control" placeholder="Search Courses" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="searchCourse" (input)="searchForCourse()">
+      
     </div>
 
-    <div class="col-8 ms-2">
-      <input type="text" class="form-control"
-        placeholder="Enter a student name or Roll No and click Search Student to the Left" aria-label="Username"
-        aria-describedby="basic-addon1" [(ngModel)]="searchCourse" [ngbTypeahead]="search"
-        (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
-        #instance="ngbTypeahead">
-    </div>
+        
   </div>
 
   <!-- Table  -->
   <div class="col-11 ms-2">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-responsible table-hover">
       <thead class="bg-primary text-light">
         <th>Course Code</th>
         <th>Course Name</th>
@@ -42,8 +38,10 @@
         <th>Prerequisite Waiver</th>
       </thead>
 
+     
       <tbody>
-        @for (item of selectedCourses; track $index) {
+        
+        @for (item of displayedCourses; track $index) {
         <tr scope="col">
           <!-- @if(isCourseAlreadyCompleted(item)){ -->
           <!-- <td title="Course already completed"> {{item.code}} </td> -->
@@ -88,7 +86,8 @@
 
 
             @if(!applyCourseWaiver.preReqWaiverRequest){
-            <div ngbAccordion>
+            <span class="badge bg-primary">
+              <div ngbAccordion>
               <div ngbAccordionItem>
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Apply</button>
@@ -96,7 +95,7 @@
                 <div ngbAccordionCollapse>
                   <div ngbAccordionBody>
                     <ng-template>
-                      <div class="input-group mb-3">
+                      <div class="mb-3">
                         <input type="text" class="form-control" placeholder="State Reason" aria-label="Username"
                           [(ngModel)]="reasonForWaiver" aria-describedby="basic-addon1">
                       </div>
@@ -107,11 +106,12 @@
                 </div>
               </div>
             </div>
+          </span>
+
+
             }
             @else {
-              <div class="btn btn-success">
-                Successfully applied for Waiver
-              </div>
+              <span class="badge bg-light text-success">Applied</span>
             }
 
             }
@@ -120,6 +120,7 @@
         }
 
       </tbody>
+
     </table>
 
   </div>
