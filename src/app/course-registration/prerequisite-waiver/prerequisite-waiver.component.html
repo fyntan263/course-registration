@@ -215,8 +215,8 @@
           <td colspan="3">
             <div class="btn-group me-3 ms-5">
               <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                <button type="button" class="btn btn-primary">Select Rows</button>
-                <button type="button" class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
+                <p>{{pageSize}} items of per Page</p>
+                <button type="button" class="btn dropdown-toggle-split" ngbDropdownToggle></button>
                 <div class="dropdown-menu" ngbDropdownMenu>
                   <button ngbDropdownItem (click)="setPageSize(5)" > 5</button>
                   <button ngbDropdownItem (click)="setPageSize(10)">10</button>
