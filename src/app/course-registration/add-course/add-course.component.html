@@ -58,7 +58,14 @@
         <td>{{ course.name }}</td>
         <td>{{ course.credits }}</td>
         <td>{{ course.instructor }}</td>
-        <td>{{ course.slot }}</td>
+        @if(addCourseService.isSlotClash(course)){
+          <td class="table-warning" 
+          >
+          <div ngbTooltip="slots are clashing">{{ course.slot }}</div></td>
+        }
+        @else{
+          <td>{{ course.slot }}</td>
+        }
         @if(isprereqmet(course) &&
         addCourseService.isCoreqMet(student?.completedCourses, course)){
         <td class="text-success">
@@ -106,25 +113,34 @@
       }
     </tbody>
   </table>
-  <div class="d-flex justify-content-between m-2">
-    <div>
-      <ngb-pagination
-        [collectionSize]="courses.length"
-        [(page)]="page"
-        [pageSize]="pagesize"
-        (pageChange)="Refreshcourse()"
-      >
-      </ngb-pagination>
+  <div class="d-flex justify-content-between p-2 position-absolute bottom-0" style="width: 100%;">
+    <div  class="d-flex flex-row">
+      <div>
+        <ngb-pagination
+          [collectionSize]="courses.length"
+          [(page)]="page"
+          [pageSize]="pagesize"
+          (pageChange)="Refreshcourse()"
+        >
+        </ngb-pagination>
+      </div>
+      <!-- <div>
+        <select class="form-select" style="width: auto" [(ngModel)]="pagesize" (ngModelChange)="Refreshcourse()">
+          <option [ngValue]="2">2 items per page</option>
+          <option [ngValue]="4">4 items per page</option>
+          <option [ngValue]="6">6 items per page</option>
+        </select>
+      </div> -->
     </div>
-    <div class="fs-5 text-dark text-center mx-2 border border-light p-2">
-      @if(addCourseService.totalcredits<creditRange.max){ <strong> Total credits </strong>
-      {{ addCourseService.totalcredits }}
+    <div class="fs-4 text-dark text-center mx-2 border border-light p-2">
+      @if(addCourseService.totalcredits<creditRange.max){ <b> Total credits : </b> &nbsp;&nbsp;
+      <strong>{{ addCourseService.totalcredits }}</strong> 
       } @else { You have reached max credit range <strong> {{ creditRange.max }} </strong> 
       }
     </div>
     <div>
       <button
-        class="btn btn-primary"
+        class="btn fs-5 btn-primary"
         (click)="
           addCourseService.electiveRange = true;
           addCourseService.coreCourse = false
@@ -139,9 +155,9 @@
   </div>
   <div>
     <ngb-alert [dismissible]="false" class="d-block p-2" type="warning">
-      Disclaimer!!! If you are not able to add a course it could be due to either of the following reasons<br>
+      Disclaimer!!! If you are not able to add a course it could be due to either of the following reasons :<br>
       1. The prerequisites or corequisites are not met (Kindly check the syllabus through the More Info)<br>
-      2. The total credit will be exceeded<br>
+      2. The total credit would be exceeded<br>
       3. The slot of the course clashes with another<br>
       4. Already completed (will be grayed out) <br>
     </ngb-alert>

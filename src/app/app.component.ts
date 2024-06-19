@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { Course, StudentInfo } from './models/models';
 import { waitForAsync } from '@angular/core/testing';
 import { WaiverAllComponent } from './waiver-all/waiver-all.component';
-
 @Component({
   selector: 'app-root',
   standalone: true,

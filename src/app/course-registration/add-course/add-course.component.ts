@@ -8,11 +8,12 @@ import { PrerequisiteTooltipPipe } from '../pipes/prerequisite-tooltip.pipe';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { AddCourseService } from './add-course.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-course',
   standalone: true,
-  imports: [NgbModule,PrerequisiteTooltipPipe,CommonModule],
+  imports: [NgbModule,PrerequisiteTooltipPipe,CommonModule,FormsModule],
   templateUrl: './add-course.component.html'
 })
 export class AddCourseComponent implements OnInit {
@@ -26,7 +27,7 @@ export class AddCourseComponent implements OnInit {
   };
   datatoserver !: CoreCoursePlanSubmission ;
   page = 1
-  pagesize = 7;
+  pagesize = 9;
 
   constructor(private prereqService:CourseEligibilityService,
               private dataService: DataService,
