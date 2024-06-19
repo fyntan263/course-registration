@@ -45,8 +45,7 @@
             <th class="text-uppercase">Credits<div>(L-T-P-C)</div></th>
             <th class="text-uppercase">Intructor</th>
             <th class="text-uppercase">Slot</th>
-            <th class="text-uppercase">Prerequisite<div>met?</div></th>
-            <th class="text-uppercase">Prerequisite<div>Waiver</div></th>
+            <th class="text-uppercase">Prerequisite</th>
           </tr>
         </thead>
         
@@ -137,67 +136,47 @@
             </td>
             <td>{{ course.slot }}</td>
             <td>
-              @if(isPrerequisiteMet(course)){
+              @if ( isCourseAlreadyCompleted(course) || isPrerequisiteMet(course)){
               <i class="fs-5 fa-solid fa-check text-success"></i>
-              }@else {
-              <div
-                class="text-nowrap text-danger"
-                placement="top"
-                [ngbTooltip]="course.preRequisites | prerequisiteTooltip"
-              >
-                <i class="fs-5 fa-solid fa-xmark"></i>
-              </div>
-              }
-            </td>
-            <td style="width: 17vw">
-              @if( !isCourseAlreadyCompleted(course) &&
+              }@else if( !isCourseAlreadyCompleted(course) &&
               !isPrerequisiteMet(course) && !isPrerequisiteWaiverApplied(course)
-              ){
-              <span
+              ) {
+                <span
                 type="button"
                 class="badge bg-primary p1-2 text-white px-4"
                 (click)="toggleCollapseApply(course.code)"
                 [attr.aria-expanded]="!collapsedStatesApply[course.code]"
                 aria-controls="collapseExample"
-                ><i class="fa-regular fa-pen-to-square"></i> </span
-              >}
-              @else if(isCourseAlreadyCompleted(course)){
-              <span class="badge bg-light text-success text-uppercase"> Completed</span>
-              }
-              @else if (isPrerequisiteMet(course) && !isCourseAlreadyCompleted(course)) {
-                <span class="badge bg-light text-info text-uppercase">Prerequisite met</span>
-              }
-              @else {
+                ><i class="fa-regular fa-pen-to-square"></i> </span>
+
+
+                  <div
+                  class="m-2 "
+                  #collapse="ngbCollapse"
+                  [ngbCollapse]="!collapsedStatesApply[course.code]">
+  
+                  <div class="">
+                    <textarea
+                      rows="1"
+                      [(ngModel)]="reasonInput"
+                      name="reason-{{ course.code }}"
+                      type="text"
+                      class="form-control mt-1"
+                      placeholder="Reason for waiver"
+                    ></textarea>
+  
+                      <button
+                      class="btn btn-sm mt-1 py-1 px-3 btn-outline-primary "
+                      (click)="closeInput(course.code)">
+                      Apply
+                    </button>
+                  </div>
+                </div>
+              } @else {
                 <span class="badge bg-light text-success text-uppercase"> applied</span>
               }
-
-              @if( !isCourseAlreadyCompleted(course) &&
-              !isPrerequisiteMet(course) && !isPrerequisiteWaiverApplied(course)
-              ){
-                <div
-                class="m-2 "
-                #collapse="ngbCollapse"
-                [ngbCollapse]="!collapsedStatesApply[course.code]">
-
-                <div class="">
-                  <textarea
-                    rows="1"
-                    [(ngModel)]="reasonInput"
-                    name="reason-{{ course.code }}"
-                    type="text"
-                    class="form-control mt-1"
-                    placeholder="Reason for waiver"
-                  ></textarea>
-
-                    <button
-                    class="btn btn-sm mt-1 py-1 px-3 btn-outline-primary "
-                    (click)="closeInput(course.code)">
-                    Apply
-                  </button>
-                </div>
-              </div>
-              }
             </td>
+          
           </tr>
 
           }

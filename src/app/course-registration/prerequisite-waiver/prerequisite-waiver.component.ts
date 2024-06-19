@@ -120,4 +120,8 @@ export class PrerequisiteWaiverComponent {
       }
       return false;
     }
+
+
+    // Pagination 
+    
 }
