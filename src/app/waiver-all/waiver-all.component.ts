@@ -5,7 +5,7 @@ import { DataService } from '../services/data.service'
 import { CourseEligibilityService } from '../services/course-eligibility.service';
 import { NgbAccordionModule, NgbCollapseModule, NgbTooltipModule, NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, NgModel } from '@angular/forms';
-import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
+import { Observable, Subject, merge, OperatorFunction, from } from 'rxjs';
 import { ViewChild } from '@angular/core';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { JsonPipe } from '@angular/common';
@@ -22,11 +22,13 @@ import { JsonUtils } from '../utils/json-utils';
   providers: [DataService, CourseEligibilityService],   //Add service in your component providers list
 })
 export class WaiverAllComponent {
-  programs: string[] = ['CS', 'EE', 'ME', 'CE', 'DS', 'MA', 'PH', 'CH', 'BSE', 'HSE', 'ESSENCE'];
-  
+  programs: Map<string, string> = {} as Map<string, string>;
+ 
+  collapsedStates: { [key: string]: boolean } = {};
+  collapsedStatesApply: { [key: string]: boolean } = {};
 
   selectedCourses !: types.Course[];
-  student !: types.StudentInfo | undefined;
+  student !: types.StudentInfo;
   displayedCourses !: types.Course[];
 
   selectedCodes: string[] = [];
@@ -54,9 +56,9 @@ export class WaiverAllComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getCourses()
-    this.getStudent()
-  
+    this.getCourses();
+    this.getStudent();
+    this.getDepartments();
   }
 
   getCourses(){  // subscribe for data from the service
@@ -76,6 +78,26 @@ export class WaiverAllComponent {
     )
   }
 
+  getDepartments(){ // subscribe for data
+    this.dataService.getDepartments().subscribe({
+      next: data => {this.programs = data as Map<string, string>; console.log("DEPARTMENT: ", data)},
+      error: err => console.log("ERROR: ", err),
+      complete:() => {
+          console.log("DONE");
+      },
+    })
+
+  }
+
+  toggleCollapse(courseCode: string): void {
+    this.collapsedStates[courseCode] = !this.collapsedStates[courseCode];
+  }
+
+
+  public toggleCollapseApply(courseCode: string) {
+    this.collapsedStatesApply[courseCode] = !this.collapsedStatesApply[courseCode];
+  }
+
   stringIfy(): void{
     for(let course of this.selectedCourses){
       this.selectedCodes.push(course.name);
@@ -90,6 +112,7 @@ export class WaiverAllComponent {
     });
   }
 
+  
 
   // @ViewChild('instance', { static: true })
   // instance!: NgbTypeahead;
@@ -139,12 +162,18 @@ export class WaiverAllComponent {
   }
 
   applyForWaiver(course: types.Course): void{
+    this.student.rollNo;
+    this.student.preRequisiteWaivers.push(course.code);
+    this.collapsedStatesApply[course.code] = !this.collapsedStatesApply[course.code]
+
     let request = {
       rollNo: this.student?.rollNo,
       courseCode: course.code,
       reason: this.reasonForWaiver,
       preReqWaiverRequest: true
     }
+
+
     JsonUtils.downloadJson(request);
   }
 

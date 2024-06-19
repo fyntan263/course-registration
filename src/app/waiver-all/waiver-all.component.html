@@ -1,19 +1,7 @@
 <div class="row g-3 justify-content-center mt-1">
 
-  <!-- Search By Department -->
-  <!-- <div class="card col-1 me-2">
-        <h4>Search by Program</h4>
-        @for (item of programs; track $index) {
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                  {{item}}
-                </label>
-            </div>
-        }
-
-    </div> -->
-  <div class="container-fluid row justify-content-end">
+  
+  <div class="row justify-content-start">
     <div class="col-3 d-flex justify-content-end">
       <span class="input-group-text" id="basic-addon1">
         <i class="fa fa-search" aria-hidden="true"></i>
@@ -27,47 +15,42 @@
   </div>
 
   <!-- Table  -->
-  <div class="col-11 ms-2">
+  <div class="col">
     <table class="table table-bordered table-responsible table-hover">
-      <thead class="bg-primary text-light text-center">
-        <th>Course Code</th>
-        <th>Course Name</th>
-        <th>Credits(L-T-P-C)</th>
-        <th>Instructor</th>
-        <th>Slot</th>
-        <th>Prerequisite Met?</th>
-        <th>Prerequisite Waiver</th>
+      <thead class="text-dark text-center">
+        <th class="text-uppercase">Course <br> Code </th>
+        <th class="text-uppercase">Course <br> Name </th>
+        <th class="text-uppercase">Credits <br> (L-T-P-C) </th>
+        <th class="text-uppercase">Instructor </th>
+        <th class="text-uppercase">Slot </th>
+        <th class="text-uppercase">Prerequisite <br> Met? </th>
       </thead>
 
 
       <tbody>
 
         @for (item of displayedCourses; track $index) {
-        <tr scope="col" class="text-center">
-          <!-- @if(isCourseAlreadyCompleted(item)){ -->
-          <!-- <td title="Course already completed"> {{item.code}} </td> -->
-          <!-- <div class="text-wrap">
-            <td class="text-light bg-secondary" placement="top" ngbTooltip="Course already completed">
-              {{item.code}}
-            </td>
-          </div>
-          }
-          @else{
+        
+        <tr scope="col" class="text-center" [ngClass]="isCourseAlreadyCompleted(item) ? 'table-secondary': ''">
 
-          <td> {{item.code}} </td>
-          } -->
-          <div class="container-fluid">
+
+          <div class="container-fluid text-center d-flex justify-content-center">
             <td class="text-dark" placement="top"
-              [ngbTooltip]=" isCourseAlreadyCompleted(item)? 'Course already completed':'' "> {{item.code}} </td>
+              [ngbTooltip]=" isCourseAlreadyCompleted(item)? 'Course already completed':''" placement="right">
+              {{item.code}}
+              @if(isCourseAlreadyCompleted(item)){
+              <i class="fa-solid fa-circle-check text-success"></i>
+              }
+            </td>
+
           </div>
 
           <td> {{item.name}} </td>
           <td> {{item.credits}} </td>
           <td>
             <div>
-              @for (it of item.instructor; track $index) {
-              {{it}} <br>
-              }
+              {{item.instructor.join(",\n")}}
+
             </div>
           </td>
           <td> {{item.slot}} </td>
@@ -77,28 +60,15 @@
             <i class="fa-solid fa-check text-success"></i>
             }
             @else {
-            <i class="fa-solid fa-x text-danger"></i>
-            }
-          </td>
-          <td class="">
-            <!-- {{item.applyForWaiver}} -->
-            @if(!checkPrerequisiteMet(item)){
-            <!-- <button class="btn btn-primary"> Apply </button> -->
-
-
-            @if(!applyCourseWaiver.preReqWaiverRequest){
-            <!-- <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="State Reason" aria-label="Username"
-                          [(ngModel)]="reasonForWaiver" aria-describedby="basic-addon1">
-                      </div>
-                      <button class="btn btn-primary" (click)="applyForWaiver(item)">Apply</button>
- -->
-            
-            <span class="badge bg-primary" (click)="isCollapsed = !isCollapsed"
-              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-              Apply
-            </span>
-            <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+            <i class="fa-solid fa-x text-danger"></i> <br>
+             @if(!applyCourseWaiver.preReqWaiverRequest){
+              
+              <button class="badge bg-primary" (click)="toggleCollapseApply(item.code)" [attr.aria-expanded]="!isCollapsed"
+              aria-controls="collapseExample">
+              <i class="fa-regular fa-pen-to-square"></i>
+              
+             </button>
+            <div #collapse="ngbCollapse" [ngbCollapse]="!collapsedStatesApply[item.code]">
               <div class="card">
                 <div class="card-body">
                   <div class="mb-3">
@@ -109,41 +79,12 @@
                 </div>
               </div>
             </div>
-            
-            <!--  <div
-                class="m-2 "
-                #collapse="ngbCollapse"
-                [ngbCollapse]="!collapsedStatesApply[course.code]">
 
-                <div class="">
-                  <textarea
-                    rows="1"
-                    [(ngModel)]="reasonInput"
-                    name="reason-{{ course.code }}"
-                    type="text"
-                    class="form-control mt-1"
-                    placeholder="Reason for waiver"
-                  ></textarea>
+            } 
 
-                    <button
-                    class="btn btn-sm mt-1 py-1 px-3 btn-outline-primary "
-                    (click)="closeInput(course.code)">
-                    Apply
-                  </button>
-                </div>
-              </div>
-              } -->
-
-            }
-            @else {
-            <span class="badge bg-light text-success">Applied</span>
-            }
-
-            }
-            @else {
-              <span class="badge bg-light text-primary">Prerequisites Satisfied </span>
             }
           </td>
+            
         </tr>
         }
 

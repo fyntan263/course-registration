@@ -24,4 +24,8 @@ export class DataService {
       map(data => data.studentInfo)
     );
   }
+
+  getDepartments(): Observable<Map<string, string>> {
+    return this.http.get<{departments: Map<string, string>}>(this.dataUrl).pipe(map(data => data.departments));
+  }
 }
