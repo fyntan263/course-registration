@@ -10,15 +10,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { CourseDetailComponent } from '../course-detail/course-detail.component';
 import { PrerequisiteTooltipPipe } from '../pipes/prerequisite-tooltip.pipe';
 import { JsonUtils } from '../../utils/json-utils';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-prerequisite-waiver',
   standalone: true,
-  imports: [CourseDetailComponent,FormsModule, CommonModule,NgbModule, HttpClientModule, PrerequisiteTooltipPipe],
+  imports: [CourseDetailComponent,FormsModule, CommonModule,NgbModule, HttpClientModule, PrerequisiteTooltipPipe, NgbDropdownModule],
   providers: [DataService],
   templateUrl: './prerequisite-waiver.component.html'
 })
 export class PrerequisiteWaiverComponent {
+
   private coreCourses: Course[] = [];
   reasonInput: string = '';
   private searchQuery = new Subject<string>();
@@ -29,9 +31,8 @@ export class PrerequisiteWaiverComponent {
   collapsedStates: { [key: string]: boolean } = {};
   collapsedStatesApply: { [key: string]: boolean } = {};
 
-
   page = 1;
-  pageSize = 8;
+  pageSize = 5;
   collectionSize = 0;
 
   constructor(private dataService: DataService, private courseEligibilityService: CourseEligibilityService) { }
@@ -40,7 +41,7 @@ export class PrerequisiteWaiverComponent {
     this.getCourses();
     this.getStudent();
     this.filteredCourses$ = combineLatest([
-      this.searchQuery.pipe(startWith(''), debounceTime(100), distinctUntilChanged()),
+      this.searchQuery.pipe(startWith(''), debounceTime(300), distinctUntilChanged()),
       this.dataService.getCourses()
     ]).pipe(
       map(([term, courses]) => {
@@ -138,7 +139,7 @@ export class PrerequisiteWaiverComponent {
   onPageChange(page: number) {
     this.page = page;
     this.filteredCourses$ = combineLatest([
-      this.searchQuery.pipe(startWith(this.currentSearchQuery), debounceTime(100), distinctUntilChanged()),
+      this.searchQuery.pipe(startWith(this.currentSearchQuery), debounceTime(400), distinctUntilChanged()),
       this.dataService.getCourses()
     ]).pipe(
       map(([term, courses]) => {
@@ -147,5 +148,12 @@ export class PrerequisiteWaiverComponent {
       }),
       map(filteredCourses => this.paginateCourses(filteredCourses))
     );
+  }
+
+  setPageSize(pageSize: number) {
+    this.pageSize = pageSize;
+    console.log('page size set to: ' , pageSize);
+    this.onPageChange(1);
+    
   }
 }

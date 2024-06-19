@@ -203,20 +203,48 @@
           </tr>
           } }
         </tbody>
-      </table>
 
-      <div>
-        <ngb-pagination
-	[collectionSize]="collectionSize"
-  [(page)]="page"
-  [pageSize]="pageSize"
-  (pageChange)="onPageChange($event)"
-	[maxSize]="5"
-	[rotate]="true"
-	[ellipses]="false"
-	[boundaryLinks]="true"
-/>
-      </div>
+        <tfoot>
+         <tr>
+          <td colspan="3">
+            <div class="btn-group me-3 ms-5">
+              <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                <button type="button" class="btn btn-primary">Select Rows</button>
+                <button type="button" class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                  <button ngbDropdownItem (click)="setPageSize(5)" > 5</button>
+                  <button ngbDropdownItem (click)="setPageSize(10)">10</button>
+                  <button ngbDropdownItem (click)="setPageSize(20)">20</button>
+                </div>
+              </div>
+            </div>
+            
+          </td>
+
+          <td colspan="3">
+            
+  <div>
+    <ngb-pagination
+      [collectionSize]="collectionSize"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      (pageChange)="onPageChange($event)"
+      [maxSize]="5"
+      [rotate]="true"
+      [ellipses]="false"
+      [boundaryLinks]="true"
+      />
+  </div>
+
+          </td>
+          
+         </tr>
+        </tfoot>
+      </table>
     </div>
   </div>
+
+
+  
+
 </div>
