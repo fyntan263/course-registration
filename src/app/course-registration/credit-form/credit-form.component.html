@@ -1,0 +1,78 @@
+<div >
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav nav-tabs">
+      <li [ngbNavItem]="1"  class="px-4">
+        <button ngbNavLink class="text-dark" [ngClass]="{'active-tab': active === 1}" >Declare Electives Credit Range</button>
+        <ng-template ngbNavContent>
+            @if(active === 1){
+                <div id="declareRange"> </div>
+            }
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2"  class="px-4">
+        <button ngbNavLink class="text-dark"  [ngClass]="{'active-tab': active === 2}" >Review Elective Courses</button>
+        <ng-template ngbNavContent>
+           
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="3"  class="px-4">
+        <button ngbNavLink class="text-dark" [ngClass]="{'active-tab': active === 3}" >Your Elective Courses</button>
+        <ng-template ngbNavContent> 
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>
+
+<div #declareRange class="justify-content-center m-4">
+    <form (ngSubmit)="onsubmit()">
+      <div class="card-body">
+        <table class="table table-striped border">
+          <thead>
+            <tr class="text-center align-middle">
+              <th>Elective Courses</th>
+              <th>Min Credits</th>
+              <th>Max Credits</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of basket; track $index; ) {
+            <tr class="text-center align-middle">
+              <td>{{ item }}</td>
+              <td>
+                <input
+                  type="number"
+                  #minCredit
+                  (change)="addMinCredit(+minCredit.value, $index)"
+                  style="border: primary"
+                  placeholder="0"
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  #maxCredit
+                  (change)="addMaxCredit(+maxCredit.value, $index)"
+                  style="border: primary"
+                  placeholder="0"
+                  required
+                />
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onclicking()"
+        >
+          Submit For FA Approval
+        </button>
+        <div *ngIf="formErrors.length > 0" class="text-danger mt-2">
+          <div *ngFor="let error of formErrors">{{ error }}</div>
+        </div>
+      </div>
+    </form>
+  </div>

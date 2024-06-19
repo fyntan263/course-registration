@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { CourseRegComponent } from './course-reg/course-reg.component';
+import { CourseRegistrationComponent } from './course-registration/course-registration.component';
 
 export const routes: Routes = [
 
     {path: '', redirectTo: 'course-reg', pathMatch: 'full'},
-    {path: 'course-reg', component: CourseRegComponent}
+    {path: 'course-reg', component: CourseRegistrationComponent}
 ];
