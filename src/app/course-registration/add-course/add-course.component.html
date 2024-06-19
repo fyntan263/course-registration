@@ -74,7 +74,6 @@
           addCourseService.isCoreqMet(student?.completedCourses,course) &&
           addCourseService.totalcredits+addCourseService.credit(course.credits)<=creditRange.max
           && !addCourseService.isSlotClash(course) &&
-          !addCourseService.isSlotClash(course) &&
           !addCourseService.isYourCourse(course) && !ispastcoursesel(course)){
           <button
             class="btn py-0 px-2 bg-primary text-white"
@@ -117,7 +116,7 @@
       >
       </ngb-pagination>
     </div>
-    <div class="fs-5 text-dark">
+    <div class="fs-5 text-dark text-center mx-2 border border-light p-2">
       @if(addCourseService.totalcredits<creditRange.max){ <strong> Total credits </strong>
       {{ addCourseService.totalcredits }}
       } @else { You have reached max credit range <strong> {{ creditRange.max }} </strong> 
@@ -130,10 +129,21 @@
           addCourseService.electiveRange = true;
           addCourseService.coreCourse = false
         "
+        ngbTooltip="Click to proceed"
+        placement="left"
       >
         Elective Range
         <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
       </button>
     </div>
+  </div>
+  <div>
+    <ngb-alert [dismissible]="false" class="d-block p-2" type="warning">
+      Disclaimer!!! If you are not able to add a course it could be due to either of the following reasons<br>
+      1. The prerequisites or corequisites are not met (Kindly check the syllabus through the More Info)<br>
+      2. The total credit will be exceeded<br>
+      3. The slot of the course clashes with another<br>
+      4. Already completed (will be grayed out) <br>
+    </ngb-alert>
   </div>
 </div>

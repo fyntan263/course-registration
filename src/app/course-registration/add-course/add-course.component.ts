@@ -26,7 +26,7 @@ export class AddCourseComponent implements OnInit {
   };
   datatoserver !: CoreCoursePlanSubmission ;
   page = 1
-  pagesize = 8;
+  pagesize = 7;
 
   constructor(private prereqService:CourseEligibilityService,
               private dataService: DataService,
