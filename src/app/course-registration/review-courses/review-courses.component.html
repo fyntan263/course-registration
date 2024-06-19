@@ -1,16 +1,143 @@
 <div class="container-fluid p-2 rounded-0 border border-light text-white">
   <div class="d-flex justify-content-around">
     <div class="m-2 d-flex justify-content-around border bg-primary flex-fill">
-      <div ><b> Program: </b> BTECH</div>
-      <div ><b> Branch: </b> CS</div>
+      <div><b> Program: </b> BTECH</div>
+      <div><b> Branch: </b> CS</div>
       <div>
         <div><b>Total Credits</b> &nbsp; {{ totalcredits }}</div>
       </div>
     </div>
-    <div >
+  </div>
+</div>
+
+@if(isselyourcourses){
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr class="text-center">
+        <th class="text-uppercase">
+          Course
+          <div>Code</div>
+        </th>
+        <th class="text-uppercase" scope="col">
+          Course
+          <div>Name</div>
+        </th>
+        <th class="text-uppercase" scope="col">
+          Credits
+          <div>(L-T-P-C)</div>
+        </th>
+        <th class="text-uppercase" scope="col">Instructor</th>
+        <th class="text-uppercase" scope="col">Slot</th>
+        <th class="text-uppercase" scope="col">
+          Prerequisite
+          <div>Met/Waived?</div>
+        </th>
+        <th class="text-uppercase" scope="col">
+          Add/Drop
+          <div>Courses</div>
+        </th>
+        <th class="text-uppercase" scope="col">
+          More
+          <div>Info</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of refreshcourses; track $index) {
+      <tr
+        class="text-center"
+        [ngClass]="{ 'table-light': ispastcoursesel(item) }"
+      >
+        <td>
+          @if(iscompl){
+          <div
+            class="text-wrap"
+            placement="right"
+            ngbTooltip="Course Already Completed"
+          >
+            {{ item.code }}
+            <i class="fa-solid fa-circle-check text-success"></i>
+          </div>
+          } @else {
+          <div>{{ item.code }}</div>
+          }
+        </td>
+        <td>{{ item.name }}</td>
+        <td>
+          {{ item.credits }}
+        </td>
+        <td>{{ item.instructor }}</td>
+        <td>{{ item.slot }}</td>
+        @if(isprereqmet(item) && iscoreqmet(item) ){
+        <td class="text-success">
+          <i class="fs-5 fa-solid fa-check"></i>
+        </td>
+        } @else {
+        <td class="text-danger">
+          <div
+            class="text-nowrap"
+            placement="top"
+            [ngbTooltip]="item.preRequisites | prerequisiteTooltip"
+          >
+            <i class="fs-5 fa-solid fa-xmark"></i>
+          </div>
+        </td>
+        }
+        <td>
+          @if(!isyourcoursesel(item) && !iscompl &&
+          (totalcredits+credit(item.credits)<=creditRange.max) && ispremet &&
+          iscomet){
+          <button
+            class="btn py-0 px-2 bg-primary text-white"
+            (click)="
+              this.yourcourses.push(item);
+              this.yourcoursescode.push(item.code);
+              iscoreqmet(item);
+              totalcredits = totalcredits + credit(item.credits)
+            "
+          >
+            <i class="fa-solid fa-circle-plus"></i>
+          </button>
+          } @else if (isyourcoursesel(item) && iscomet) {
+          <button
+            class="btn py-0 px-2 bg-danger text-white"
+            (click)="dropcourse(item)"
+          >
+            <i class="fa-solid fa-circle-minus"></i>
+          </button>
+          }
+        </td>
+        <td>
+          <a [href]="item.syllabusLink"
+            ><i
+              class="fa-solid fa-circle-info text-primary"
+              ngbTooltip="For Syllabus"
+              placement="top"
+            ></i
+          ></a>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-around">
+    <div>
+      <ngb-pagination
+        [collectionSize]="courses.length"
+        [(page)]="page"
+        [pageSize]="pagesize"
+        (pageChange)="Refreshcourse()"
+      >
+      </ngb-pagination>
+    </div>
+    <div class="">
+      Total credits {{totalcredits}}
+    </div>
+    <div>
       @if(isselyourcourses){
       <button
-        class=" btn btn-outline-primary"
+        class="btn btn-outline-primary"
         (click)="isselyourcourses = false; isselreviewcourses = true"
       >
         Review your courses &nbsp; <i class="fa-solid fa-arrow-right"></i>
@@ -27,131 +154,68 @@
     </div>
   </div>
 </div>
-
-@if(isselyourcourses){
+} @else if (isselreviewcourses) {
 <div class="table-responsive">
   <table class="table table-hover">
     <thead>
-      <tr class="text-center ">
-          <th class="text-uppercase">Course <div>Code</div></th>
-          <th class="text-uppercase" scope="col">Course <div>Name</div></th>
-          <th class="text-uppercase"scope="col">Credits<div>(L-T-P-C)</div></th>
-          <th class="text-uppercase" scope="col">Instructor</th>
-          <th class="text-uppercase" scope="col">Slot</th>
-          <th class="text-uppercase" scope="col">Prerequisite <div>Met/Waived?</div></th>
-          <th class="text-uppercase" scope="col">Add/Drop <div>Courses</div></th>
-          <th  class="text-uppercase" scope="col">More <div>Info</div></th>
-        </tr>
+      <tr class="text-center">
+        <th class="text-uppercase" scope="col">
+          Course
+          <div>Code</div>
+        </th>
+        <th class="text-uppercase" scope="col">
+          Course
+          <div>Name</div>
+        </th>
+        <th class="text-uppercase" scope="col">
+          Credits
+          <div>(L-T-P-C)</div>
+        </th>
+        <th class="text-uppercase" scope="col">Instructor</th>
+        <th class="text-uppercase" scope="col">Slot</th>
+        <th class="text-uppercase" scope="col">
+          Prerequisite
+          <div>Met/Waived?</div>
+        </th>
+        <th class="text-uppercase" scope="col">
+          Add/Drop
+          <div>Courses</div>
+        </th>
+        <th class="text-uppercase" scope="col">
+          More
+          <div>Info</div>
+        </th>
+      </tr>
     </thead>
     <tbody>
-      @for (item of courses; track $index) {
-      <tr class="text-center" [ngClass]="{ 'table-light': ispastcoursesel(item) }">
-        <td >
-          @if(iscompl){
-          <div
-            class="text-wrap"
-            placement="right"
-            ngbTooltip="Course Already Completed"
-          >
-            {{ item.code }}
-            <i class="fa-solid fa-circle-check text-success"></i>
-          </div>
-          } @else {
-          <div>{{ item.code }}</div>
-          }
-        </td>
-        <td >{{ item.name }}</td>
-        <td>
-          {{ item.credits }}
-        </td>
+      @for (item of yourcourses; track $index) {
+      <tr class="text-center">
+        <td>{{ item.code }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.credits }}</td>
         <td>{{ item.instructor }}</td>
         <td>{{ item.slot }}</td>
-        @if(isprereqmet(item) && iscoreqmet(item) ){
         <td class="text-success">
           <i class="fs-5 fa-solid fa-check"></i>
         </td>
-        } @else {
-        <td class=" text-danger">
-          <div
-            class="text-nowrap"
-            placement="top"
-            [ngbTooltip]="item.preRequisites | prerequisiteTooltip"
-          >
-            <i class="fs-5 fa-solid fa-xmark"></i>
-          </div>
-        </td>
-        }
-        <td >
-          @if(!isyourcoursesel(item) && !iscompl &&
-          (totalcredits+credit(item.credits)<=creditRange.max) && ispremet && iscomet){
+        <td class="text-center">
           <button
-          class="btn py-0 px-2 bg-primary text-white"
-            (click)="
-              this.yourcourses.push(item);
-              this.yourcoursescode.push(item.code);
-              iscoreqmet(item);
-              totalcredits = totalcredits + credit(item.credits)
-            "
+            class="btn text-white bg-danger py-0 px-2"
+            (click)="dropcourse(item)"
           >
-            <i class="fa-solid fa-circle-plus"></i>
+            <i class="fas fa-circle-minus"></i>
           </button>
-          } @else if (isyourcoursesel(item) && iscomet) {
-          <button  class="btn py-0 px-2 bg-danger text-white" (click)="dropcourse(item)">
-            <i class="fa-solid fa-circle-minus"></i>
-          </button>
-          }
         </td>
         <td>
-          <a [href]="item.syllabusLink"
-            ><i
-            class="fa-solid fa-circle-info text-primary"
+          <a [href]="item.syllabusLink">
+            <i
+              class="fas fa-circle-info text-primary"
               ngbTooltip="For Syllabus"
               placement="top"
-            ></i
-          ></a>
+            ></i>
+          </a>
         </td>
       </tr>
-      }
-    </tbody>
-  </table>
-</div>
-} @else if (isselreviewcourses) {
-<div class="table-responsive">
-   <table class="table table-hover">
-          <thead>
-            <tr class="text-center">
-              <th class="text-uppercase" scope="col">Course <div>Code</div></th>
-              <th class="text-uppercase"  scope="col">Course<div>Name</div></th>
-              <th class="text-uppercase" scope="col">Credits<div>(L-T-P-C)</div></th>
-              <th class="text-uppercase" scope="col">Instructor</th>
-              <th class="text-uppercase" scope="col">Slot</th>
-              <th  class="text-uppercase" scope="col">Prerequisite<div>Met/Waived?</div></th>
-              <th class="text-uppercase" scope="col">Add/Drop <div>Courses</div></th>
-              <th class="text-uppercase" scope="col">More <div>Info</div></th>
-            </tr>
-          </thead>
-    <tbody>
-      @for (item of yourcourses; track $index) {
-        <tr class="text-center">
-          <td >{{ item.code }}</td>
-          <td >{{ item.name }}</td>
-          <td >{{ item.credits }}</td>
-          <td>{{ item.instructor }}</td>
-          <td >{{ item.slot }}</td>
-          <td class="text-success">
-            <i class="fs-5 fa-solid fa-check"></i>
-          </td>
-          <td class="text-center">
-            <button class="btn text-white bg-danger py-0 px-2" (click)="dropcourse(item)">
-              <i class="fas  fa-circle-minus"></i>
-            </button>
-          </td>
-          <td>
-            <a [href]="item.syllabusLink">
-              <i class="fas fa-circle-info text-primary" ngbTooltip="For Syllabus" placement="top"></i>
-            </a>
-          </td>
-        </tr>
       }
     </tbody>
   </table>
@@ -162,9 +226,9 @@
     Submit for FA Approval
   </button>
   } @else {
-    <ngb-alert [dismissible]="false" class="d-block mt-3" type="warning">
-      You don't have enough credits!
-  </ngb-alert> 
+  <ngb-alert [dismissible]="false" class="d-block mt-3" type="warning">
+    You don't have enough credits!
+  </ngb-alert>
   }
 </div>
 }
