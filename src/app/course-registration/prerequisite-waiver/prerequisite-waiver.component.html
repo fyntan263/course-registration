@@ -156,9 +156,9 @@
            <i class="fs-5 fa-solid fa-check text-success"></i>
          } @else if (!isCourseAlreadyCompleted(course) &&
                      !isPrerequisiteMet(course) &&
-                     (getPrerequisiteWaiverStatus(course) === PreWaiverStatus.REJECTED || getPrerequisiteWaiverStatus(course) === PreWaiverStatus.NOT_APPLIED) ) {
+                     (courseStatusMap[course.code] === PreWaiverStatus.REJECTED || courseStatusMap[course.code] === PreWaiverStatus.NOT_APPLIED) ) {
            <span
-             [ngbTooltip]="getPrerequisiteWaiverStatus(course) === PreWaiverStatus.REJECTED ? 'REJECTED: Please Apply for Prerequisite Waiver' : 'Apply for Prerequisite'"
+             [ngbTooltip]="courseStatusMap[course.code] === PreWaiverStatus.REJECTED ? 'REJECTED: Please Apply for Prerequisite Waiver' : 'Apply for Prerequisite'"
              type="button"
              class="badge bg-primary p1-2 text-white px-4"
              (click)="toggleCollapseApply(course.code)"
@@ -169,7 +169,7 @@
            </span>
          } @else {
            <span class="badge bg-light text-success text-uppercase">
-             {{getPrerequisiteWaiverStatus(course)}}
+             {{courseStatusMap[course.code]}}
            </span>
          }
          
@@ -178,8 +178,8 @@
 
           @if (collapsedStatesApply[course.code] &&
           !isCourseAlreadyCompleted(course)  &&
-          !isPrerequisiteMet(course) && (getPrerequisiteWaiverStatus(course) === PreWaiverStatus.REJECTED
-          || getPrerequisiteWaiverStatus(course) === PreWaiverStatus.NOT_APPLIED
+          !isPrerequisiteMet(course) && (courseStatusMap[course.code] === PreWaiverStatus.REJECTED
+          || courseStatusMap[course.code] === PreWaiverStatus.NOT_APPLIED
           )){
           <tr>
             <td colspan="6" class="m-2">
@@ -209,7 +209,48 @@
           </tr>
           } }
         </tbody>
+
+        <tfoot>
+         <tr>
+          <td colspan="3">
+            <div class="btn-group me-3 ms-5">
+              <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                <p>{{pageSize}} items per page</p>
+                <button type="button" class="btn dropdown-toggle-split" ngbDropdownToggle></button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                  <button ngbDropdownItem (click)="setPageSize(5)" > 5</button>
+                  <button ngbDropdownItem (click)="setPageSize(10)">10</button>
+                  <button ngbDropdownItem (click)="setPageSize(20)">20</button>
+                </div>
+              </div>
+            </div>
+            
+          </td>
+
+          <td colspan="3">
+            
+  <div>
+    <ngb-pagination
+      [collectionSize]="collectionSize"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      (pageChange)="onPageChange($event)"
+      [maxSize]="5"
+      [rotate]="true"
+      [ellipses]="false"
+      [boundaryLinks]="true"
+      />
+  </div>
+
+          </td>
+          
+         </tr>
+        </tfoot>
       </table>
     </div>
   </div>
+
+
+  
+
 </div>
