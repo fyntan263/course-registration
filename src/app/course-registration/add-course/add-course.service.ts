@@ -48,7 +48,7 @@ export class AddCourseService {
     if(course.slot=='') return false;
     for(let time of course.slot.split('+')){
       for(let cour of this.yourcourses){
-        if(cour.slot.split('+').includes(time) && cour!= course){
+        if(cour.slot.split('+').includes(time) && cour.code!= course.code){
           // console.log(this.yourcourses);
           return true;
         }
