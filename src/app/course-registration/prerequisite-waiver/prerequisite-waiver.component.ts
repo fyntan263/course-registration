@@ -10,11 +10,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { CourseDetailComponent } from '../course-detail/course-detail.component';
 import { PrerequisiteTooltipPipe } from '../pipes/prerequisite-tooltip.pipe';
 import { JsonUtils } from '../../utils/json-utils';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-prerequisite-waiver',
   standalone: true,
-  imports: [CourseDetailComponent,FormsModule, CommonModule,NgbModule, HttpClientModule, PrerequisiteTooltipPipe],
+  imports: [CourseDetailComponent,FormsModule, CommonModule,NgbModule, HttpClientModule, PrerequisiteTooltipPipe, NgbDropdownModule],
   providers: [DataService],
   templateUrl: './prerequisite-waiver.component.html'
 })
@@ -31,27 +32,29 @@ export class PrerequisiteWaiverComponent {
   collapsedStatesApply: { [key: string]: boolean } = {};
 
   page = 1;
-  pageSize = 20;
+  pageSize = 5;
   collectionSize = 0;
-
+  courseStatusMap: { [key: string]: PrerequisiteWaiverStatus } = {};
   constructor(private dataService: DataService, private courseEligibilityService: CourseEligibilityService) { }
 
   ngOnInit(): void {
     this.getCourses();
     this.getStudent();
     this.filteredCourses$ = combineLatest([
-      this.searchQuery.pipe(startWith(''), debounceTime(100), distinctUntilChanged()),
+      this.searchQuery.pipe(startWith(''), debounceTime(300), distinctUntilChanged()),
       this.dataService.getCourses()
     ]).pipe(
       map(([term, courses]) => {
         this.coreCourses = courses.filter(course => course.isCore);
         this.collectionSize = this.coreCourses.length;
+        this.computeCourseStatuses();
         return this.filterCourses(term);
       }),
       map(filteredCourses => this.paginateCourses(filteredCourses))
     );
   }
 
+  //table search filtering 
   onSearch(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     this.currentSearchQuery = inputElement.value
@@ -63,31 +66,47 @@ export class PrerequisiteWaiverComponent {
       ? this.coreCourses
       : this.coreCourses.filter(course =>
           course.code.toLowerCase().includes(term.toLowerCase()) ||
-          course.name.toLowerCase().includes(term.toLowerCase())
+          course.name.toLowerCase().includes(term.toLowerCase()) ||
+          course.instructor.join(", ").toLowerCase().includes(term.toLowerCase())
         );
   }
 
-  paginateCourses(courses: Course[]): Course[] {
-    this.collectionSize = courses.length;
-    const start = (this.page - 1) * this.pageSize;
-    const end = start + this.pageSize;
-    return courses.slice(start, end);
-  }
+  
+
+  //DATA FECTCHING
 
   getCourses() {
     this.dataService.getCourses().subscribe({
-      next: data => { this.coreCourses = data.filter(course => course.isCore); },
+      next: data => { 
+        this.coreCourses = data.filter(course => course.isCore);
+      },
     });
   }
 
   getStudent() {
     this.dataService.getStudent().subscribe({
-      next: data => { this.currentStudent = data as StudentInfo; console.log("STUDENTS INFO: ", data); },
+      next: data => { 
+        this.currentStudent = data as StudentInfo;
+        console.log("STUDENTS INFO: ", data); },
       error: err => console.log("ERROR: ", err),
       complete: () => { console.log("DONE"); }
     });
+    
   }
 
+  //precomputing prerequisitewaiver statuses
+  computeCourseStatuses(): void {
+    if (this.currentStudent && this.coreCourses.length) {
+      this.coreCourses.forEach(course => {
+        this.courseStatusMap[course.code] = this.courseEligibilityService
+          .getPrerequisiteWaiverStatus(this.currentStudent.preRequisiteWaivers, course.code)??this.PreWaiverStatus.NOT_APPLIED;
+      });
+    }
+  }
+
+
+
+  // TOGGLE REASON Input
   toggleCollapse(courseCode: string): void {
     this.collapsedStates[courseCode] = !this.collapsedStates[courseCode];
   }
@@ -106,15 +125,13 @@ export class PrerequisiteWaiverComponent {
       reason: this.reasonInput,
       preReqWaiverRequest: true
     }
-    this.reasonInput=''
+    this.reasonInput='' //clear input reason
     JsonUtils.downloadJson(request);
-
     this.collapsedStatesApply[courseCode] = false;
-
-    
-    // Handle the logic to close or remove the input field
+    this.computeCourseStatuses()
   }
 
+  //check course egibility
   isCourseAlreadyCompleted(course: Course): boolean {
     if (this.currentStudent) {
       return this.courseEligibilityService.isComplete(this.currentStudent.completedCourses, course.code);
@@ -130,23 +147,36 @@ export class PrerequisiteWaiverComponent {
   }
 
   getPrerequisiteWaiverStatus(course: Course) {
-    if (this.currentStudent) {
-      return this.courseEligibilityService.getPrerequisiteWaiverStatus(this.currentStudent.preRequisiteWaivers, course.code);
-    }
-    return '';
+    return this.courseStatusMap[course.code];
+  }
+
+  //pagination
+  paginateCourses(courses: Course[]): Course[] {
+    this.collectionSize = courses.length;
+    const start = (this.page - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    return courses.slice(start, end);
   }
 
   onPageChange(page: number) {
     this.page = page;
     this.filteredCourses$ = combineLatest([
-      this.searchQuery.pipe(startWith(this.currentSearchQuery), debounceTime(100), distinctUntilChanged()),
+      this.searchQuery.pipe(startWith(this.currentSearchQuery), debounceTime(400), distinctUntilChanged()),
       this.dataService.getCourses()
     ]).pipe(
       map(([term, courses]) => {
         this.coreCourses = courses.filter(course => course.isCore);
+        this.computeCourseStatuses();
         return this.filterCourses(term);
       }),
       map(filteredCourses => this.paginateCourses(filteredCourses))
     );
+  }
+
+  setPageSize(pageSize: number) {
+    this.pageSize = pageSize;
+    console.log('page size set to: ' , pageSize);
+    this.onPageChange(1);
+    
   }
 }
