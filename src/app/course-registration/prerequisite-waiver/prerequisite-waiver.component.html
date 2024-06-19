@@ -135,23 +135,18 @@
               }
             </td>
             <td>
-              <span
-                class="d-inline-block text-truncate"
-                style="max-width: 150px"
-                [ngbTooltip]="course.name"
-                >{{ course.name }}</span
+              <div
+                class="text-wrap"
+                >{{ course.name }}</div
               >
             </td>
             <td>
               <span>{{ course.credits }}</span>
             </td>
             <td>
-              <span
-                class="d-inline-block text-truncate"
-                style="max-width: 150px"
-                [ngbTooltip]="course.instructor.join(',')"
-                >{{ course.instructor }}</span
-              >
+              <div
+                class="text-wrap"
+                >{{ course.instructor }}</div>
             </td>
             <td>{{ course.slot }}</td>
             <td>
@@ -162,6 +157,7 @@
               !isPrerequisiteMet(course) && !isPrerequisiteWaiverApplied(course)
               ) {
               <span
+              [ngbTooltip]="'Apply for Prerequisite Waiver'"
                 type="button"
                 class="badge bg-primary p1-2 text-white px-4"
                 (click)="toggleCollapseApply(course.code)"

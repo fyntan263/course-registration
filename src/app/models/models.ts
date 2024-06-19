@@ -38,6 +38,10 @@ export interface PrerequisiteClause {
     code: string
 }
   
+  export interface PrerequisiteWaiver{
+    code: string;
+    status: string
+  }
   // Interface extending StudentProfile with additional course-related information
   export interface StudentInfo{
     rollNo: string;
