@@ -19,6 +19,7 @@ export class ReviewCoursesComponent implements OnInit {
   courses : Course[] = []; 
   yourcourses : Course[] = [];
   yourcoursescode : string[] = [];
+  yourcoursescode : string[] = [];
   isselyourcourses : boolean = true
   isselreviewcourses : boolean = false
   totalcredits = 0;
@@ -28,8 +29,7 @@ export class ReviewCoursesComponent implements OnInit {
   };
   iscompl : boolean = false
   ispremet : boolean = false;
-  iscomet : boolean = false;
-  datatoserver !: CoreCoursePlanSubmission ;
+  datatoserver !: senddata ;
 
   constructor(private prereqService:CourseEligibilityService,
               private dataService: DataService,
@@ -81,13 +81,6 @@ export class ReviewCoursesComponent implements OnInit {
     this.yourcourses = this.yourcourses.filter(item => item!=c);
     this.yourcoursescode = this.yourcoursescode.filter(item => item!=c.code);
     this.totalcredits -= Number(c.credits.split('-')[3]);
-    if(this.student){
-      this.student.completedCourses = this.student?.completedCourses.filter(term => term!=c.code);
-    }
-    for( let cour of this.yourcourses){
-      if(this.iscoreqmet(cour)) continue;
-      this.dropcourse(cour);
-    }
   }
 
   isprereqmet(c:Course):boolean{
@@ -97,11 +90,6 @@ export class ReviewCoursesComponent implements OnInit {
       return this.ispremet;
     }
     return false;
-  }
-
-  iscoreqmet(c:Course):boolean{
-    this.iscomet = this.prereqService.isPrerequisiteMet(this.yourcoursescode,c.coRequisites);
-    return this.iscomet;
   }
 
   senddatatoserver(){
