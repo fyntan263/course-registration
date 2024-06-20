@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Course, StudentInfo } from '../../models/models';
+import { Course, PrerequisiteWaiverStatus, StudentInfo } from '../../models/models';
 import { Observable, OperatorFunction, Subject, combineLatest, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
 import { DataService } from '../../services/data.service';
 import { CourseEligibilityService } from '../course-eligibility.service';
 import { FormsModule } from '@angular/forms';
-import { NgbAccordionModule, NgbCollapseModule, NgbModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import {  NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CourseDetailComponent } from '../course-detail/course-detail.component';
@@ -19,6 +19,7 @@ import { JsonUtils } from '../../utils/json-utils';
   templateUrl: './prerequisite-waiver.component.html'
 })
 export class PrerequisiteWaiverComponent {
+  PreWaiverStatus = PrerequisiteWaiverStatus
   private coreCourses: Course[] = [];
   reasonInput: string = '';
   private searchQuery = new Subject<string>();
@@ -29,9 +30,8 @@ export class PrerequisiteWaiverComponent {
   collapsedStates: { [key: string]: boolean } = {};
   collapsedStatesApply: { [key: string]: boolean } = {};
 
-
   page = 1;
-  pageSize = 8;
+  pageSize = 20;
   collectionSize = 0;
 
   constructor(private dataService: DataService, private courseEligibilityService: CourseEligibilityService) { }
@@ -98,7 +98,7 @@ export class PrerequisiteWaiverComponent {
 
   closeInput(courseCode: string) {
     this.currentStudent.rollNo;
-    this.currentStudent.preRequisiteWaivers.push(courseCode);
+    this.currentStudent.preRequisiteWaivers.push({code:courseCode, status: PrerequisiteWaiverStatus.APPLIED});
 
     let request = {
       rollNo: this.currentStudent.rollNo,
@@ -106,6 +106,7 @@ export class PrerequisiteWaiverComponent {
       reason: this.reasonInput,
       preReqWaiverRequest: true
     }
+    this.reasonInput=''
     JsonUtils.downloadJson(request);
 
     this.collapsedStatesApply[courseCode] = false;
@@ -128,11 +129,11 @@ export class PrerequisiteWaiverComponent {
     return false;
   }
 
-  isPrerequisiteWaiverApplied(course: Course) {
+  getPrerequisiteWaiverStatus(course: Course) {
     if (this.currentStudent) {
-      return this.courseEligibilityService.isWaiverApplied(this.currentStudent.preRequisiteWaivers, course.code);
+      return this.courseEligibilityService.getPrerequisiteWaiverStatus(this.currentStudent.preRequisiteWaivers, course.code);
     }
-    return false;
+    return '';
   }
 
   onPageChange(page: number) {

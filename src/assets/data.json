@@ -6,16 +6,16 @@
       "credits": "3-0-0-3",
       "instructor": ["Krithika Ramaswamy"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "B",
       "textBooks": [],
@@ -34,18 +34,18 @@
       "credits": "3-0-0-3",
       "instructor": ["Sandeep Chandran"],
       "preRequisites": {
-        "orClause" : [{
-          "code":["CS3020"]
+        "orClause": [{
+          "code": ["CS3020"]
         },{
-          "code":["CS2130","CS2030"]
+          "code": ["CS2130", "CS2030"]
         }],
-        "notClause" : ["CS2030"]
+        "notClause": ["CS2030"]
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "G",
       "textBooks": [],
@@ -64,16 +64,16 @@
       "credits": "0-0-3-3",
       "instructor": ["Deepak Rajendraprasad", "Srimanta Bhattacharya"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":["CS2030"]
+        "orClause": [{
+          "code": ["CS2030"]
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "PA4",
       "textBooks": [],
@@ -92,16 +92,16 @@
       "credits": "0-0-3-3",
       "instructor": ["Sandeep Chandran"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "PA2",
       "textBooks": [],
@@ -120,16 +120,16 @@
       "credits": "1-0-2-3",
       "instructor": ["C K Narayanan"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "C+PA3",
       "textBooks": [],
@@ -148,16 +148,16 @@
       "credits": "3-0-0-3",
       "instructor": ["Koninika Pal"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "A",
       "textBooks": [],
@@ -176,16 +176,16 @@
       "credits": "2-0-1-3",
       "instructor": ["Unnikrishnan Cheramangalath"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "D+E5",
       "textBooks": [],
@@ -204,16 +204,16 @@
       "credits": "3-0-0-3",
       "instructor": ["Sandeep Chandran"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "G",
       "textBooks": [],
@@ -232,16 +232,16 @@
       "credits": "0-0-0-0",
       "instructor": ["Vivek Chaturvedi"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "",
       "textBooks": [],
@@ -260,16 +260,16 @@
       "credits": "0-0-3-3",
       "instructor": ["Sahely Bhadra", "Koninika Pal"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "PA1",
       "textBooks": [],
@@ -288,16 +288,16 @@
       "credits": "0-0-3-3",
       "instructor": ["Unnikrishnan Cheramangalath"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "PA5",
       "textBooks": [],
@@ -316,16 +316,16 @@
       "credits": "0-0-3-3",
       "instructor": ["Sandeep Chandran"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":["CS3060"]
+        "orClause": [{
+          "code": ["CS3060"]
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "PA2",
       "textBooks": [],
@@ -344,16 +344,16 @@
       "credits": "0-0-0-0",
       "instructor": ["Deepak Rajendraprasad", "Srimanta Bhattacharya"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "",
       "textBooks": [],
@@ -372,16 +372,16 @@
       "credits": "3-0-0-3",
       "instructor": ["Piyush Kurur"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "B",
       "textBooks": [],
@@ -400,16 +400,16 @@
       "credits": "3-0-0-3",
       "instructor": ["Krithika Ramaswamy"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "H",
       "textBooks": [],
@@ -428,16 +428,16 @@
       "credits": "3-0-0-3",
       "instructor": ["Srimanta Bhattacharya"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "I",
       "textBooks": [],
@@ -456,16 +456,16 @@
       "credits": "2-1-0-3",
       "instructor": ["Deepak Rajendraprasad"],
       "preRequisites": {
-        "orClause" : [{
-          "code":["CS5010"]
+        "orClause": [{
+          "code": ["CS5010"]
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "F",
       "textBooks": [],
@@ -484,16 +484,16 @@
       "credits": "1-1-0-2",
       "instructor": ["Albert Sunny"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "PA4+E4",
       "textBooks": [],
@@ -512,16 +512,16 @@
       "credits": "3-0-0-3",
       "instructor": ["Unnikrishnan Cheramangalath"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "L",
       "textBooks": [],
@@ -540,16 +540,16 @@
       "credits": "3-0-0-3",
       "instructor": ["Dinesh Krishnamoorthy"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "B",
       "textBooks": [],
@@ -568,16 +568,16 @@
       "credits": "1-2-0-3",
       "instructor": ["Jasine Babu"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "C+E2",
       "textBooks": [],
@@ -596,16 +596,16 @@
       "credits": "2-1-0-3",
       "instructor": ["Dinesh Krishnamoorthy", "Srimanta Bhattacharya"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "E",
       "textBooks": [],
@@ -624,16 +624,16 @@
       "credits": "1-2-0-3",
       "instructor": ["Anish Hirwe"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "PA2+E2",
       "textBooks": [],
@@ -652,16 +652,16 @@
       "credits": "2-1-0-3",
       "instructor": ["Anish Hirwe", "Vivek Chaturvedi", "Sovan Lal Das"],
       "preRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": ["CS5639"]
         }],
-        "notClause" : []
+        "notClause": []
       },
       "coRequisites": {
-        "orClause" : [{
-          "code":[]
+        "orClause": [{
+          "code": []
         }],
-        "notClause" : []
+        "notClause": []
       },
       "slot": "F",
       "textBooks": [],
@@ -750,8 +750,21 @@
       "max": 24,
       "min": 18
     },
-    "completedCourses": ["CS2030","ID1110", "CE1020", "ME1030"],
-    "preRequisiteWaivers": ["CSE202"],
+    "completedCourses": ["CS2030", "ID1110"],
+    "preRequisiteWaivers": [
+      {
+        "code": "CS5639",
+        "status": "REJECTED"
+      }, 
+      {
+        "code": "CS5010",
+        "status": "APPROVED"
+      },
+      {
+        "code": "CS3020",
+        "status": "APPLIED"
+      }
+    ],
     "totalCredits": 18,
     "electiveCredits": [
       {

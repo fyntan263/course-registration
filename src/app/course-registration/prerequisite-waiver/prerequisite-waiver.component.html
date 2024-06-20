@@ -150,31 +150,37 @@
             </td>
             <td>{{ course.slot }}</td>
             <td>
-              @if ( isCourseAlreadyCompleted(course) ||
-              isPrerequisiteMet(course)){
-              <i class="fs-5 fa-solid fa-check text-success"></i>
-              }@else if( !isCourseAlreadyCompleted(course) &&
-              !isPrerequisiteMet(course) && !isPrerequisiteWaiverApplied(course)
-              ) {
-              <span
-              [ngbTooltip]="'Apply for Prerequisite Waiver'"
-                type="button"
-                class="badge bg-primary p1-2 text-white px-4"
-                (click)="toggleCollapseApply(course.code)"
-                [attr.aria-expanded]="!collapsedStatesApply[course.code]"
-                aria-controls="collapseExample"
-                ><i class="fa-regular fa-pen-to-square"></i>
-              </span>
-              } @else {
-              <span class="badge bg-light text-success text-uppercase">
-                applied</span
-              >
-              }
+              
+              @if (isCourseAlreadyCompleted(course) ||
+              !isCourseAlreadyCompleted(course) && isPrerequisiteMet(course)) {
+           <i class="fs-5 fa-solid fa-check text-success"></i>
+         } @else if (!isCourseAlreadyCompleted(course) &&
+                     !isPrerequisiteMet(course) &&
+                     (getPrerequisiteWaiverStatus(course) === PreWaiverStatus.REJECTED || getPrerequisiteWaiverStatus(course) === PreWaiverStatus.NOT_APPLIED) ) {
+           <span
+             [ngbTooltip]="getPrerequisiteWaiverStatus(course) === PreWaiverStatus.REJECTED ? 'REJECTED: Please Apply for Prerequisite Waiver' : 'Apply for Prerequisite'"
+             type="button"
+             class="badge bg-primary p1-2 text-white px-4"
+             (click)="toggleCollapseApply(course.code)"
+             [attr.aria-expanded]="!collapsedStatesApply[course.code]"
+             aria-controls="collapseExample"
+           >
+             <i class="fa-regular fa-pen-to-square"></i>
+           </span>
+         } @else {
+           <span class="badge bg-light text-success text-uppercase">
+             {{getPrerequisiteWaiverStatus(course)}}
+           </span>
+         }
+         
             </td>
           </tr>
 
           @if (collapsedStatesApply[course.code] &&
-          !isCourseAlreadyCompleted(course)){
+          !isCourseAlreadyCompleted(course)  &&
+          !isPrerequisiteMet(course) && (getPrerequisiteWaiverStatus(course) === PreWaiverStatus.REJECTED
+          || getPrerequisiteWaiverStatus(course) === PreWaiverStatus.NOT_APPLIED
+          )){
           <tr>
             <td colspan="6" class="m-2">
               <div class="m-2 p-1">
@@ -204,19 +210,6 @@
           } }
         </tbody>
       </table>
-
-      <div>
-        <ngb-pagination
-	[collectionSize]="collectionSize"
-  [(page)]="page"
-  [pageSize]="pageSize"
-  (pageChange)="onPageChange($event)"
-	[maxSize]="5"
-	[rotate]="true"
-	[ellipses]="false"
-	[boundaryLinks]="true"
-/>
-      </div>
     </div>
   </div>
 </div>

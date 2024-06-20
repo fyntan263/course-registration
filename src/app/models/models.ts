@@ -1,3 +1,5 @@
+import { PrerequisiteService } from "../services/prerequisite.service";
+
 // Clause that contains a list of codes, representing AND conditions
 export interface PrerequisiteClause {
     code: string[];
@@ -40,7 +42,7 @@ export interface PrerequisiteClause {
   
   export interface PrerequisiteWaiver{
     code: string;
-    status: string
+    status: PrerequisiteWaiverStatus
   }
   // Interface extending StudentProfile with additional course-related information
   export interface StudentInfo{
@@ -49,7 +51,7 @@ export interface PrerequisiteClause {
     electiveRange: ElectiveRange[]
     creditRange: Range;
     completedCourses: string[]; // List of past courses (including electives)
-    preRequisiteWaivers: string[];
+    preRequisiteWaivers: PrerequisiteWaiver[];
     totalCredits: number;
     electiveCredits: ElectiveCredits[];
 
@@ -72,4 +74,11 @@ export interface ElectiveCredits {
 	basket: string[];
 	minCredits: number;
   maxCredits: number;
+}
+
+export enum PrerequisiteWaiverStatus {
+  APPLIED = "APPLIED",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
+  NOT_APPLIED = "NOT_APPLIED" 
 }
