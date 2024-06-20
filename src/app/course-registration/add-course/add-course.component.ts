@@ -73,7 +73,7 @@ export class AddCourseComponent implements OnInit {
   isprereqmet(course:Course):boolean{
     if(this.student){
       for(let waiver of this.student.preRequisiteWaivers){
-        if(waiver.courseCode === course.code) return true;
+        if(waiver.code === course.code) return true;
       }
     }
     if(this.student){
