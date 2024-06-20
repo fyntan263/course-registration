@@ -92,6 +92,11 @@ export class WaiverAllComponent {
   }
 
 
+  toggleCollapse(courseCode: string): void {
+    this.collapsedStates[courseCode] = !this.collapsedStates[courseCode];
+  }
+
+
   public toggleCollapseApply(courseCode: string) {
     this.collapsedStatesApply[courseCode] = !this.collapsedStatesApply[courseCode];
   }
