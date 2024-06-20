@@ -29,7 +29,7 @@ export class ReviewCoursesComponent implements OnInit {
   iscompl : boolean = false
   ispremet : boolean = false;
   iscomet : boolean = false;
-  datatoserver !: CoreCoursePlanSubmission ;
+  datatoserver !:  CoreCoursePlanSubmission;
 
   constructor(private prereqService:CourseEligibilityService,
               private dataService: DataService,
@@ -85,7 +85,7 @@ export class ReviewCoursesComponent implements OnInit {
       this.student.completedCourses = this.student?.completedCourses.filter(term => term!=c.code);
     }
     for( let cour of this.yourcourses){
-      if(this.iscoreqmet(cour)) continue;
+      if(this.iscoreqmet(cour)) return;
       this.dropcourse(cour);
     }
   }
