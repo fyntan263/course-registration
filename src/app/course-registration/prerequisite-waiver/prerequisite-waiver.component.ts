@@ -84,7 +84,7 @@ export class PrerequisiteWaiverComponent {
   closeInput(courseCode: string) {
 
     this.currentStudent.rollNo;
-    this.currentStudent.preRequisiteWaivers.push(courseCode);
+    // this.currentStudent.preRequisiteWaivers.push(courseCode);
 
     let request = {
       rollNo: this.currentStudent.rollNo,
@@ -115,9 +115,9 @@ export class PrerequisiteWaiverComponent {
 
   isPrerequisiteWaiverApplied(course:Course){
     
-      if (this.currentStudent ) {
-        return  this.courseEligibilityService.isWaiverApplied(this.currentStudent.preRequisiteWaivers, course.code);
-      }
+      // if (this.currentStudent ) {
+      //   return  this.courseEligibilityService.isWaiverApplied(this.currentStudent.preRequisiteWaivers, course.code);
+      // }
       return false;
     }
 }

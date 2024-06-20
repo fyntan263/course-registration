@@ -21,10 +21,10 @@ export class AddCourseComponent implements OnInit {
   courses : Course[] = []; 
   course$ : Observable<Course[]> = this.dataService.getCourses();
   refreshcourses : any;
-  creditRange : Range = {
-    "max" : 24,
-    "min" : 9
-  };
+  creditRange : Range ={
+    "max":24,
+    "min":9
+  } ;
   datatoserver !: CoreCoursePlanSubmission ;
   page = 1
   pagesize = 9;
@@ -38,7 +38,7 @@ export class AddCourseComponent implements OnInit {
   ngOnInit(): void {
     this.getCourses();
     this.getStudent();
-    this.Refreshcourse();    
+    this.Refreshcourse(); 
   }
 
   getCourses(){  // subscribe for data from the service
@@ -53,8 +53,9 @@ export class AddCourseComponent implements OnInit {
     this.dataService.getStudent().subscribe({
       next:data =>{this.student = data? data as StudentInfo: undefined; console.log("STUDENTS INFO: ", data)},
       error: err => console.log("ERROR: ", err),
-      complete:() => {console.log("DONE")}
-    }
+      complete:() => {if(this.student?.creditRange) this.creditRange = this.student.creditRange;
+      },
+      }
     )
   }
 
