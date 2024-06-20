@@ -182,6 +182,19 @@
           }
         </tbody>
       </table>
+
+      <div>
+        <ngb-pagination
+	[collectionSize]="collectionSize"
+  [(page)]="page"
+  [pageSize]="pageSize"
+  (pageChange)="onPageChange($event)"
+	[maxSize]="5"
+	[rotate]="true"
+	[ellipses]="false"
+	[boundaryLinks]="true"
+/>
+      </div>
     </div>
   </div>
 </div>
