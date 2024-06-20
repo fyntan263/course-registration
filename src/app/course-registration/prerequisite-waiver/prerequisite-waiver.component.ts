@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Course, PrerequisiteWaiverStatus, StudentInfo } from '../../models/models';
+import { Course, CourseRegistrationStatus, StudentInfo } from '../../models/models';
 import { Observable, OperatorFunction, Subject, combineLatest, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
 import { DataService } from '../../services/data.service';
 import { CourseEligibilityService } from '../course-eligibility.service';
@@ -20,7 +20,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './prerequisite-waiver.component.html'
 })
 export class PrerequisiteWaiverComponent {
-  PreWaiverStatus = PrerequisiteWaiverStatus
+  PreWaiverStatus = CourseRegistrationStatus
   private coreCourses: Course[] = [];
   reasonInput: string = '';
   private searchQuery = new Subject<string>();
@@ -34,7 +34,7 @@ export class PrerequisiteWaiverComponent {
   page = 1;
   pageSize = 5;
   collectionSize = 0;
-  courseStatusMap: { [key: string]: PrerequisiteWaiverStatus } = {};
+  courseStatusMap: { [key: string]: CourseRegistrationStatus } = {};
   constructor(private dataService: DataService, private courseEligibilityService: CourseEligibilityService) { }
 
   ngOnInit(): void {
@@ -99,7 +99,7 @@ export class PrerequisiteWaiverComponent {
     if (this.currentStudent && this.coreCourses.length) {
       this.coreCourses.forEach(course => {
         this.courseStatusMap[course.code] = this.courseEligibilityService
-          .getPrerequisiteWaiverStatus(this.currentStudent.preRequisiteWaivers, course.code)??this.PreWaiverStatus.NOT_APPLIED;
+          .getCourseRegistrationStatus(this.currentStudent.preRequisiteWaivers, course.code)??this.PreWaiverStatus.NOT_APPLIED;
       });
     }
   }
@@ -117,7 +117,7 @@ export class PrerequisiteWaiverComponent {
 
   closeInput(courseCode: string) {
     this.currentStudent.rollNo;
-    this.currentStudent.preRequisiteWaivers.push({code:courseCode, status: PrerequisiteWaiverStatus.APPLIED});
+    this.currentStudent.preRequisiteWaivers.push({code:courseCode, status: CourseRegistrationStatus.APPLIED});
 
     let request = {
       rollNo: this.currentStudent.rollNo,

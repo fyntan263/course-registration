@@ -42,7 +42,7 @@ export interface PrerequisiteClause {
   
   export interface PrerequisiteWaiver{
     code: string;
-    status: PrerequisiteWaiverStatus
+    status: CourseRegistrationStatus
   }
   // Interface extending StudentProfile with additional course-related information
   export interface StudentInfo{
@@ -52,6 +52,7 @@ export interface PrerequisiteClause {
     creditRange: Range;
     completedCourses: string[]; // List of past courses (including electives)
     preRequisiteWaivers: PrerequisiteWaiver[];
+    faApprovalStatus?:CourseRegistrationStatus
     totalCredits: number;
     electiveCredits: ElectiveCredits[];
 
@@ -76,7 +77,7 @@ export interface ElectiveCredits {
   maxCredits: number;
 }
 
-export enum PrerequisiteWaiverStatus {
+export enum CourseRegistrationStatus {
   APPLIED = "APPLIED",
   APPROVED = "APPROVED",
   REJECTED = "REJECTED",
