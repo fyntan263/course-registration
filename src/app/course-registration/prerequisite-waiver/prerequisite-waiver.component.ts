@@ -107,7 +107,11 @@ export class PrerequisiteWaiverComponent {
       preReqWaiverRequest: true
     }
     JsonUtils.downloadJson(request);
+
     this.collapsedStatesApply[courseCode] = false;
+
+    
+    // Handle the logic to close or remove the input field
   }
 
   isCourseAlreadyCompleted(course: Course): boolean {
