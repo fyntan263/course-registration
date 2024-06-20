@@ -17,17 +17,17 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './add-course.component.html'
 })
 export class AddCourseComponent implements OnInit {
-  student : StudentInfo | undefined;
-  courses : Course[] = []; 
-  course$ : Observable<Course[]> = this.dataService.getCourses();
-  refreshcourses : any;
-  creditRange : Range ={
+  student : StudentInfo | undefined;  //the information of the student is fetched from the service
+  courses : Course[] = [];   //the list of courses fetched from the service
+  course$ : Observable<Course[]> = this.dataService.getCourses();  // subscribe for data of courses from the service
+  refreshcourses : any; //courses data to show in the pagination
+  creditRange : Range ={  //must get from backend if the student does not has a credit range
     "max":24,
     "min":9
   } ;
-  datatoserver !: CoreCoursePlanSubmission ;
+  datatoserver !: CoreCoursePlanSubmission ;  //json file format to send to the server
   page = 1
-  pagesize = 9;
+  pagesize = 9; //number of courses to show per page in the table
 
   constructor(private prereqService:CourseEligibilityService,
               private dataService: DataService,
@@ -59,19 +59,19 @@ export class AddCourseComponent implements OnInit {
     )
   }
 
-  Refreshcourse(){
+  Refreshcourse(){ //slice the courses based on pagination page number
     this.course$.subscribe(() =>{
     this.refreshcourses = this.courses.map((course, i) => ({ id: i + 1, ...course })).slice((this.page-1)*this.pagesize,(this.page-1)*this.pagesize+this.pagesize);
     })
   }
   
-  ispastcoursesel(course:Course):boolean{
+  ispastcoursesel(course:Course):boolean{  //if the course is in the list of completed courses of the student
     if(this.student) return this.student.completedCourses.includes(course.code);
     return false;
   }
 
 
-  isprereqmet(course:Course):boolean{
+  isprereqmet(course:Course):boolean{  //if the course is in the list of waivers of the student or the prerequisite is met or not
     if(this.student){
       for(let waiver of this.student.preRequisiteWaivers){
         if(waiver.code === course.code) return true;
@@ -83,7 +83,7 @@ export class AddCourseComponent implements OnInit {
     return false;
   }
 
-  senddatatoserver(){
+  senddatatoserver(){ //json file format to send to the server
     if(this.student){
       this.datatoserver  = 
       {
