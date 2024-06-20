@@ -1,6 +1,6 @@
 <div class="row g-3 justify-content-center mt-1">
 
-  
+  @if(true) {
   <div class="row justify-content-start">
     <div class="col-3 d-flex justify-content-end">
       <span class="input-group-text" id="basic-addon1">
@@ -29,11 +29,9 @@
 
       <tbody>
 
-        @for (item of displayedCourses; track $index) {
-        
+        @for (item of displayedCourses ; track $index) {
+
         <tr scope="col" class="text-center" [ngClass]="isCourseAlreadyCompleted(item) ? 'table-secondary': ''">
-
-
           <div class="container-fluid text-center d-flex justify-content-center">
             <td class="text-dark" placement="top"
               [ngbTooltip]=" isCourseAlreadyCompleted(item)? 'Course already completed':''" placement="right">
@@ -42,7 +40,6 @@
               <i class="fa-solid fa-circle-check text-success"></i>
               }
             </td>
-
           </div>
 
           <td> {{item.name}} </td>
@@ -50,24 +47,21 @@
           <td>
             <div>
               {{item.instructor.join(",\n")}}
-
             </div>
           </td>
           <td> {{item.slot}} </td>
           <td>
-            <!-- {{item.preRequisiteMet?}} -->
             @if(checkPrerequisiteMet(item)){
             <i class="fa-solid fa-check text-success"></i>
             }
-            @else {
+            @else if(!isAppliedForWaiver(item)) {
             <i class="fa-solid fa-x text-danger"></i> <br>
-             @if(!applyCourseWaiver.preReqWaiverRequest){
-              
-              <button class="badge bg-primary" (click)="toggleCollapseApply(item.code)" [attr.aria-expanded]="!isCollapsed"
-              aria-controls="collapseExample">
+            
+            <button class="badge bg-primary" (click)="toggleCollapseApply(item.code)"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
               <i class="fa-regular fa-pen-to-square"></i>
-              
-             </button>
+
+            </button>
             <div #collapse="ngbCollapse" [ngbCollapse]="!collapsedStatesApply[item.code]">
               <div class="card">
                 <div class="card-body">
@@ -80,18 +74,39 @@
               </div>
             </div>
 
-            } 
-
+            }
+            @else {
+              <span class="badge bg-success">Applied</span>
             }
           </td>
-            
+
         </tr>
         }
 
       </tbody>
 
     </table>
+    
 
   </div>
 
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination
+      [collectionSize]="selectedCourses.length"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      (pageChange)="refreshCourses()"
+    >
+    </ngb-pagination>
+  
+    <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshCourses()">
+      <option [ngValue]="2">2 items per page</option>
+      <option [ngValue]="4">4 items per page</option>
+      <option [ngValue]="6">6 items per page</option>
+    </select>
+  </div>
+  
+  }
+  
+  <!-- <app-testing-table></app-testing-table> -->
 </div>

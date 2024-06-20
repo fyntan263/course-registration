@@ -1,54 +1,45 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild} from '@angular/core';
 import * as types from '../models/models';
-import { NgClass } from '@angular/common';
+import { NgClass, DecimalPipe } from '@angular/common';
 import { DataService } from '../services/data.service'
 import { CourseEligibilityService } from '../services/course-eligibility.service';
-import { NgbAccordionModule, NgbCollapseModule, NgbTooltipModule, NgbTypeahead, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbTooltipModule, NgbTypeahead, NgbTypeaheadModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Observable, Subject, merge, OperatorFunction, from } from 'rxjs';
-import { ViewChild } from '@angular/core';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { JsonPipe } from '@angular/common';
 import { JsonUtils } from '../utils/json-utils';
+import { TestingTableComponent } from '../testing-table/testing-table.component';
 
 
 
 @Component({
   selector: 'app-waiver-all',
   standalone: true,
-  imports: [NgClass, NgbTooltipModule, NgbTypeaheadModule, FormsModule, NgbAccordionModule, NgbCollapseModule],
+  imports: [NgClass, NgbTooltipModule, NgbTypeaheadModule, FormsModule, NgbCollapseModule, TestingTableComponent, NgbPaginationModule, DecimalPipe],
   templateUrl: './waiver-all.component.html',
   styleUrl: './waiver-all.component.css',
   providers: [DataService, CourseEligibilityService],   //Add service in your component providers list
 })
 export class WaiverAllComponent {
-  programs: Map<string, string> = {} as Map<string, string>;
- 
-  collapsedStates: { [key: string]: boolean } = {};
+  // programs: Map<string, string> = {} as Map<string, string>;
   collapsedStatesApply: { [key: string]: boolean } = {};
 
-  selectedCourses !: types.Course[];
+  selectedCourses : types.Course[] = [];
   student !: types.StudentInfo;
-  displayedCourses !: types.Course[];
+  displayedCourses : types.Course[] = [];
+  availableCourses : types.Course[] = [];
 
-  selectedCodes: string[] = [];
+
   searchCourse: string = "";
 
-  availableCourses: types.Course[] = [];
-  isSelectingCourses: boolean = true;
-  isReviewingCourses: boolean = false;
-  totalCredits: number = 0;
-  creditRange: types.Range = {
-    max: 24,
-    min: 9
-  };
+  
   isCourseCompleted: boolean = false;
   isPrerequisiteMet: boolean = false;
 
   isCollapsed: boolean = true;
 
   reasonForWaiver: string = '';
-  applyCourseWaiver: types.PrerequisiteWaiverRequest = {} as types.PrerequisiteWaiverRequest;
 
   constructor(
     private courseEligibilityService: CourseEligibilityService,
@@ -57,13 +48,20 @@ export class WaiverAllComponent {
 
   ngOnInit(): void {
     this.getCourses();
+    this.refreshCourses();
     this.getStudent();
-    this.getDepartments();
+    // this.getDepartments();
+    
   }
 
   getCourses(){  // subscribe for data from the service
     this.dataService.getCourses().subscribe({
-    next: data => {this.selectedCourses = data;this.displayedCourses = data; console.log("COURSES: ",data)},
+    next: data => {
+      this.selectedCourses = data;
+      // this.displayedCourses = data; 
+      this.availableCourses = data;
+      console.log("COURSES: ",data)
+    },
     error: err => console.log("ERROR: ", err),
     complete:() => {console.log("DONE")}
     })
@@ -78,7 +76,7 @@ export class WaiverAllComponent {
     )
   }
 
-  getDepartments(){ // subscribe for data
+  /* getDepartments(){ // subscribe for data
     this.dataService.getDepartments().subscribe({
       next: data => {this.programs = data as Map<string, string>; console.log("DEPARTMENT: ", data)},
       error: err => console.log("ERROR: ", err),
@@ -87,26 +85,18 @@ export class WaiverAllComponent {
       },
     })
 
-  }
-
-  toggleCollapse(courseCode: string): void {
-    this.collapsedStates[courseCode] = !this.collapsedStates[courseCode];
-  }
+  } */
 
 
   public toggleCollapseApply(courseCode: string) {
     this.collapsedStatesApply[courseCode] = !this.collapsedStatesApply[courseCode];
   }
 
-  stringIfy(): void{
-    for(let course of this.selectedCourses){
-      this.selectedCodes.push(course.name);
-    }
-  }
-
+  
   searchForCourse(): void{
-    this.displayedCourses = this.selectedCourses.filter((v) => {
-      if(v.name.toLowerCase().includes(this.searchCourse.toLowerCase()))
+    this.selectedCourses = this.availableCourses.filter((v) => {
+      if(v.name.toLowerCase().includes(this.searchCourse.toLowerCase())
+      || v.code.toLowerCase().includes(this.searchCourse.toLowerCase()))
           return true;
       return false;
     });
@@ -140,9 +130,6 @@ export class WaiverAllComponent {
 	// 	);
 	// };
 
-
-
-
   isCourseSelected(course: types.Course): boolean {
     return this.selectedCourses.some(selectedCourse => selectedCourse === course);
   }
@@ -175,6 +162,23 @@ export class WaiverAllComponent {
 
 
     JsonUtils.downloadJson(request);
+  }
+
+  isAppliedForWaiver(course: types.Course): boolean{
+    if(this.student.preRequisiteWaivers.includes(course.code)){
+      return true;
+    }
+    return false;
+  }
+
+  page = 1;
+  pageSize = 5;
+
+  refreshCourses(){
+    this.displayedCourses = this.availableCourses.map((course, i) => ({ id: i + 1, ...course })).slice(
+			(this.page - 1) * this.pageSize,
+			(this.page - 1) * this.pageSize + this.pageSize,
+		);
   }
 
 }
