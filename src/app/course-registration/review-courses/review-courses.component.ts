@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { Course, StudentInfo, Range, CoreCoursePlanSubmission } from '../../models/models';
 import { DataService } from '../../services/data.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { PrerequisiteTooltipPipe } from '../pipes/prerequisite-tooltip.pipe';
 import { CourseEligibilityService } from '../course-eligibility.service';
 import { JsonUtils } from '../../utils/json-utils';
+import { AddCoursesService } from './add-courses.service';
 
 @Component({
   selector: 'app-review-courses',
@@ -14,11 +15,21 @@ import { JsonUtils } from '../../utils/json-utils';
   providers: [CourseEligibilityService],
   templateUrl: './review-courses.component.html'
 })
+
+//TODO: pagination
+//TODO: next to elective range
+//TODO: input to parent in nav
+//TODO: total credits to bottom and review next to elective range
+//TODO: next button to elective range page
+//TODO: make the heading sticky
+//TODO: slot clash detection
+//TODO:
 export class ReviewCoursesComponent implements OnInit {
   student : StudentInfo | undefined;
   courses : Course[] = []; 
   yourcourses : Course[] = [];
   yourcoursescode : string[] = [];
+  refreshcourses : any;
   isselyourcourses : boolean = true
   isselreviewcourses : boolean = false
   totalcredits = 0;
@@ -29,19 +40,24 @@ export class ReviewCoursesComponent implements OnInit {
   iscompl : boolean = false
   ispremet : boolean = false;
   iscomet : boolean = false;
-  datatoserver !:  CoreCoursePlanSubmission;
+  datatoserver !: CoreCoursePlanSubmission ;
+  page = 1
+  pagesize = 8;
 
   constructor(private prereqService:CourseEligibilityService,
               private dataService: DataService,
+              public addcourse: AddCoursesService
              ){
     // console.log(this.student)
+    // this.Refreshcourse();
   }
-
+  
   ngOnInit(): void {
     this.getCourses();
     this.getStudent();
     if(this.student)
-    this.yourcoursescode = this.student.completedCourses;
+      this.yourcoursescode = this.student.completedCourses;
+    this.Refreshcourse();
   }
 
   getCourses(){  // subscribe for data from the service
@@ -60,6 +76,12 @@ export class ReviewCoursesComponent implements OnInit {
     }
     )
   }
+
+    Refreshcourse(){
+      // console.log(this.courses);
+          
+      this.refreshcourses = this.courses.map((course, i) => ({ id: i + 1, ...course })).slice((this.page-1)*this.pagesize,(this.page-1)*this.pagesize+this.pagesize);
+    }
 
   credit(credit:string):number{
     return Number(credit.split('-')[3])
