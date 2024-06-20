@@ -146,7 +146,7 @@ export class PrerequisiteWaiverComponent {
 
   getPrerequisiteWaiverStatus(course: Course) {
     if (this.currentStudent) {
-      return this.courseEligibilityService.getPrerequisiteWaiverStatus(this.currentStudent.preRequisiteWaivers, course.code);
+      return this.courseEligibilityService.getCourseRegistrationStatus(this.currentStudent.preRequisiteWaivers, course.code);
     }
     return '';
   }

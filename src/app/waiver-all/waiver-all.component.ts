@@ -2,7 +2,7 @@ import { Component, Input, ViewChild} from '@angular/core';
 import * as types from '../models/models';
 import { NgClass, DecimalPipe, AsyncPipe } from '@angular/common';
 import { DataService } from '../services/data.service'
-import { CourseEligibilityService } from '../services/course-eligibility.service';
+import { CourseEligibilityService } from '../course-registration/course-eligibility.service';
 import { NgbCollapseModule, NgbTooltipModule, NgbTypeahead, NgbTypeaheadModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Observable, Subject, merge, OperatorFunction, startWith, from, combineLatest } from 'rxjs';
@@ -23,6 +23,7 @@ import { TestingTableComponent } from '../testing-table/testing-table.component'
 export class WaiverAllComponent {
   // programs: Map<string, string> = {} as Map<string, string>;
   collapsedStatesApply: { [key: string]: boolean } = {};
+  PreWaiverStatus = types.CourseRegistrationStatus
 
   selectedCourses : types.Course[] = [];
   student !: types.StudentInfo;
@@ -32,13 +33,13 @@ export class WaiverAllComponent {
   page = 1;
   pageSize = 5;
   collectionSize = 0;
-  // courseStatusMap: { [key: string]: types.PrerequisiteWaiverStatus } = {};
+  courseStatusMap: { [key: string]: types.CourseRegistrationStatus } = {};
 
   searchCourse: string = "";
 
   
   isCourseCompleted: boolean = false;
-  isPrerequisiteMet: boolean = false;
+  // isPrerequisiteMet: boolean = false;
 
   isCollapsed: boolean = true;
 
@@ -91,6 +92,12 @@ export class WaiverAllComponent {
     )
   }
 
+  isPrerequisiteMet(course: types.Course): boolean {
+    if (this.currentStudent && this.currentStudent.completedCourses.length) {
+      return this.courseEligibilityService.isPrerequisiteMet(this.currentStudent.completedCourses, course.preRequisites);
+    }
+    return false;
+  }
 
   toggleCollapse(courseCode: string): void {
     this.collapsedStates[courseCode] = !this.collapsedStates[courseCode];
@@ -124,7 +131,7 @@ export class WaiverAllComponent {
 
   applyForWaiver(course: types.Course): void{
     this.student.rollNo;
-    this.student.preRequisiteWaivers.push(course.code);
+    this.student.preRequisiteWaivers.push({} as types.PrerequisiteWaiver);
     this.collapsedStatesApply[course.code] = !this.collapsedStatesApply[course.code]
 
     let request = {
@@ -138,12 +145,12 @@ export class WaiverAllComponent {
     JsonUtils.downloadJson(request);
   }
 
-  isAppliedForWaiver(course: types.Course): boolean{
-    if(this.student.preRequisiteWaivers.includes(course.code)){
-      return true;
-    }
-    return false;
-  }
+  // isAppliedForWaiver(course: types.Course): boolean{
+  //   if(this.student.preRequisiteWaivers.includes(course.code)){
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   
   paginateCourses(courses: types.Course[]): types.Course[] {
@@ -195,14 +202,14 @@ export class WaiverAllComponent {
 
   
   //precomputing prerequisitewaiver statuses
-  // computeCourseStatuses(): void {
-  //   if (this.currentStudent && this.coreCourses.length) {
-  //     this.coreCourses.forEach(course => {
-  //       this.courseStatusMap[course.code] = this.courseEligibilityService
-  //         .getPrerequisiteWaiverStatus(this.currentStudent.preRequisiteWaivers, course.code)??this.PreWaiverStatus.NOT_APPLIED;
-  //     });
-  //   }
-  // }
+  computeCourseStatuses(): void {
+    if (this.currentStudent && this.coreCourses.length) {
+      this.coreCourses.forEach(course => {
+        this.courseStatusMap[course.code] = this.courseEligibilityService
+          .getCourseRegistrationStatus(this.currentStudent.preRequisiteWaivers, course.code)??this.PreWaiverStatus.NOT_APPLIED;
+      });
+    }
+  }
 
   private coreCourses: types.Course[] = [];
   reasonInput: string = '';

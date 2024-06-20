@@ -57,7 +57,13 @@
             @if(checkPrerequisiteMet(item)){
             <i class="fa-solid fa-check text-success"></i>
             }
-            @else if(!isAppliedForWaiver(item)) {
+            @else if(
+              collapsedStatesApply[item.code] &&
+          !isCourseAlreadyCompleted(item)  &&
+          !isPrerequisiteMet(item) && (courseStatusMap[item.code] === PreWaiverStatus.REJECTED
+          || courseStatusMap[item.code] === PreWaiverStatus.NOT_APPLIED
+          )
+            ) {
             <i class="fa-solid fa-x text-danger"></i> <br>
 
             <button class="badge bg-primary" (click)="toggleCollapseApply(item.code)"
