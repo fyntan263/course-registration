@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Prerequisite, PrerequisiteWaiver, PrerequisiteWaiverStatus } from '../models/models';
+import { Prerequisite, PrerequisiteWaiver, CourseRegistrationStatus } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +13,15 @@ export class CourseEligibilityService {
 
   // Check if a prerequisite waiver is applied
   isWaiverApplied(waivers: PrerequisiteWaiver[], courseCode: string): boolean {
-    return this.getPrerequisiteWaiverStatus(waivers, courseCode)? true : false
+    return this.getCourseRegistrationStatus(waivers, courseCode)? true : false
   }
   // isWaiverApplied(waivers: string[], courseCode: string): boolean {
   //   return  waivers.includes(courseCode)
   // }
-  getPrerequisiteWaiverStatus(waivers: PrerequisiteWaiver[], courseCode: string):PrerequisiteWaiverStatus | undefined{
+  getCourseRegistrationStatus(waivers: PrerequisiteWaiver[], courseCode: string):CourseRegistrationStatus | undefined{
     let waiver =(waivers.find(waiver => waiver.code ==courseCode))
     if (waiver)  return waiver.status ;
-    else return PrerequisiteWaiverStatus.NOT_APPLIED
+    else return CourseRegistrationStatus.NOT_APPLIED
   }
 
   
