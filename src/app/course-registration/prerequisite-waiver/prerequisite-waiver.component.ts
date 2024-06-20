@@ -94,6 +94,8 @@ export class PrerequisiteWaiverComponent {
     }
     JsonUtils.downloadJson(request);
 
+    this.collapsedStatesApply[courseCode] = false;
+
     
     // Handle the logic to close or remove the input field
   }
@@ -120,4 +122,8 @@ export class PrerequisiteWaiverComponent {
       }
       return false;
     }
+
+
+    // Pagination 
+    
 }
