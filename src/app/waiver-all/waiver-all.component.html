@@ -34,17 +34,17 @@
         @for (item of filteredCourses$ | async; track item.code) {
 
         <tr scope="col" class="text-center" [ngClass]="isCourseAlreadyCompleted(item) ? 'table-secondary': ''">
-          <div class="container-fluid text-center d-flex justify-content-center">
-            <td class="text-dark" placement="top"
+          <td>
+
+            <div class="text-dark" placement="top"
               [ngbTooltip]=" isCourseAlreadyCompleted(item)? 'Course already completed':''" placement="right">
               {{item.code}}
               @if(isCourseAlreadyCompleted(item)){
               <i class="fa-solid fa-circle-check text-success"></i>
               }
-            </td>
+            </div>
 
-          </div>
-
+        </td>
           <td> {{item.name}} </td>
           <td> {{item.credits}} </td>
           <td>
