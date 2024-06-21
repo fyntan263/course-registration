@@ -222,6 +222,13 @@ export class WaiverAllComponent {
     // Handle the logic to close or remove the input field
   }
   
+  getPrerequisiteWaiverStatus(course: types.Course) {
+    if (this.student) {
+      return this.courseEligibilityService.getCourseRegistrationStatus(this.student.preRequisiteWaivers, course.code);
+    }
+    return '';
+  }
+
   //precomputing prerequisitewaiver statuses
   computeCourseStatuses(): void {
     if (this.student && this.coreCourses.length) {

@@ -1,136 +1,136 @@
-<div class="row g-3 justify-content-center mt-1">
+<div class="g-3 justify-content-center mt-1">
 
   @if(true) {
-  <div class="row justify-content-start">
-    <div class="col-3 d-flex justify-content-end">
-      <span class="input-group-text" id="basic-addon1">
+
+    
+    <div class="d-flex justify-content-between border border-light">
+      <div class="btn-group me-3 ms-5 mt-2">
+        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+          <p>{{pageSize}} items per page</p>
+          <button type="button" class="btn dropdown-toggle-split" ngbDropdownToggle></button>
+          <div class="dropdown-menu" ngbDropdownMenu>
+            <button ngbDropdownItem (click)="setPageSize(5)"> 5</button>
+            <button ngbDropdownItem (click)="setPageSize(10)">10</button>
+            <button ngbDropdownItem (click)="setPageSize(20)">20</button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-3 d-flex justify-content-end ms-2">
+      <span class="input-group-text ms-1 mt-1 mb-1" id="basic-addon1">
         <i class="fa fa-search" aria-hidden="true"></i>
       </span>
 
-      <input id="search-filter-input" type="text" class="form-control form-control-sm flex-fill border border-primary"
+      <input id="search-filter-input" type="text" class="form-control form-control-sm no-border flex-fill me-3 mt-1 mb-1"
         placeholder="Search courses..." (input)="onSearch($event)" aria-label="Username"
         aria-describedby="basic-addon1" />
 
     </div>
-
-
   </div>
+
+
 
   <!-- Table  -->
-  <div class="col">
-    <table class="table table-responsible table-hover">
-      <thead class="text-dark text-center">
-        <th class="text-uppercase">Course <br> Code </th>
-        <th class="text-uppercase">Course <br> Name </th>
-        <th class="text-uppercase">Credits <br> (L-T-P-C) </th>
-        <th class="text-uppercase">Instructor </th>
-        <th class="text-uppercase">Slot </th>
-        <th class="text-uppercase">Prerequisite <br> Met? </th>
-      </thead>
+
+  <table class="table table-responsible table-hover mt-1">
+    <thead class="text-dark text-center">
+      <th class="text-uppercase">Course <br> Code </th>
+      <th class="text-uppercase">Course <br> Name </th>
+      <th class="text-uppercase">Credits <br> (L-T-P-C) </th>
+      <th class="text-uppercase">Instructor </th>
+      <th class="text-uppercase">Slot </th>
+      <th class="text-uppercase">Prerequisite <br> Met? </th>
+    </thead>
 
 
-      <tbody>
+    <tbody>
 
-        @for (item of filteredCourses$ | async; track item.code) {
+      @for (item of filteredCourses$ | async; track item.code) {
 
-        <tr scope="col" class="text-center" [ngClass]="isCourseAlreadyCompleted(item) ? 'table-secondary': ''">
-          <td>
+      <tr scope="col" class="text-center" [ngClass]="isCourseAlreadyCompleted(item) ? 'table-secondary': ''">
+        <td>
 
-            <div class="text-dark" placement="top"
-              [ngbTooltip]=" isCourseAlreadyCompleted(item)? 'Course already completed':''" placement="right">
-              {{item.code}}
-              @if(isCourseAlreadyCompleted(item)){
-              <i class="fa-solid fa-circle-check text-success"></i>
-              }
-            </div>
+          <div class="text-dark" [ngbTooltip]=" isCourseAlreadyCompleted(item)? 'Course already completed':''"
+            placement="right">
+            {{item.code}}
+            @if(isCourseAlreadyCompleted(item)){
+            <i class="fa-solid fa-circle-check text-success"></i>
+            }
+          </div>
 
         </td>
-          <td> {{item.name}} </td>
-          <td> {{item.credits}} </td>
-          <td>
-            <div>
-              {{item.instructor.join(",\n")}}
-            </div>
-          </td>
-          <td> {{item.slot}} </td>
-          <td>
-            @if(checkPrerequisiteMet(item)){
-            <i class="fa-solid fa-check text-success"></i>
-            }
-            @else if( 
-            (courseStatusMap[item.code] == PreWaiverStatus.REJECTED
+        <td> {{item.name}} </td>
+        <td> {{item.credits}} </td>
+        <td>
+          <div>
+            {{item.instructor.join(",\n")}}
+          </div>
+        </td>
+        <td> {{item.slot}} </td>
+        <td>
+          @if(checkPrerequisiteMet(item)){
+          <i class="fa-solid fa-check text-success"></i>
+          }
+          @else if(
+          (courseStatusMap[item.code] == PreWaiverStatus.REJECTED
           || courseStatusMap[item.code] == PreWaiverStatus.NOT_APPLIED)){
-            <i class="fa-solid fa-x text-danger"></i> <br>
 
-            <button class="badge bg-primary" (click)="toggleCollapseApply(item.code)"
-              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-              <i class="fa-regular fa-pen-to-square"></i>
+            <i class="fa-solid fa-x text-danger mt-1"></i> <br>
 
-            </button>
-            <div #collapse="ngbCollapse" [ngbCollapse]="!collapsedStatesApply[item.code]">
-              <div class="card">
-                <div class="card-body">
-                  <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="State Reason" aria-label="Username"
-                      [(ngModel)]="reasonForWaiver" aria-describedby="basic-addon1">
-                  </div>
-                  <button class="btn btn-primary" (click)="closeInput(item.code)">Apply</button>
+          <button class="badge bg-primary" (click)="toggleCollapseApply(item.code)" [attr.aria-expanded]="!isCollapsed"
+            aria-controls="collapseExample">
+            <i [ngbTooltip]="getPrerequisiteWaiverStatus(item) === PreWaiverStatus.REJECTED ? 'REJECTED: Please Apply for Waiver':'Apply for Waiver'" class="fa-regular fa-pen-to-square"></i>
+
+          </button>
+
+          <div #collapse="ngbCollapse" [ngbCollapse]="!collapsedStatesApply[item.code]">
+            <div class="card">
+              <div class="card-body">
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="State Reason" aria-label="Username"
+                    [(ngModel)]="reasonInput" aria-describedby="basic-addon1">
                 </div>
+                <button class="btn btn-primary" (click)="closeInput(item.code)">Apply</button>
               </div>
             </div>
+          </div>
 
-            }
-            @else {
-            <span class="badge bg-success"> 
-              {{courseStatusMap[item.code] === PreWaiverStatus.APPLIED ? "APPLIED"
-              :(courseStatusMap[item.code] === PreWaiverStatus.APPROVED ? "APPROVED"
-              :(courseStatusMap[item.code] === PreWaiverStatus.REJECTED ? "REJECTED"
-              :"Not Applied"
-              )
-              ) }}
-            </span>
-            }
-          </td>
+          }
+          @else {
+          <span class="badge bg-success">
+            {{courseStatusMap[item.code]}}
+          </span>
+          }
+        </td>
 
-        </tr>
-        }
+      </tr>
+      }
 
-      </tbody>
+    </tbody>
 
-      <tfoot>
-        <tr>
-          <td colspan="3">
-            <div class="btn-group me-3 ms-5">
-              <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                <p>{{pageSize}} items per page</p>
-                <button type="button" class="btn dropdown-toggle-split" ngbDropdownToggle></button>
-                <div class="dropdown-menu" ngbDropdownMenu>
-                  <button ngbDropdownItem (click)="setPageSize(5)"> 5</button>
-                  <button ngbDropdownItem (click)="setPageSize(10)">10</button>
-                  <button ngbDropdownItem (click)="setPageSize(20)">20</button>
-                </div>
-              </div>
-            </div>
+    <tfoot>
+      <tr>
+        <td colspan="3">
+          
 
-          </td>
+        </td>
 
-          <td colspan="3">
+        <td colspan="3">
 
-            <div>
-              <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
-                (pageChange)="onPageChange($event)" [maxSize]="5" [rotate]="true" [ellipses]="false"
-                [boundaryLinks]="true" />
-            </div>
+          <div>
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+              (pageChange)="onPageChange($event)" [maxSize]="5" [rotate]="true" [ellipses]="false"
+              [boundaryLinks]="true" />
+          </div>
 
-          </td>
+        </td>
 
-        </tr>
-      </tfoot>
+      </tr>
+    </tfoot>
 
-    </table>
+  </table>
 
 
-  </div>
 
   }
 

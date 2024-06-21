@@ -722,7 +722,7 @@
       "slot": "B",
       "textBooks": [],
       "referenceBooks": [],
-      "syllabusLink": "http://example.com/id1110/syllabus",
+      "syllabusLink": "http://example.com/me2030a/syllabus",
       "programCode": "BTECH-ME",
       "isCore": false,
       "isElective": true,
@@ -750,7 +750,7 @@
       "max": 24,
       "min": 18
     },
-    "completedCourses": ["CS2030", "ID1110"],
+    "completedCourses": ["CS2030"],
     "preRequisiteWaivers": [
       {
         "code": "CS5639",
