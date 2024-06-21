@@ -34,12 +34,15 @@
 
   <table class="table table-responsible table-hover mt-1">
     <thead class="text-dark text-center">
+      <tr scope="col">
       <th class="text-uppercase">Course <br> Code </th>
       <th class="text-uppercase">Course <br> Name </th>
       <th class="text-uppercase">Credits <br> (L-T-P-C) </th>
       <th class="text-uppercase">Instructor </th>
       <th class="text-uppercase">Slot </th>
       <th class="text-uppercase">Prerequisite <br> Met? </th>
+      <th class="text-uppercase"> More <br> Info </th>
+    </tr>
     </thead>
 
 
@@ -102,34 +105,22 @@
           </span>
           }
         </td>
+        <td> <a [href]="item.syllabusLink"> <i class="fa-solid fa-circle-info text-primary"></i> </a> </td>
 
       </tr>
       }
 
     </tbody>
 
-    <tfoot>
-      <tr>
-        <td colspan="3">
-          
 
-        </td>
-
-        <td colspan="3">
-
-          <div>
-            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
-              (pageChange)="onPageChange($event)" [maxSize]="5" [rotate]="true" [ellipses]="false"
-              [boundaryLinks]="true" />
-          </div>
-
-        </td>
-
-      </tr>
-    </tfoot>
 
   </table>
 
+  <div>
+    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+      (pageChange)="onPageChange($event)" [maxSize]="5" [rotate]="true" [ellipses]="false"
+      [boundaryLinks]="true" />
+  </div>
 
 
   }
