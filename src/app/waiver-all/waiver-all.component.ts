@@ -3,25 +3,27 @@ import * as types from '../models/models';
 import { NgClass, DecimalPipe, AsyncPipe } from '@angular/common';
 import { DataService } from '../services/data.service'
 import { CourseEligibilityService } from '../course-registration/course-eligibility.service';
-import { NgbCollapseModule, NgbTooltipModule, NgbTypeahead, NgbTypeaheadModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbTooltipModule, NgbDropdownModule ,NgbTypeahead, NgbTypeaheadModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Observable, Subject, merge, OperatorFunction, startWith, from, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 
 import { JsonUtils } from '../utils/json-utils';
 import { TestingTableComponent } from '../testing-table/testing-table.component';
+import { CourseDetailComponent } from '../course-registration/course-detail/course-detail.component';
 
 
 @Component({
   selector: 'app-waiver-all',
   standalone: true,
-  imports: [NgClass, NgbTooltipModule, NgbTypeaheadModule, FormsModule, NgbCollapseModule, TestingTableComponent, NgbPaginationModule, DecimalPipe, AsyncPipe],
+  imports: [NgClass, NgbTooltipModule, NgbTypeaheadModule, FormsModule, NgbCollapseModule, TestingTableComponent, NgbPaginationModule, DecimalPipe, AsyncPipe, NgbDropdownModule, CourseDetailComponent],
   templateUrl: './waiver-all.component.html',
   styleUrl: './waiver-all.component.css',
   providers: [DataService, CourseEligibilityService],   //Add service in your component providers list
 })
 export class WaiverAllComponent {
   // programs: Map<string, string> = {} as Map<string, string>;
+  collapsedStates: { [key: string]: boolean } = {};
   collapsedStatesApply: { [key: string]: boolean } = {};
   PreWaiverStatus = types.CourseRegistrationStatus
 
@@ -60,9 +62,9 @@ export class WaiverAllComponent {
       this.dataService.getCourses()
     ]).pipe(
       map(([term, courses]) => {
-        this.coreCourses = courses.filter(course => course.isCore);
+        this.coreCourses = courses.filter(course => course);
         this.collectionSize = this.coreCourses.length;
-        // this.computeCourseStatuses();
+        this.computeCourseStatuses();
         return this.filterCourses(term);
       }),
       map(filteredCourses => this.paginateCourses(filteredCourses))
@@ -93,8 +95,8 @@ export class WaiverAllComponent {
   }
 
   isPrerequisiteMet(course: types.Course): boolean {
-    if (this.currentStudent && this.currentStudent.completedCourses.length) {
-      return this.courseEligibilityService.isPrerequisiteMet(this.currentStudent.completedCourses, course.preRequisites);
+    if (this.student && this.student.completedCourses.length) {
+      return this.courseEligibilityService.isPrerequisiteMet(this.student.completedCourses, course.preRequisites);
     }
     return false;
   }
@@ -131,7 +133,7 @@ export class WaiverAllComponent {
 
   applyForWaiver(course: types.Course): void{
     this.student.rollNo;
-    this.student.preRequisiteWaivers.push({} as types.PrerequisiteWaiver);
+    this.student.preRequisiteWaivers.push({code: course.code, status: this.PreWaiverStatus.APPLIED});
     this.collapsedStatesApply[course.code] = !this.collapsedStatesApply[course.code]
 
     let request = {
@@ -167,8 +169,8 @@ export class WaiverAllComponent {
       this.dataService.getCourses()
     ]).pipe(
       map(([term, courses]) => {
-        this.coreCourses = courses.filter(course => course.isCore);
-        // this.computeCourseStatuses();
+        this.coreCourses = courses.filter(course => course);
+        this.computeCourseStatuses();
         return this.filterCourses(term);
       }),
       map(filteredCourses => this.paginateCourses(filteredCourses))
@@ -199,14 +201,33 @@ export class WaiverAllComponent {
   }
 
   
+  closeInput(courseCode: string) {
+    this.student.rollNo;
+    this.student.preRequisiteWaivers.push({code:courseCode, status: types.CourseRegistrationStatus.APPLIED});
+    this.courseStatusMap[courseCode] = this.PreWaiverStatus.APPLIED;
+    this.collapsedStatesApply[courseCode] = !this.collapsedStatesApply[courseCode]
 
+    let request = {
+      rollNo: this.student.rollNo,
+      courseCode: courseCode,
+      reason: this.reasonInput,
+      preReqWaiverRequest: true
+    }
+    this.reasonInput=''
+    JsonUtils.downloadJson(request);
+
+    this.collapsedStatesApply[courseCode] = false;
+
+    
+    // Handle the logic to close or remove the input field
+  }
   
   //precomputing prerequisitewaiver statuses
   computeCourseStatuses(): void {
-    if (this.currentStudent && this.coreCourses.length) {
+    if (this.student && this.coreCourses.length) {
       this.coreCourses.forEach(course => {
         this.courseStatusMap[course.code] = this.courseEligibilityService
-          .getCourseRegistrationStatus(this.currentStudent.preRequisiteWaivers, course.code)??this.PreWaiverStatus.NOT_APPLIED;
+          .getCourseRegistrationStatus(this.student.preRequisiteWaivers, course.code)??this.PreWaiverStatus.NOT_APPLIED;
       });
     }
   }
@@ -216,9 +237,8 @@ export class WaiverAllComponent {
   private searchQuery = new Subject<string>();
   private currentSearchQuery = ''
   filteredCourses$!: Observable<types.Course[]>;
-  currentStudent: types.StudentInfo = {} as types.StudentInfo;
+
   preReqWaiverRequest: boolean = false;
-  collapsedStates: { [key: string]: boolean } = {};
 
 
 

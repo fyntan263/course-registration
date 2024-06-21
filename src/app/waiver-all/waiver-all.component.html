@@ -18,7 +18,7 @@
 
   <!-- Table  -->
   <div class="col">
-    <table class="table table-bordered table-responsible table-hover">
+    <table class="table table-responsible table-hover">
       <thead class="text-dark text-center">
         <th class="text-uppercase">Course <br> Code </th>
         <th class="text-uppercase">Course <br> Name </th>
@@ -57,13 +57,9 @@
             @if(checkPrerequisiteMet(item)){
             <i class="fa-solid fa-check text-success"></i>
             }
-            @else if(
-              collapsedStatesApply[item.code] &&
-          !isCourseAlreadyCompleted(item)  &&
-          !isPrerequisiteMet(item) && (courseStatusMap[item.code] === PreWaiverStatus.REJECTED
-          || courseStatusMap[item.code] === PreWaiverStatus.NOT_APPLIED
-          )
-            ) {
+            @else if( 
+            (courseStatusMap[item.code] == PreWaiverStatus.REJECTED
+          || courseStatusMap[item.code] == PreWaiverStatus.NOT_APPLIED)){
             <i class="fa-solid fa-x text-danger"></i> <br>
 
             <button class="badge bg-primary" (click)="toggleCollapseApply(item.code)"
@@ -78,14 +74,21 @@
                     <input type="text" class="form-control" placeholder="State Reason" aria-label="Username"
                       [(ngModel)]="reasonForWaiver" aria-describedby="basic-addon1">
                   </div>
-                  <button class="btn btn-primary" (click)="applyForWaiver(item)">Apply</button>
+                  <button class="btn btn-primary" (click)="closeInput(item.code)">Apply</button>
                 </div>
               </div>
             </div>
 
             }
             @else {
-            <span class="badge bg-success">Applied</span>
+            <span class="badge bg-success"> 
+              {{courseStatusMap[item.code] === PreWaiverStatus.APPLIED ? "APPLIED"
+              :(courseStatusMap[item.code] === PreWaiverStatus.APPROVED ? "APPROVED"
+              :(courseStatusMap[item.code] === PreWaiverStatus.REJECTED ? "REJECTED"
+              :"Not Applied"
+              )
+              ) }}
+            </span>
             }
           </td>
 
@@ -131,7 +134,6 @@
 
   }
 
-  <!-- <app-testing-table></app-testing-table> -->
 </div>
 
 <!-- 
