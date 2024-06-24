@@ -148,10 +148,8 @@
               <td>
                 <span>{{ course.credits }}</span>
               </td>
-              <td>
-                <div
-                  class="text-wrap"
-                  >{{ course.instructor }}</div>
+              <td   style="white-space: pre-line;">
+                {{ course.instructor.join('\n') }}
               </td>
               <td>{{ course.slot }}</td>
               <td>
