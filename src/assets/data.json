@@ -673,10 +673,66 @@
       "electiveCategory": "",
       "quota": 100,
       "courseLevel": 1
+    },
+    {
+      "code": "ME2010",
+      "name": "Fluid Mechanics: Theory and practice",
+      "credits": "3-0-2-4",
+      "instructor": ["Krishna Sesha Giri"],
+      "preRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "slot": "A",
+      "textBooks": [],
+      "referenceBooks": [],
+      "syllabusLink": "http://example.com/me2010/syllabus",
+      "programCode": "BTECH-ME",
+      "isCore": false,
+      "isElective": true,
+      "electiveCategory": "",
+      "quota": 100,
+      "courseLevel": 1
+    },
+    {
+      "code": "ME2030A",
+      "name": "Manufacturing Processes I",
+      "credits": "3-0-0-3",
+      "instructor": ["Buchibabu Vicharapu"],
+      "preRequisites": {
+        "orClause" : [{
+          "code":["ME2080A"]
+        }],
+        "notClause" : []
+      },
+      "coRequisites": {
+        "orClause" : [{
+          "code":[]
+        }],
+        "notClause" : []
+      },
+      "slot": "B",
+      "textBooks": [],
+      "referenceBooks": [],
+      "syllabusLink": "http://example.com/me2030a/syllabus",
+      "programCode": "BTECH-ME",
+      "isCore": false,
+      "isElective": true,
+      "electiveCategory": "",
+      "quota": 100,
+      "courseLevel": 1
     }
   ],
   "studentInfo": {
-    "rollNo": "2021001",
+    "rollNo": "112201017",
     "isEligible": true,
     "electiveRange": [
       {
@@ -722,5 +778,19 @@
         "maxCredits": 0
       }
     ]
+  },
+
+  "departments": {
+    "CS": "Computer Science",
+    "EE": "Electrical",
+    "ME": "Mechanical",
+    "CE": "Civil",
+    "DS": "Data Science",
+    "CY": "Chemistry",
+    "PH": "Physics",
+    "MA": "Mathematics",
+    "BS": "Biological Sciences",
+    "HS": "Humanities and Social Sciences",
+    "ESSENCE": "Environmental Sciences and Sustainable Engineering Centre"
   }
 }
