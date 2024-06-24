@@ -28,7 +28,7 @@ export class WaiverAllComponent {
   PreWaiverStatus = types.CourseRegistrationStatus
 
   selectedCourses : types.Course[] = [];
-  student !: types.StudentInfo;
+  currentStudent !: types.StudentInfo;
   displayedCourses : types.Course[] = [];
   availableCourses : types.Course[] = [];
 
@@ -87,7 +87,7 @@ export class WaiverAllComponent {
 
   getStudent(){ // subscribe for data from the service
     this.dataService.getStudent().subscribe({
-      next:data =>{this.student = data as types.StudentInfo; console.log("STUDENTS INFO: ", data)},
+      next:data =>{this.currentStudent = data as types.StudentInfo; console.log("STUDENTS INFO: ", data)},
       error: err => console.log("ERROR: ", err),
       complete:() => {console.log("DONE")}
     }
@@ -95,8 +95,8 @@ export class WaiverAllComponent {
   }
 
   isPrerequisiteMet(course: types.Course): boolean {
-    if (this.student && this.student.completedCourses.length) {
-      return this.courseEligibilityService.isPrerequisiteMet(this.student.completedCourses, course.preRequisites);
+    if (this.currentStudent && this.currentStudent.completedCourses.length) {
+      return this.courseEligibilityService.isPrerequisiteMet(this.currentStudent.completedCourses, course.preRequisites);
     }
     return false;
   }
@@ -118,26 +118,26 @@ export class WaiverAllComponent {
   }
 
   isCourseAlreadyCompleted(course: types.Course): boolean {
-    if (this.student) {
-      return  this.courseEligibilityService.isComplete(this.student.completedCourses, course.code);
+    if (this.currentStudent) {
+      return  this.courseEligibilityService.isComplete(this.currentStudent.completedCourses, course.code);
     }
     return false;
   }
 
   checkPrerequisiteMet(course: types.Course): boolean {
-    if (this.student && this.student.completedCourses.length) {
-      return  this.courseEligibilityService.isPrerequisiteMet(this.student.completedCourses, course.preRequisites);
+    if (this.currentStudent && this.currentStudent.completedCourses.length) {
+      return  this.courseEligibilityService.isPrerequisiteMet(this.currentStudent.completedCourses, course.preRequisites);
     }
     return false;
   }
 
   applyForWaiver(course: types.Course): void{
-    this.student.rollNo;
-    this.student.preRequisiteWaivers.push({code: course.code, status: this.PreWaiverStatus.APPLIED});
+    this.currentStudent.rollNo;
+    this.currentStudent.preRequisiteWaivers.push({code: course.code, status: this.PreWaiverStatus.APPLIED});
     this.collapsedStatesApply[course.code] = !this.collapsedStatesApply[course.code]
 
     let request = {
-      rollNo: this.student?.rollNo,
+      rollNo: this.currentStudent?.rollNo,
       courseCode: course.code,
       reason: this.reasonForWaiver,
       preReqWaiverRequest: true
@@ -148,7 +148,7 @@ export class WaiverAllComponent {
   }
 
   // isAppliedForWaiver(course: types.Course): boolean{
-  //   if(this.student.preRequisiteWaivers.includes(course.code)){
+  //   if(this.currentStudent.preRequisiteWaivers.includes(course.code)){
   //     return true;
   //   }
   //   return false;
@@ -202,13 +202,13 @@ export class WaiverAllComponent {
 
   
   closeInput(courseCode: string) {
-    this.student.rollNo;
-    this.student.preRequisiteWaivers.push({code:courseCode, status: types.CourseRegistrationStatus.APPLIED});
+    this.currentStudent.rollNo;
+    this.currentStudent.preRequisiteWaivers.push({code:courseCode, status: types.CourseRegistrationStatus.APPLIED});
     this.courseStatusMap[courseCode] = this.PreWaiverStatus.APPLIED;
     this.collapsedStatesApply[courseCode] = !this.collapsedStatesApply[courseCode]
 
     let request = {
-      rollNo: this.student.rollNo,
+      rollNo: this.currentStudent.rollNo,
       courseCode: courseCode,
       reason: this.reasonInput,
       preReqWaiverRequest: true
@@ -223,18 +223,18 @@ export class WaiverAllComponent {
   }
   
   getPrerequisiteWaiverStatus(course: types.Course) {
-    if (this.student) {
-      return this.courseEligibilityService.getCourseRegistrationStatus(this.student.preRequisiteWaivers, course.code);
+    if (this.currentStudent) {
+      return this.courseEligibilityService.getCourseRegistrationStatus(this.currentStudent.preRequisiteWaivers, course.code);
     }
     return '';
   }
 
   //precomputing prerequisitewaiver statuses
   computeCourseStatuses(): void {
-    if (this.student && this.coreCourses.length) {
+    if (this.currentStudent && this.coreCourses.length) {
       this.coreCourses.forEach(course => {
         this.courseStatusMap[course.code] = this.courseEligibilityService
-          .getCourseRegistrationStatus(this.student.preRequisiteWaivers, course.code)??this.PreWaiverStatus.NOT_APPLIED;
+          .getCourseRegistrationStatus(this.currentStudent.preRequisiteWaivers, course.code)??this.PreWaiverStatus.NOT_APPLIED;
       });
     }
   }

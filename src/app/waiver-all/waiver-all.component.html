@@ -1,4 +1,4 @@
-<div class="g-3 justify-content-center mt-1">
+<div class="card g-3 justify-content-center m-3">
 
   @if(true) {
 
@@ -88,7 +88,7 @@
 
             </button>
           </div>
-             
+
 
           }
           @else {
@@ -103,7 +103,6 @@
         <td> <a [href]="item.syllabusLink"> <i class="fa-solid fa-circle-info text-primary"></i> </a> </td>
       </tr>
       @if(collapsedStatesApply[item.code] &&
-      !isCourseAlreadyCompleted(item)  &&
       !isPrerequisiteMet(item) && (getPrerequisiteWaiverStatus(item) === PreWaiverStatus.REJECTED
       || getPrerequisiteWaiverStatus(item) === PreWaiverStatus.NOT_APPLIED
       )){
@@ -112,19 +111,11 @@
           <div class="m-2 p-1">
             <div class=" ">
               <div class="d-flex justify-content-end">
-                <textarea
-                  rows="1"
-                  [(ngModel)]="reasonInput"
-                  name="reason-{{ item.code }}"
-                  type="text"
-                  class="form-control mt-1 me-2 w-50"
-                  placeholder="Reason for waiver"
-                >
+                <textarea rows="1" [(ngModel)]="reasonInput" name="reason-{{ item.code }}" type="text"
+                  class="form-control mt-1 me-2 w-50" placeholder="Reason for waiver">
                 </textarea>
                 <div>
-                  <button
-                    class="btn btn-sm mt-1 py-1 px-3 btn-outline-primary"
-                    (click)="closeInput(item.code)">
+                  <button class="btn btn-sm mt-1 py-1 px-3 btn-outline-primary" (click)="closeInput(item.code)">
                     Apply
                   </button>
                 </div>
