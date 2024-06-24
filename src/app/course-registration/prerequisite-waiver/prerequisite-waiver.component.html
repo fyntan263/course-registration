@@ -165,7 +165,7 @@
              <span
                [ngbTooltip]="courseStatusMap[course.code] === PreWaiverStatus.REJECTED ? 'REJECTED: Please Apply for Prerequisite Waiver' : 'Apply for Prerequisite'"
           
-               class="badge bg-primary  text-white px-4"
+               class="btn text-primary p-0"
                (click)="toggleCollapseApply(course.code)"
                [attr.aria-expanded]="!collapsedStatesApply[course.code]"
                aria-controls="collapseExample"

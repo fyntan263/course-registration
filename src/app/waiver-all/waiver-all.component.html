@@ -97,9 +97,9 @@
 
             <div class="justify-content-center me-2">
 
-          <span type="button" class="badge bg-primary text-white px-4" (click)="toggleCollapseApply(item.code)" [attr.aria-expanded]="!isCollapsed"
+          <span type="button" class="btn text-primary p-0" (click)="toggleCollapseApply(item.code)" [attr.aria-expanded]="!isCollapsed"
             aria-controls="collapseExample">
-            <i [ngbTooltip]="getPrerequisiteWaiverStatus(item) === PreWaiverStatus.REJECTED ? 'REJECTED: Please Apply for Waiver':'Apply for Waiver'" class="fa-regular fa-pen-to-square"></i>
+            <i [ngbTooltip]="getPrerequisiteWaiverStatus(item) === PreWaiverStatus.REJECTED ? 'REJECTED: Please Apply for Prerequisite Waiver':'Apply for Prerequisite Waiver'" class="fa-regular fa-pen-to-square"></i>
 
             </span>
         </div>
@@ -108,7 +108,7 @@
 
           }
           @else {
-          <span class="badge bg-success">
+          <span class="badge  text-success">
             {{courseStatusMap[item.code]}}
           </span>
           }
