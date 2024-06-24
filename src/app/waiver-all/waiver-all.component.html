@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card m-2">
 
   @if(true) {
 <div class="card-body">
@@ -104,17 +104,7 @@
             </span>
         </div>
 
-          <div #collapse="ngbCollapse" [ngbCollapse]="!collapsedStatesApply[item.code]">
-            <div class="card">
-              <div class="card-body">
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="State Reason" aria-label="Username"
-                    [(ngModel)]="reasonInput" aria-describedby="basic-addon1">
-                </div>
-                <button class="btn btn-primary" (click)="closeInput(item.code)">Apply</button>
-              </div>
-            </div>
-          </div>
+          
 
           }
           @else {
@@ -126,6 +116,39 @@
         <td> <a [href]="item.syllabusLink"> <i class="fa-solid fa-circle-info text-primary"></i> </a> </td>
 
       </tr>
+
+      @if(collapsedStatesApply[item.code] &&
+      !isCourseAlreadyCompleted(item)  &&
+      !isPrerequisiteMet(item) && (courseStatusMap[item.code] === PreWaiverStatus.REJECTED
+      || courseStatusMap[item.code] === PreWaiverStatus.NOT_APPLIED
+      )){
+        <tr>
+          <td colspan="7"  class="m-2">
+            <div class="m-2 p-1">
+              <div class=" ">
+                <div class="d-flex justify-content-end">
+                  <textarea
+                    rows="1"
+                    [(ngModel)]="reasonInput"
+                    name="reason-{{ item.code }}"
+                    type="text"
+                    class="form-control mt-1 me-2 w-50"
+                    placeholder="Reason for waiver"
+                  >
+                  </textarea>
+                  <div>
+                    <button
+                      class="btn btn-sm mt-1 py-1 px-3 btn-outline-primary"
+                      (click)="closeInput(item.code)">
+                      Apply
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      }
       }
 
     </tbody>
