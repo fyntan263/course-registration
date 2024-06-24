@@ -1,32 +1,49 @@
-<div class="g-3 justify-content-center mt-1">
+<div class="card">
 
   @if(true) {
-
+<div class="card-body">
     
-    <div class="d-flex justify-content-between border border-light">
-      <div class="btn-group me-3 ms-5 mt-2">
-        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-          <p>{{pageSize}} items per page</p>
-          <button type="button" class="btn dropdown-toggle-split" ngbDropdownToggle></button>
-          <div class="dropdown-menu" ngbDropdownMenu>
-            <button ngbDropdownItem (click)="setPageSize(5)"> 5</button>
-            <button ngbDropdownItem (click)="setPageSize(10)">10</button>
-            <button ngbDropdownItem (click)="setPageSize(20)">20</button>
+  <div class="d-flex justify-content-between">
+    
+  
+    <div class="col-md-3">
+      <div class="p-1 d-flex flex-row">
+        <div class="input-group border rounded border-light">
+          <div class="input-group-prepend border-0 bg-white">
+            <label
+              for="search-filter-input"
+              class="input-group-text  border-0 bg-white"
+              id="basic-addon1"
+            >
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </label>
           </div>
+          <input
+            id="search-filter-input"
+            type="text"
+            class="form-control border-0  flex-fill"
+            placeholder="Search courses..."
+            (input)="onSearch($event)"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+          />
         </div>
       </div>
-    
-      <div class="col-3 d-flex justify-content-end ms-2">
-      <span class="input-group-text ms-1 mt-1 mb-1" id="basic-addon1">
-        <i class="fa fa-search" aria-hidden="true"></i>
-      </span>
-
-      <input id="search-filter-input" type="text" class="form-control form-control-sm no-border flex-fill me-3 mt-1 mb-1"
-        placeholder="Search courses..." (input)="onSearch($event)" aria-label="Username"
-        aria-describedby="basic-addon1" />
-
     </div>
-  </div>
+
+    <div class="btn-group me-3 ms-5">
+      <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+        <small class="text-primary">{{pageSize}} items per page</small>
+        <button type="button" class="btn dropdown-toggle-split" ngbDropdownToggle></button>
+        <div class="dropdown-menu text-dark" ngbDropdownMenu>
+          <button ngbDropdownItem (click)="setPageSize(5)" > 5</button>
+          <button ngbDropdownItem (click)="setPageSize(10)">10</button>
+          <button ngbDropdownItem (click)="setPageSize(20)">20</button>
+        </div>
+      </div>
+    </div>
+   </div>
+
 
 
 
@@ -79,13 +96,12 @@
           || courseStatusMap[item.code] == PreWaiverStatus.NOT_APPLIED)){
 
             <div class="justify-content-center me-2">
-            <i class="fa-solid fa-x text-danger mt-1"></i>
 
-          <button class="badge bg-primary ms-2" (click)="toggleCollapseApply(item.code)" [attr.aria-expanded]="!isCollapsed"
+          <span type="button" class="badge bg-primary text-white px-4" (click)="toggleCollapseApply(item.code)" [attr.aria-expanded]="!isCollapsed"
             aria-controls="collapseExample">
             <i [ngbTooltip]="getPrerequisiteWaiverStatus(item) === PreWaiverStatus.REJECTED ? 'REJECTED: Please Apply for Waiver':'Apply for Waiver'" class="fa-regular fa-pen-to-square"></i>
 
-          </button>
+            </span>
         </div>
 
           <div #collapse="ngbCollapse" [ngbCollapse]="!collapsedStatesApply[item.code]">
@@ -123,7 +139,7 @@
       (pageChange)="onPageChange($event)" [maxSize]="5" [rotate]="true" [ellipses]="false"
       [boundaryLinks]="true" />
   </div>
-
+</div>
 
   }
 

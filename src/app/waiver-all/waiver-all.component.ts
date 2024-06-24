@@ -9,14 +9,13 @@ import { Observable, Subject, merge, OperatorFunction, startWith, from, combineL
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 
 import { JsonUtils } from '../utils/json-utils';
-import { TestingTableComponent } from '../testing-table/testing-table.component';
 import { CourseDetailComponent } from '../course-registration/course-detail/course-detail.component';
 
 
 @Component({
   selector: 'app-waiver-all',
   standalone: true,
-  imports: [NgClass, NgbTooltipModule, NgbTypeaheadModule, FormsModule, NgbCollapseModule, TestingTableComponent, NgbPaginationModule, DecimalPipe, AsyncPipe, NgbDropdownModule, CourseDetailComponent],
+  imports: [NgClass, NgbTooltipModule, NgbTypeaheadModule, FormsModule, NgbCollapseModule, NgbPaginationModule, DecimalPipe, AsyncPipe, NgbDropdownModule, CourseDetailComponent],
   templateUrl: './waiver-all.component.html',
   styleUrl: './waiver-all.component.css',
   providers: [DataService, CourseEligibilityService],   //Add service in your component providers list
