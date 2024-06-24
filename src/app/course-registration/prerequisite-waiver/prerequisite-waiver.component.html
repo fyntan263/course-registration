@@ -13,25 +13,15 @@
 
     <div class="card-body">
      <div class="d-flex justify-content-between">
-      <div class="btn-group me-3 ms-5">
-        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-          <p class="text-dark">{{pageSize}} items per page</p>
-          <button type="button" class="btn dropdown-toggle-split" ngbDropdownToggle></button>
-          <div class="dropdown-menu text-dark" ngbDropdownMenu>
-            <button ngbDropdownItem (click)="setPageSize(5)" > 5</button>
-            <button ngbDropdownItem (click)="setPageSize(10)">10</button>
-            <button ngbDropdownItem (click)="setPageSize(20)">20</button>
-          </div>
-        </div>
-      </div>
+    
   
       <div class="col-md-3">
         <div class="p-1 d-flex flex-row">
-          <div class="input-group border border-light">
+          <div class="input-group border rounded border-light">
             <div class="input-group-prepend border-0 bg-white">
               <label
                 for="search-filter-input"
-                class="input-group-text rounded-0 border-0 bg-white"
+                class="input-group-text  border-0 bg-white"
                 id="basic-addon1"
               >
                 <i class="fa fa-search" aria-hidden="true"></i>
@@ -40,12 +30,24 @@
             <input
               id="search-filter-input"
               type="text"
-              class="form-control border-0 form-control-sm flex-fill"
+              class="form-control border-0  flex-fill"
               placeholder="Search courses..."
               (input)="onSearch($event)"
               aria-label="Username"
               aria-describedby="basic-addon1"
             />
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-group me-3 ms-5">
+        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+          <small class="text-primary">{{pageSize}} items per page</small>
+          <button type="button" class="btn dropdown-toggle-split" ngbDropdownToggle></button>
+          <div class="dropdown-menu text-dark" ngbDropdownMenu>
+            <button ngbDropdownItem (click)="setPageSize(5)" > 5</button>
+            <button ngbDropdownItem (click)="setPageSize(10)">10</button>
+            <button ngbDropdownItem (click)="setPageSize(20)">20</button>
           </div>
         </div>
       </div>
