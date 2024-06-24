@@ -2,28 +2,28 @@
 
   @if(true) {
 
-    
-    <div class="d-flex justify-content-between border border-light">
-      <div class="btn-group me-3 ms-5 mt-2">
-        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-          <p>{{pageSize}} items per page</p>
-          <button type="button" class="btn dropdown-toggle-split" ngbDropdownToggle></button>
-          <div class="dropdown-menu" ngbDropdownMenu>
-            <button ngbDropdownItem (click)="setPageSize(5)"> 5</button>
-            <button ngbDropdownItem (click)="setPageSize(10)">10</button>
-            <button ngbDropdownItem (click)="setPageSize(20)">20</button>
-          </div>
+
+  <div class="d-flex justify-content-between border border-light">
+    <div class="btn-group me-3 ms-5 mt-2">
+      <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+        <p>{{pageSize}} items per page</p>
+        <button type="button" class="btn dropdown-toggle-split" ngbDropdownToggle></button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+          <button ngbDropdownItem (click)="setPageSize(5)"> 5</button>
+          <button ngbDropdownItem (click)="setPageSize(10)">10</button>
+          <button ngbDropdownItem (click)="setPageSize(20)">20</button>
         </div>
       </div>
-    
-      <div class="col-3 d-flex justify-content-end ms-2">
+    </div>
+
+    <div class="col-3 d-flex justify-content-end ms-2">
       <span class="input-group-text ms-1 mt-1 mb-1" id="basic-addon1">
         <i class="fa fa-search" aria-hidden="true"></i>
       </span>
 
-      <input id="search-filter-input" type="text" class="form-control form-control-sm no-border flex-fill me-3 mt-1 mb-1"
-        placeholder="Search courses..." (input)="onSearch($event)" aria-label="Username"
-        aria-describedby="basic-addon1" />
+      <input id="search-filter-input" type="text"
+        class="form-control form-control-sm no-border flex-fill me-3 mt-1 mb-1" placeholder="Search courses..."
+        (input)="onSearch($event)" aria-label="Username" aria-describedby="basic-addon1" />
 
     </div>
   </div>
@@ -35,14 +35,14 @@
   <table class="table table-responsible table-hover mt-1">
     <thead class="text-dark text-center">
       <tr scope="col">
-      <th class="text-uppercase">Course <br> Code </th>
-      <th class="text-uppercase">Course <br> Name </th>
-      <th class="text-uppercase">Credits <br> (L-T-P-C) </th>
-      <th class="text-uppercase">Instructor </th>
-      <th class="text-uppercase">Slot </th>
-      <th class="text-uppercase">Prerequisite <br> Met? </th>
-      <th class="text-uppercase"> More <br> Info </th>
-    </tr>
+        <th class="text-uppercase">Course <br> Code </th>
+        <th class="text-uppercase">Course <br> Name </th>
+        <th class="text-uppercase">Credits <br> (L-T-P-C) </th>
+        <th class="text-uppercase">Instructor </th>
+        <th class="text-uppercase">Slot </th>
+        <th class="text-uppercase">Prerequisite <br> Met? </th>
+        <th class="text-uppercase"> More <br> Info </th>
+      </tr>
     </thead>
 
 
@@ -78,27 +78,17 @@
           (courseStatusMap[item.code] == PreWaiverStatus.REJECTED
           || courseStatusMap[item.code] == PreWaiverStatus.NOT_APPLIED)){
 
-            <div class="justify-content-center me-2">
+          <div class="justify-content-center me-2">
             <i class="fa-solid fa-x text-danger mt-1"></i>
 
-          <button class="badge bg-primary ms-2" (click)="toggleCollapseApply(item.code)" [attr.aria-expanded]="!isCollapsed"
-            aria-controls="collapseExample">
-            <i [ngbTooltip]="getPrerequisiteWaiverStatus(item) === PreWaiverStatus.REJECTED ? 'REJECTED: Please Apply for Waiver':'Apply for Waiver'" class="fa-regular fa-pen-to-square"></i>
+            <button class="badge bg-primary ms-2" (click)="toggleCollapseApply(item.code)"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+              <i [ngbTooltip]="getPrerequisiteWaiverStatus(item) === PreWaiverStatus.REJECTED ? 'REJECTED: Please Apply for Waiver':'Apply for Waiver'"
+                class="fa-regular fa-pen-to-square"></i>
 
-          </button>
-        </div>
-
-          <div #collapse="ngbCollapse" [ngbCollapse]="!collapsedStatesApply[item.code]">
-            <div class="card">
-              <div class="card-body">
-                <div class="mb-3">
-                  <input type="text" class="form-control" placeholder="State Reason" aria-label="Username"
-                    [(ngModel)]="reasonInput" aria-describedby="basic-addon1">
-                </div>
-                <button class="btn btn-primary" (click)="closeInput(item.code)">Apply</button>
-              </div>
-            </div>
+            </button>
           </div>
+             
 
           }
           @else {
@@ -107,9 +97,43 @@
           </span>
           }
         </td>
-        <td> <a [href]="item.syllabusLink"> <i class="fa-solid fa-circle-info text-primary"></i> </a> </td>
 
+
+
+        <td> <a [href]="item.syllabusLink"> <i class="fa-solid fa-circle-info text-primary"></i> </a> </td>
       </tr>
+      @if(collapsedStatesApply[item.code] &&
+      !isCourseAlreadyCompleted(item)  &&
+      !isPrerequisiteMet(item) && (getPrerequisiteWaiverStatus(item) === PreWaiverStatus.REJECTED
+      || getPrerequisiteWaiverStatus(item) === PreWaiverStatus.NOT_APPLIED
+      )){
+      <tr>
+        <td colspan="7" class="m-2">
+          <div class="m-2 p-1">
+            <div class=" ">
+              <div class="d-flex justify-content-end">
+                <textarea
+                  rows="1"
+                  [(ngModel)]="reasonInput"
+                  name="reason-{{ item.code }}"
+                  type="text"
+                  class="form-control mt-1 me-2 w-50"
+                  placeholder="Reason for waiver"
+                >
+                </textarea>
+                <div>
+                  <button
+                    class="btn btn-sm mt-1 py-1 px-3 btn-outline-primary"
+                    (click)="closeInput(item.code)">
+                    Apply
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      }
       }
 
     </tbody>
@@ -120,8 +144,7 @@
 
   <div class="ms-2">
     <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
-      (pageChange)="onPageChange($event)" [maxSize]="5" [rotate]="true" [ellipses]="false"
-      [boundaryLinks]="true" />
+      (pageChange)="onPageChange($event)" [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true" />
   </div>
 
 
