@@ -1,4 +1,3 @@
-import { PrerequisiteService } from "../services/prerequisite.service";
 
 // Clause that contains a list of codes, representing AND conditions
 export interface PrerequisiteClause {
