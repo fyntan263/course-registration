@@ -13,8 +13,8 @@
       >
         Courses offered
       </button>
-      <ng-template ngbNavContent
-        ><app-waiver-all></app-waiver-all>
+      <ng-template ngbNavContent>
+          <app-courses-offered  [courses$]="courses$"></app-courses-offered>
       </ng-template>
     </li>
     <li [ngbNavItem]="2" class="px-4">
@@ -26,9 +26,15 @@
         Core Courses Offered
       </button>
       <ng-template ngbNavContent>
-        <app-prerequisite-waiver></app-prerequisite-waiver>
+       
+          <app-core-courses [coreCourses$]="coreCourses$"></app-core-courses>
+      
+       
       </ng-template>
     </li>
   </ul>
   <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>
+
+
+  
