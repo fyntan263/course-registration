@@ -15,9 +15,6 @@ export class CourseEligibilityService {
   isWaiverApplied(waivers: PrerequisiteWaiver[], courseCode: string): boolean {
     return this.getCourseRegistrationStatus(waivers, courseCode)? true : false
   }
-  // isWaiverApplied(waivers: string[], courseCode: string): boolean {
-  //   return  waivers.includes(courseCode)
-  // }
   getCourseRegistrationStatus(waivers: PrerequisiteWaiver[], courseCode: string):PreWaiverApplyStatus | undefined{
     let waiver =(waivers.find(waiver => waiver.code ==courseCode))
     if (waiver)  return waiver.status ;

@@ -23,7 +23,6 @@ export class DataService {
     private courseEligibilityService: CourseEligibilityService
   ) {}
 
-  // Method to fetch and precompute necessary data
   // fetchEnhancedCourses(): void {
   //   combineLatest([this.getCourses(), this.getStudent()])
   //     .pipe(
@@ -69,15 +68,15 @@ export class DataService {
   }
 
   // Method to apply for a waiver and update the status in the BehaviorSubject
-  applyWaiver(course: StudentCourse, request:PrerequisiteWaiverRequest): void {
+  applyWaiver(request:PrerequisiteWaiverRequest, status:PreWaiverApplyStatus): void {
     const student = this.currentStudentSubject.value;
     if (!student) {
       return; // If the student data is not loaded yet, do nothing
     }
-
+    request.rollNo = student.rollNo
     const currentCourses = this.enhancedCoursesSubject.value.map(course =>
-      course.code === course.code
-        ? { ...course, preReqWaiverStatus: course.preReqWaiverStatus}
+      course.code === request.courseCode
+        ? { ...course, preReqWaiverStatus: status}
         : course
     );
     this.enhancedCoursesSubject.next(currentCourses);

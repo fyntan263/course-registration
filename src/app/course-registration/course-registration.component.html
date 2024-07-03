@@ -1,40 +1,25 @@
-<div>
-  <ul
-    ngbNav
-    #nav="ngbNav"
-    [(activeId)]="active"
-    class="nav nav-pills m-3 shadow p-2"
-  >
-    <li [ngbNavItem]="1" class="px-4">
-      <button
-        ngbNavLink
-        class="text-dark"
-        [ngClass]="{ 'active-tab': active === 1, 'text-white': active === 1 }"
-      >
-        Courses offered
-      </button>
-      <ng-template ngbNavContent>
-          <app-courses-offered  [courses$]="courses$"></app-courses-offered>
-      </ng-template>
-    </li>
-    <li [ngbNavItem]="2" class="px-4">
-      <button
-        ngbNavLink
-        class="text-dark"
-        [ngClass]="{ 'active-tab': active === 2, 'text-white': active === 2 }"
-      >
-        Core Courses Offered
-      </button>
-      <ng-template ngbNavContent>
-       
-          <app-core-courses [coreCourses$]="coreCourses$"></app-core-courses>
-      
-       
-      </ng-template>
-    </li>
-  </ul>
-  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+<div class="container-fluid">
+  <div class="card">    
+    <div class="card-header text-center text-dark fw-bold">
+        My Courses
+    </div>  
+      <div class="card-body">
+        <div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" (click)="toggleCourses()" type="checkbox" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Show Core Courses Only</label>
+          </div>
+        </div>
+          @if (isCoreCourses$.getValue()) {
+            <app-courses-table [courseList$]="coreCourses$"></app-courses-table>
+          }@else {
+            <app-courses-table [courseList$]="allCourses$"></app-courses-table>
+          }
+      </div>
+  </div>
 </div>
+
 
 
   

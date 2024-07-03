@@ -63,12 +63,12 @@ export interface PrerequisiteClause {
   preReqWaiverRequest: boolean
  }
 
-  export interface CoreCoursePlanSubmission {
-    rollNo: string;
-    riskStatus: boolean;  // Changed to more descriptive naming for properties
-    totalCredits: number;
-    coreCoursePlan: Course[];
-}
+//   export interface CoreCoursePlanSubmission {
+//     rollNo: string;
+//     riskStatus: boolean;  // Changed to more descriptive naming for properties
+//     totalCredits: number;
+//     coreCoursePlan: Course[];
+// }
 
 export interface ElectiveCredits {
 	basket: string[];

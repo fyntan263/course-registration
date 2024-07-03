@@ -1,195 +1,244 @@
-   
-    <div class="d-flex justify-content-between">
-        <div class="col-md-3">
-          <div class="p-1 d-flex flex-row">
-            <div class="input-group border rounded border-light">
-              <div class="input-group-prepend border-0 bg-white">
-                <label
-                  for="search-filter-input"
-                  class="input-group-text  border-0 bg-white"
-                  id="basic-addon1"
-                >
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </label>
-              </div>
-              <input
-                id="search-filter-input"
-                type="text"
-                class="form-control border-0  flex-fill"
-                placeholder="Search courses..."
-                (input)="onSearch($event)"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-              />
-            </div>
-          </div>
-        </div>
-    
-        <div class="btn-group me-3 ms-5">
-          <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-            <small class="text-primary">{{pageSize}} items per page</small>
-            <button type="button" class="btn dropdown-toggle-split" ngbDropdownToggle></button>
-            <div class="dropdown-menu text-dark" ngbDropdownMenu>
-              <button ngbDropdownItem (click)="setPageSize(5)" > 5</button>
-              <button ngbDropdownItem (click)="setPageSize(10)">10</button>
-              <button ngbDropdownItem (click)="setPageSize(20)">20</button>
-            </div>
-          </div>
-        </div>
-       </div>
-    <div class="table-responsive">
-      <table class="table table-hover border">
-        <thead>
-          <tr class="text-center">
-            <th class="text-uppercase">Course Code</th>
-            <th class="text-uppercase">Course Name</th>
-            <th class="text-uppercase">Credits (L-T-P-C)</th>
-            <th class="text-uppercase">Instructor</th>
-            <th class="text-uppercase">Slot</th>
-            <th class="text-uppercase">Prerequisite</th>
-            <th class="text-uppercase">More Info</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (course of filteredCourses$ | async; track course.code) {
-          <ng-container>
-            <tr
-              class="text-center"
-              [ngClass]="{ 'table-light': course.isComplete }"
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+  <div class="mb-3 mb-md-0">
+  <ng-container *ngTemplateOutlet="searchTemplate"></ng-container>
+</div>
+
+<div class="mb-3 mb-md-0">
+  <ng-container *ngTemplateOutlet="paginationTemplate"></ng-container>
+</div>
+<div class="mb-3 mb-md-0">
+  <ng-container *ngTemplateOutlet="selectPaginationSize"></ng-container>
+</div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-hover border">
+    <thead>
+      <tr class="text-center">
+        <th scope="col" sortable="code" (sort)="onSort($event)">Course Code
+          <ng-container *ngTemplateOutlet="sortDirectionIconTemplate;  context: {direction: sortColumnMap['code']}"></ng-container>
+        </th>
+        <th scope="col" sortable="name" (sort)="onSort($event)">Course Name
+          <ng-container *ngTemplateOutlet="sortDirectionIconTemplate;  context: {direction: sortColumnMap['name']}"></ng-container>
+        </th>
+        <th scope="col" sortable="credits" (sort)="onSort($event)">
+          Credits (L-T-P-C)
+          <ng-container *ngTemplateOutlet="sortDirectionIconTemplate;  context: {direction: sortColumnMap['credits']}"></ng-container>
+        </th>
+        <th scope="col" sortable="instructor" (sort)="onSort($event)">
+          Instructor
+          <ng-container *ngTemplateOutlet="sortDirectionIconTemplate;  context: {direction: sortColumnMap['instructor']}"></ng-container>
+        </th>
+        <th scope="col" sortable="slot" (sort)="onSort($event)">Slot
+          <ng-container *ngTemplateOutlet="sortDirectionIconTemplate;  context: {direction: sortColumnMap['slot']}"></ng-container>
+        </th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (course of courseData$ | async; track course.code) {
+      <ng-container>
+        <tr
+          class="text-center"
+          [ngClass]="{ 'table-light': course.isComplete }"
+        >
+          <td>
+            @if (course.isComplete) {
+              <span
+              class="text-dark"
+              ngbTooltip="Course already completed"
+              tooltipClass="tooltip-styles"
+              [openDelay]="300"
+              [closeDelay]="400"
+              (click)="toggleCollapse(course.code)"
+              [attr.aria-expanded]="!collapsedStates[course.code]"
+              aria-controls="collapseExample"
             >
-              <td>
+            <ngb-highlight [result]=" course.code" [term]="searchTerm" />
+            </span>
+            }         
+            @if(!course.isComplete){
+            <span
+              class="me-2 text-primary"
+              (click)="toggleCollapse(course.code)"
+              [attr.aria-expanded]="!collapsedStates[course.code]"
+              aria-controls="collapseExample"
+            >
+            <ngb-highlight [result]=" course.code" [term]="searchTerm" />
+            </span>
+            }
+          </td>
+          <td> <ngb-highlight [result]=" course.name" [term]="searchTerm" /></td>
+          <td> <ngb-highlight [result]=" course.credits" [term]="searchTerm" /></td>
+          <td style="white-space: pre-line">
+            <ngb-highlight [result]="course.instructor.join(', ')" [term]="searchTerm" />
+          </td>
+          <td> <ngb-highlight [result]=" course.slot" [term]="searchTerm" /></td>
+          <td>
+            <div class="d-flex justify-content-evenly">
+              
+            @if(course.isComplete){} @else if (course.isPrerequisiteMet) {
+              <ng-container>
+                <span  ngbTooltip="Prerequisite Met"
+                tooltipClass="tooltip-styles"><i class="fs-5 fa-solid fa-check text-success"></i></span>
+              </ng-container>
+              }@else {
+              <ng-container>
+                @if (!course.isComplete && !course.isPrerequisiteMet &&
+                (course.preReqWaiverStatus === PreWaiverStatus.REJECTED ||
+                course.preReqWaiverStatus === PreWaiverStatus.NOT_APPLIED)) {
                 <span
-                  class="text-dark"
-                  *ngIf="course.isComplete"
-                  ngbTooltip="Course already completed"
-                  tooltipClass="tooltip-styles"
-                  [openDelay]="300"
-                  [closeDelay]="400"
-                  (click)="toggleCollapse(course.code)"
-                  [attr.aria-expanded]="!collapsedStates[course.code]"
+                  [ngbTooltip]="
+                    course.preReqWaiverStatus === PreWaiverStatus.REJECTED
+                      ? 'REJECTED: Please Apply for Prerequisite Waiver'
+                      : 'Apply for Prerequisite'
+                  "
+                  class="btn text-primary p-0"
+                  (click)="toggleCollapseApply(course.code)"
+                  [attr.aria-expanded]="!collapsedStatesApply[course.code]"
                   aria-controls="collapseExample"
                 >
-                  {{ course.code }}
-                  <i
-                    class="fas fa-circle-check text-success mx-2"
-                    style="font-size: 12px"
-                  ></i>
+                  <i class="fa-regular fs-5  fa-pen-to-square"></i>
                 </span>
-                @if(!course.isComplete){
-                <span
-                  class="me-2 text-primary"
-                  (click)="toggleCollapse(course.code)"
-                  [attr.aria-expanded]="!collapsedStates[course.code]"
-                  aria-controls="collapseExample"
-                >
-                  {{ course.code }}
+                } @if (course.preReqWaiverStatus === PreWaiverStatus.APPLIED) {
+                <span class="badge text-success text-uppercase">
+                  {{ course.preReqWaiverStatus }}
                 </span>
                 }
-              </td>
-              <td>{{ course.name }}</td>
-              <td>{{ course.credits }}</td>
-              <td style="white-space: pre-line">
-                {{ course.instructor.join("\n") }}
-              </td>
-              <td>{{ course.slot }}</td>
-              <td>
-                @if (course.isComplete || course.isPrerequisiteMet) {
-                <ng-container>
-                  <i class="fs-5 fa-solid fa-check text-success"></i>
-                </ng-container>
-                }@else {
-                <ng-container>
-                  @if (!course.isComplete && !course.isPrerequisiteMet &&
-                  (course.preReqWaiverStatus === PreWaiverStatus.REJECTED ||
-                  course.preReqWaiverStatus === PreWaiverStatus.NOT_APPLIED)) {
-                  <span
-                    [ngbTooltip]="
-                      course.preReqWaiverStatus === PreWaiverStatus.REJECTED
-                        ? 'REJECTED: Please Apply for Prerequisite Waiver'
-                        : 'Apply for Prerequisite'
-                    "
-                    class="btn text-primary p-0"
-                    (click)="toggleCollapseApply(course.code)"
-                    [attr.aria-expanded]="!collapsedStatesApply[course.code]"
-                    aria-controls="collapseExample"
-                  >
-                    <i class="fa-regular fa-pen-to-square"></i>
-                  </span>
-                  } @if (course.preReqWaiverStatus === PreWaiverStatus.APPLIED) {
-                  <span class="badge text-success text-uppercase">
-                    {{ course.preReqWaiverStatus }}
-                  </span>
-                  }
-                </ng-container>
-                }
-              </td>
-              <td>
-                <a [href]="course.syllabusLink"
-                  ><i class="fas fa-circle-info text-primary"></i
-                ></a>
-              </td>
-            </tr>
-            @if (collapsedStatesApply[course.code] && !course.isComplete &&
-            !course.isPrerequisiteMet && (course.preReqWaiverStatus ===
-            PreWaiverStatus.REJECTED || course.preReqWaiverStatus ===
-            PreWaiverStatus.NOT_APPLIED)) {
-            <tr>
-              <td colspan="7" class="m-2">
-                <div class="m-2 p-1">
-                  <div class="d-flex justify-content-end">
-                    <textarea
-                      rows="1"
-                      [(ngModel)]="reasonInput"
-                      name="reason-{{ course.code }}"
-                      type="text"
-                      class="form-control mt-1 me-2 w-50"
-                      placeholder="Reason for waiver"
-                    ></textarea>
-                   <div>
-                    <button
-                    class="btn btn-sm mt-1 py-1 px-3 btn-outline-primary"                    
+              </ng-container>
+              }
+           
+             @if(course.isComplete){
+              <div class="text-wrap" ngbTooltip="Course Completed">
+                <i class="fs-5 fa-solid fa-circle-check text-success"></i>
+              </div>
+             }
+             <div>
+              <a [href]="course.syllabusLink" ngbTooltip="More info"
+              tooltipClass="tooltip-styles"
+              ><i class="fas fs-5  fa-circle-info text-primary"></i
+            ></a>
+             </div>
+            
+            </div>
+          </td>
+        </tr>
+        @if (collapsedStatesApply[course.code] && !course.isComplete &&
+        !course.isPrerequisiteMet && (course.preReqWaiverStatus ===
+        PreWaiverStatus.REJECTED || course.preReqWaiverStatus ===
+        PreWaiverStatus.NOT_APPLIED)) {
+        <tr>
+          <td colspan="7" class="m-2">
+            <div class="m-2 p-1">
+              <div class="d-flex justify-content-end">
+                <textarea
+                  rows="1"
+                  [(ngModel)]="reasonInput"
+                  name="reason-{{ course.code }}"
+                  type="text"
+                  class="form-control mt-1 me-2 w-50"
+                  placeholder="Reason for waiver"
+                ></textarea>
+                <div>
+                  <button
+                    class="btn btn-sm mt-1 py-1 px-3 btn-outline-primary"
                     [disabled]="!reasonInput.trim()"
                     (click)="applyWaiverRequest(course)"
                   >
                     Apply
                   </button>
-                   </div>
-                  </div>
                 </div>
-              </td>
-            </tr>
-            }
-          </ng-container>
-          }
-        </tbody>
-      </table>
-      <div class="d-flex justify-content-between">
-        <ngb-pagination
-        [collectionSize]="collectionSize"
-        [(page)]="page"
-        [pageSize]="pageSize"
-        (pageChange)="onPageChange($event)"
-        [maxSize]="5"
-        [rotate]="true"
-        [ellipses]="false"
-        [boundaryLinks]="true"
-      ></ngb-pagination>
-      @if (filteredCourses$ | async; as courses) {
-        @if(courses.length  >= 15){
-            <div class="btn-group me-3 ms-5">
-                <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-                  <small class="text-primary">{{pageSize}} items per page</small>
-                  <button type="button" class="btn dropdown-toggle-split" ngbDropdownToggle></button>
-                  <div class="dropdown-menu text-dark" ngbDropdownMenu>
-                    <button ngbDropdownItem (click)="setPageSize(5)" > 5</button>
-                    <button ngbDropdownItem (click)="setPageSize(10)">10</button>
-                    <button ngbDropdownItem (click)="setPageSize(20)">20</button>
-                  </div>
-                </div>
-              </div>       
+              </div>
+            </div>
+          </td>
+        </tr>
         }
-        
+      </ng-container>
       }
-      </div>
-     
+    </tbody>
+  </table>
+  @if(total$ | async; as total ){ @if(total >15 && pageSize>15){
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+      <div class="mb-3 mb-md-0">
+      <ng-container *ngTemplateOutlet="searchTemplate"></ng-container>
     </div>
+    
+    <div class="mb-3 mb-md-0">
+      <ng-container *ngTemplateOutlet="paginationTemplate"></ng-container>
+    </div>
+    <div class="mb-3 mb-md-0">
+      <ng-container *ngTemplateOutlet="selectPaginationSize"></ng-container>
+    </div>
+    </div>
+  } }
+</div>
+
+
+<ng-template #sortDirectionIconTemplate let-direction="direction">
+  <span >
+      @if (direction === 'asc') {
+          <i class="text-dark fa-solid fa-arrow-up fa-xs"></i>
+      }@else if (direction === 'desc') {
+          <i class="text-dark fa-solid fa-arrow-down fa-xs"></i>
+      }@else {
+          <i class="text-light fa-solid fa-arrow-up fa-xs"></i>
+      }
+  </span>
+</ng-template>
+
+<ng-template #selectPaginationSize>
+  <div>
+    <select
+      class="form-select"
+      style="width: auto"
+      [(ngModel)]="pageSize">
+      <option [ngValue]="5">5 items per page</option>
+      <option [ngValue]="7">7 items per page</option>
+      <option [ngValue]="10">10 items per page</option>
+      <option [ngValue]="20">20 items per page</option>
+    </select>
+  </div>
+</ng-template>
+
+<ng-template #paginationTemplate>
+  <ngb-pagination
+    [collectionSize]="(total$ | async)!"
+    [boundaryLinks]="true"
+    [maxSize]="2"
+    [rotate]="true"
+    [ellipses]="true"
+    [(page)]="page"
+    [pageSize]="pageSize">
+  </ngb-pagination>
+</ng-template>
+
+<ng-template #searchTemplate>
+  <div class="d-flex flex-row p-1">
+    <div class="input-group border rounded border-light">
+      <div class="input-group-prepend border-0 bg-white">
+        <label
+          for="search-filter-input"
+          class="input-group-text border-0 bg-white"
+        >
+          <i class="fa fa-search mt-1" aria-hidden="true"></i>
+        </label>
+      </div>
+      <input
+        id="search-filter-input"
+        type="text"
+        class="form-control border-0 flex-fill"
+        placeholder="Search ..."
+        name="searchTerm"
+        [(ngModel)]="searchTerm"
+        aria-label="Search"
+        aria-describedby="basic-addon1"
+      />
+    </div>
+    @if (loading$ | async) {
+      <ng-container>
+        <small class="ms-4 text-success col col-form-label position-absolute" style="left: 20vw;">Loading...</small>
+      </ng-container>
+    }
+    
+  </div>
+</ng-template>
